@@ -66,6 +66,469 @@ h1{margin:0;font-size:28px;letter-spacing:-.8px}.desc{color:var(--muted);font-si
 .inventory-toolbar{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin:0 0 14px}.inventory-toolbar .pos-search{min-width:240px}.inventory-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px}.inv-kpi{padding:16px}.inv-kpi span{display:block;color:var(--muted);font-size:11px;font-weight:750;text-transform:uppercase}.inv-kpi b{display:block;font-size:22px;margin-top:7px}.inv-form-card{padding:20px}.inv-form-card h3{margin:0 0 4px}.inv-form-card .field.full .btn{width:100%}
 .inv-status-ok{background:#ecfdf5!important;color:#166534}.inv-status-low{background:#fff7ed!important;color:#9a3412}.inv-status-out{background:#fef2f2!important;color:#b91c1c}
 @media(max-width:760px){.inventory-kpis{grid-template-columns:repeat(2,1fr)}}
+
+/* =========================================================
+   TOKOKULA FINAL UI/UX — ENTERPRISE REDESIGN
+   Backend/API/IDs intentionally preserved.
+   ========================================================= */
+
+:root{
+  --bg:#f4f7fb;
+  --surface:#ffffff;
+  --surface-2:#f8fafc;
+  --text:#101828;
+  --text-2:#344054;
+  --muted:#667085;
+  --line:#e4e7ec;
+  --dark:#0b1220;
+  --dark-2:#151f32;
+  --dark-3:#202b3f;
+  --accent:#111827;
+  --success:#12b76a;
+  --danger:#d92d20;
+  --warning:#f79009;
+  --radius:22px;
+  --shadow:0 12px 35px rgba(16,24,40,.07);
+  --shadow-lg:0 24px 70px rgba(16,24,40,.12);
+}
+
+html{scroll-behavior:smooth}
+body{
+  background:
+    radial-gradient(circle at 92% 0%,rgba(148,163,184,.12),transparent 27%),
+    linear-gradient(180deg,#f8fafc 0%,var(--bg) 45%,#f4f6fa 100%);
+  color:var(--text);
+  letter-spacing:-.01em;
+}
+button,input,select,textarea{font-family:inherit}
+button{transition:transform .16s ease,box-shadow .16s ease,background .16s ease,border-color .16s ease}
+button:active{transform:scale(.985)}
+.hidden{display:none!important}
+
+/* AUTH */
+.auth{
+  min-height:100vh;
+  padding:28px 18px;
+  background:
+    radial-gradient(circle at 10% 10%,rgba(17,24,39,.08),transparent 30%),
+    radial-gradient(circle at 90% 90%,rgba(99,102,241,.08),transparent 28%),
+    #f6f8fc;
+}
+.auth-card{
+  width:min(100%,470px);
+  padding:38px;
+  border:1px solid rgba(255,255,255,.9);
+  border-radius:32px;
+  background:rgba(255,255,255,.88);
+  backdrop-filter:blur(20px);
+  box-shadow:var(--shadow-lg);
+}
+.brand{gap:14px;margin-bottom:34px}
+.mark{
+  width:52px;height:52px;border-radius:17px;
+  background:linear-gradient(145deg,#172033,#070b13);
+  box-shadow:0 10px 24px rgba(11,18,32,.18);
+}
+.brand b{font-size:24px;letter-spacing:-.7px}
+.brand small{font-size:12px;color:#98a2b3}
+.auth-card h1{font-size:32px;letter-spacing:-1.1px}
+.desc{font-size:15px;line-height:1.55;color:var(--muted)}
+.field{margin-bottom:17px}
+.field label{font-size:13px;color:#1d2939;margin-bottom:8px}
+.field input,.field select,.field textarea{
+  border:1px solid #dfe3ea!important;
+  background:#fff!important;
+  border-radius:14px!important;
+  min-height:48px;
+  padding:13px 14px!important;
+  color:var(--text);
+  transition:border-color .16s,box-shadow .16s;
+}
+.field input:focus,.field select:focus,.field textarea:focus{
+  border-color:#98a2b3!important;
+  box-shadow:0 0 0 4px rgba(16,24,40,.06)!important;
+}
+.btn{
+  min-height:46px;
+  border-radius:14px;
+  padding:12px 17px;
+}
+.primary,.dark-btn{
+  background:linear-gradient(145deg,#151d2d,#080d17)!important;
+  box-shadow:0 8px 20px rgba(15,23,42,.12);
+}
+.primary:hover,.dark-btn:hover{box-shadow:0 12px 25px rgba(15,23,42,.18);transform:translateY(-1px)}
+.google-btn{min-height:46px;border-radius:14px}
+
+/* APP SHELL */
+.sidebar{
+  width:266px;
+  padding:20px 14px;
+  background:
+    radial-gradient(circle at 10% 0%,rgba(255,255,255,.08),transparent 30%),
+    linear-gradient(180deg,#0b1220,#0a101c);
+  border-right:1px solid rgba(255,255,255,.05);
+  box-shadow:12px 0 35px rgba(15,23,42,.06);
+}
+.side-brand{
+  padding:8px 12px 28px;
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+}
+.side-brand b{font-size:23px;letter-spacing:-.7px}
+.side-brand small{color:#8d99ad;font-size:11px}
+.nav{gap:5px}
+.nav button{
+  position:relative;
+  padding:12px 13px;
+  border-radius:13px;
+  color:#aeb9ca;
+  font-size:13px;
+}
+.nav button:hover{background:rgba(255,255,255,.055);color:#fff}
+.nav button.active{
+  background:linear-gradient(90deg,#202b3e,#1a2436);
+  color:#fff;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.045);
+}
+.nav button.active:before{
+  content:"";
+  position:absolute;
+  left:0;top:10px;bottom:10px;width:3px;
+  border-radius:3px;background:#fff;
+}
+.main{margin-left:266px}
+.topbar{
+  height:76px;
+  padding:0 32px;
+  background:rgba(255,255,255,.84);
+  border-bottom:1px solid rgba(228,231,236,.9);
+}
+.top-left strong{font-size:15px;letter-spacing:-.2px}
+.top-right{gap:12px}
+.pill{
+  padding:7px 11px;
+  background:#ecfdf3;
+  color:#027a48;
+  border:1px solid #d1fadf;
+}
+.avatar{
+  width:40px;height:40px;
+  background:linear-gradient(145deg,#182235,#0b1220);
+  box-shadow:0 6px 16px rgba(15,23,42,.12);
+}
+.logout{
+  min-height:40px;
+  padding:8px 14px;
+  border-radius:12px;
+  background:#fff;
+  border-color:#e4e7ec;
+}
+.page{max-width:1540px;padding:34px 32px 60px}
+.page>section>h1,
+.module h1{
+  font-size:36px;
+  line-height:1.05;
+  letter-spacing:-1.4px;
+  margin-bottom:6px;
+}
+.subtitle{font-size:13px;color:#667085;line-height:1.55}
+
+/* DASHBOARD */
+#dashboard>h1{
+  font-size:38px;
+  margin-top:4px;
+}
+#dashboard>.subtitle{font-size:14px}
+.cards{
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:16px;
+  margin-top:26px;
+}
+.card{
+  border:1px solid rgba(228,231,236,.95);
+  border-radius:22px;
+  background:rgba(255,255,255,.94);
+  box-shadow:var(--shadow);
+}
+.cards .card{
+  min-height:132px;
+  padding:21px;
+  position:relative;
+  overflow:hidden;
+}
+.cards .card:after{
+  content:"";
+  position:absolute;
+  width:100px;height:100px;
+  right:-35px;bottom:-45px;
+  border-radius:50%;
+  background:rgba(15,23,42,.035);
+}
+.label{
+  color:#667085;
+  font-size:11px;
+  letter-spacing:.08em;
+}
+.value{
+  font-size:28px;
+  letter-spacing:-1px;
+  margin-top:11px;
+}
+.grid{
+  grid-template-columns:minmax(0,1.65fr) minmax(280px,.8fr);
+  gap:16px;
+  margin-top:16px;
+}
+.grid>.card{padding:22px}
+.grid>.card>b{font-size:16px}
+.rows{gap:0!important}
+.row{
+  padding:12px 0;
+  border-bottom:1px solid #eef0f4;
+}
+.row:last-child{border-bottom:0}
+.row span:first-child{color:#667085}
+
+/* MODULE HEADER */
+.module{margin-top:0}
+#genericHeader{display:none!important}
+.module-box{padding:60px 25px}
+
+/* TABS */
+.master-tabs,.inventory-tabs{
+  gap:8px;
+  margin:24px 0 16px;
+}
+.master-tab,.inventory-tab{
+  border:1px solid #e4e7ec;
+  background:#fff;
+  color:#475467;
+  border-radius:12px;
+  padding:10px 15px;
+  box-shadow:0 2px 7px rgba(16,24,40,.03);
+}
+.master-tab:hover,.inventory-tab:hover{border-color:#cfd4dc}
+.master-tab.active,.inventory-tab.active{
+  background:#111827;
+  color:#fff;
+  border-color:#111827;
+  box-shadow:0 7px 18px rgba(17,24,39,.13);
+}
+
+/* TOOLBARS */
+.master-toolbar,.inventory-toolbar,.integration-toolbar,.user-toolbar{
+  gap:10px;
+  margin:16px 0;
+}
+.pos-search,.integration-toolbar input,.integration-toolbar select,.inventory-toolbar select{
+  min-height:44px;
+  border:1px solid #e1e5eb!important;
+  border-radius:13px!important;
+  background:#fff!important;
+  padding:11px 13px!important;
+  outline:none;
+}
+.pos-search:focus,.integration-toolbar input:focus{
+  border-color:#98a2b3!important;
+  box-shadow:0 0 0 4px rgba(16,24,40,.05);
+}
+
+/* TABLES */
+.table-card{border-radius:20px}
+.data-table,.integration-table,.user-table{background:#fff}
+.data-table th,.integration-table th,.user-table th{
+  background:#f8fafc;
+  color:#667085;
+  font-size:10px;
+  letter-spacing:.08em;
+  padding:14px 13px;
+}
+.data-table td,.integration-table td,.user-table td{
+  padding:14px 13px;
+  border-bottom:1px solid #eef0f4;
+}
+.data-table tbody tr:hover,.integration-table tbody tr:hover,.user-table tbody tr:hover{
+  background:#fafbfc;
+}
+.status-pill,.user-badge{
+  border:1px solid #e4e7ec;
+  background:#f8fafc;
+  color:#475467;
+}
+.status-pill.ok,.inv-status-ok{
+  background:#ecfdf3!important;
+  color:#027a48!important;
+  border-color:#d1fadf;
+}
+.inv-status-low{
+  background:#fffaeb!important;
+  color:#b54708!important;
+  border-color:#fedf89;
+}
+.inv-status-out{
+  background:#fef3f2!important;
+  color:#b42318!important;
+  border-color:#fecdca;
+}
+
+/* KPI / REPORT */
+.integration-grid{
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:14px;
+  margin:20px 0;
+}
+.integration-card{
+  padding:19px;
+  border-radius:18px;
+  border:1px solid #e4e7ec;
+  box-shadow:0 5px 18px rgba(16,24,40,.045);
+}
+.integration-card .big{font-size:25px;letter-spacing:-.8px}
+.integration-error{
+  border:1px solid #fecdca;
+  background:#fef3f2;
+  color:#b42318;
+}
+.integration-message{padding:26px}
+
+/* INVENTORY */
+.inventory-kpis{
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:14px;
+}
+.inv-kpi{min-height:112px}
+.inv-kpi b{font-size:25px}
+
+/* POS */
+.pos-layout{
+  grid-template-columns:minmax(0,1.55fr) minmax(330px,.8fr);
+  gap:18px;
+  margin-top:24px;
+}
+.pos-layout>.card{padding:18px}
+.product-grid{gap:12px;margin-top:15px}
+.product-btn{
+  min-height:122px;
+  padding:15px;
+  border:1px solid #e4e7ec;
+  border-radius:16px;
+  background:linear-gradient(180deg,#fff,#fbfcfe);
+  box-shadow:0 4px 12px rgba(16,24,40,.035);
+}
+.product-btn:hover{
+  border-color:#b8c0cc;
+  box-shadow:0 9px 22px rgba(16,24,40,.08);
+  transform:translateY(-2px);
+}
+.product-name{font-size:14px}
+.product-price{font-size:15px}
+.cart{top:94px}
+.cart-list{gap:10px}
+.cart-item{
+  padding:13px;
+  border-radius:14px;
+  background:#fbfcfe;
+}
+.qty-row button{
+  border-radius:9px;
+  background:#fff;
+}
+.grand{
+  padding-top:5px;
+  font-size:21px;
+}
+
+/* MODALS */
+.modal-backdrop{background:rgba(9,15,27,.56);backdrop-filter:blur(7px)}
+.modal{
+  border-radius:24px;
+  border:1px solid rgba(255,255,255,.8);
+  box-shadow:0 30px 90px rgba(0,0,0,.3);
+  padding:24px;
+}
+.modal-head b{font-size:18px}
+.close{border-radius:10px}
+
+/* TOAST */
+.toast{
+  right:22px;bottom:22px;
+  padding:14px 17px;
+  border-radius:14px;
+  box-shadow:0 18px 45px rgba(0,0,0,.2);
+}
+
+/* MOBILE */
+@media(max-width:1100px){
+  .cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .integration-grid,.inventory-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .pos-layout{grid-template-columns:1fr}
+  .cart{position:static}
+}
+@media(max-width:760px){
+  .sidebar{
+    width:280px;
+    box-shadow:20px 0 50px rgba(0,0,0,.25);
+  }
+  .main{margin-left:0}
+  .topbar{
+    height:66px;
+    padding:0 14px;
+  }
+  .mobile-menu{
+    display:block!important;
+    width:40px;height:40px;
+    border-radius:11px;
+    background:#f2f4f7;
+    color:#101828;
+  }
+  .top-left{gap:9px}
+  .top-left strong{font-size:14px}
+  .page{padding:24px 15px 45px}
+  .page>section>h1,.module h1,#dashboard>h1{
+    font-size:30px;
+    letter-spacing:-1px;
+  }
+  .cards{
+    grid-template-columns:1fr 1fr;
+    gap:11px;
+    margin-top:20px;
+  }
+  .cards .card{min-height:112px;padding:16px}
+  .value{font-size:21px}
+  .grid{grid-template-columns:1fr;gap:11px}
+  .grid>.card{padding:17px}
+  .integration-grid,.inventory-kpis{grid-template-columns:1fr 1fr;gap:10px}
+  .integration-card{padding:15px}
+  .integration-card .big{font-size:21px}
+  .master-tabs,.inventory-tabs{margin-top:18px}
+  .master-toolbar,.inventory-toolbar,.integration-toolbar{
+    align-items:stretch;
+  }
+  .master-toolbar .pos-search,.inventory-toolbar .pos-search{
+    min-width:100%;
+  }
+  .inventory-toolbar .select{margin-top:0}
+  .pos-search{min-width:0}
+  .product-grid{grid-template-columns:1fr 1fr}
+  .product-btn{min-height:112px;padding:12px}
+  .payment-grid{grid-template-columns:1fr}
+  .auth-card{padding:27px 22px;border-radius:25px}
+}
+@media(max-width:480px){
+  .cards{grid-template-columns:1fr 1fr}
+  .integration-grid,.inventory-kpis{grid-template-columns:1fr 1fr}
+  .product-grid{grid-template-columns:1fr 1fr}
+  .top-right .pill{display:none}
+  .logout{padding:8px 11px}
+  .avatar{width:38px;height:38px}
+  .page{padding-left:12px;padding-right:12px}
+  .cards .card{padding:14px}
+  .label{font-size:9px}
+  .value{font-size:19px}
+}
+
 </style>
 </head>
 <body>
@@ -130,7 +593,7 @@ h1{margin:0;font-size:28px;letter-spacing:-.8px}.desc{color:var(--muted);font-si
 
 <section id="app" class="app hidden">
   <aside id="sidebar" class="sidebar">
-    <div class="side-brand"><b>Tokokula</b><small>Enterprise POS</small></div>
+    <div class="side-brand"><b>Tokokula</b><small>Enterprise POS • Business OS</small></div>
     <nav class="nav">
       <button class="active" data-page="dashboard" data-permission="dashboard.view">Dashboard</button>
       <button data-page="pos" data-permission="sales.view">POS</button>
@@ -152,7 +615,7 @@ h1{margin:0;font-size:28px;letter-spacing:-.8px}.desc{color:var(--muted);font-si
 
     <div class="page">
       <section id="dashboard">
-        <h1>Dashboard</h1><div class="subtitle">Ringkasan bisnis Tokokula</div>
+        <h1>Dashboard</h1><div class="subtitle">Pusat kendali bisnis — penjualan, stok, kas, dan profit dalam satu layar.</div>
         <div class="cards">
           <div class="card"><div class="label">Revenue</div><div id="revenue" class="value">Rp0</div></div>
           <div class="card"><div class="label">HPP</div><div id="cogs" class="value">Rp0</div></div>
