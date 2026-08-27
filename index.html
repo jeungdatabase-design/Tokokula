@@ -11,9 +11,9 @@
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}
 button,input{font:inherit}button{cursor:pointer}.hidden{display:none!important}
 .auth{min-height:100vh;display:grid;place-items:center;padding:22px;background:radial-gradient(circle at 100% 0,#e9eef7,transparent 38%),var(--bg)}
-.auth-card{width:min(100%,430px);background:rgba(255,255,255,.94);border:1px solid #fff;border-radius:28px;padding:34px;box-shadow:0 25px 70px rgba(15,23,42,.12)}.auth-accent{height:4px;width:58px;border-radius:99px;background:var(--dark);margin-bottom:25px}.auth-kicker{font-size:10px;letter-spacing:.18em;font-weight:850;color:#94a3b8;margin-bottom:8px}
+.auth-card{width:min(100%,430px);background:rgba(255,255,255,.94);border:1px solid #fff;border-radius:28px;padding:34px;box-shadow:0 25px 70px rgba(15,23,42,.12)}
 .brand{display:flex;align-items:center;gap:12px;margin-bottom:28px}.mark{width:46px;height:46px;border-radius:14px;background:var(--dark);color:#fff;display:grid;place-items:center;font-weight:900;font-size:20px}.brand b{font-size:22px}.brand small{display:block;color:var(--muted);margin-top:2px}
-h1{margin:0;font-size:28px;letter-spacing:-.8px}.desc{color:var(--muted);font-size:14px;margin:8px 0 25px}.field{margin:0 0 17px}.field label{display:block;font-size:13px;font-weight:750;margin-bottom:8px}.field input{width:100%;padding:14px 15px;border:1px solid var(--line);border-radius:14px;outline:0;background:#fff;color:var(--text);transition:border-color .18s,box-shadow .18s,background .18s}.field input:focus{border-color:#94a3b8;box-shadow:0 0 0 4px #eef2f7;background:#fff}.password-wrap{position:relative}.password-wrap input{padding-right:52px}.password-toggle{position:absolute;right:7px;top:50%;transform:translateY(-50%);width:40px;height:40px;border:0;border-radius:11px;background:transparent;color:#64748b;display:grid;place-items:center;font-size:19px}.password-toggle:hover{background:#f1f5f9;color:var(--dark)}.password-toggle:focus-visible{outline:3px solid #dbe3ee;outline-offset:1px}.security-note{display:flex;align-items:center;justify-content:center;gap:7px;margin-top:18px;color:#8a94a6;font-size:11px}.security-dot{width:7px;height:7px;border-radius:50%;background:#22c55e;box-shadow:0 0 0 4px #dcfce7}.btn{border:0;border-radius:14px;padding:14px 17px;font-weight:750;transition:transform .16s,box-shadow .16s,background .16s}.primary{width:100%;background:linear-gradient(135deg,#111827,#0b1220);color:#fff;box-shadow:0 10px 24px rgba(15,23,42,.16)}.primary:hover{box-shadow:0 13px 28px rgba(15,23,42,.22);transform:translateY(-1px)}.error{background:#fef2f2;color:var(--danger);padding:12px;border-radius:12px;font-size:13px;margin-bottom:15px}
+h1{margin:0;font-size:28px;letter-spacing:-.8px}.desc{color:var(--muted);font-size:14px;margin:8px 0 25px}.field{margin:0 0 15px}.field label{display:block;font-size:13px;font-weight:750;margin-bottom:7px}.field input{width:100%;padding:14px;border:1px solid var(--line);border-radius:13px;outline:0}.field input:focus{border-color:#9ca3af;box-shadow:0 0 0 4px #f0f2f5}.btn{border:0;border-radius:13px;padding:13px 17px;font-weight:750}.primary{width:100%;background:var(--dark);color:#fff}.error{background:#fef2f2;color:var(--danger);padding:12px;border-radius:12px;font-size:13px;margin-bottom:15px}
 .google-btn{width:100%;background:#fff;color:#172033;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;gap:10px;margin-top:10px}
 .google-btn:hover{background:#f8fafc;border-color:#cbd5e1}
 .google-icon{width:20px;height:20px;display:grid;place-items:center;font-weight:900;font-size:17px}
@@ -37,8 +37,6 @@ h1{margin:0;font-size:28px;letter-spacing:-.8px}.desc{color:var(--muted);font-si
 .totals{border-top:1px solid var(--line);margin-top:15px;padding-top:14px;display:grid;gap:9px}.total-row{display:flex;justify-content:space-between}.grand{font-size:20px;font-weight:900}
 .select{width:100%;padding:11px;border:1px solid var(--line);border-radius:11px;background:#fff;margin-top:7px}
 .payment-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}.pay-input{width:100%;padding:12px;border:1px solid var(--line);border-radius:11px}
-@media(max-width:520px){.auth{padding:16px}.auth-card{width:100%;padding:25px 21px;border-radius:24px;box-shadow:0 18px 50px rgba(15,23,42,.12)}.brand{margin-bottom:22px}.mark{width:42px;height:42px;border-radius:13px}.brand b{font-size:20px}h1{font-size:26px}.desc{margin-bottom:21px}.field input{font-size:16px;min-height:50px}.password-toggle{width:42px;height:42px}.google-btn{min-height:50px}.security-note{font-size:10px}}
-
 @media(max-width:900px){.pos-layout{grid-template-columns:1fr}.cart{position:static}.product-grid{grid-template-columns:repeat(2,1fr);max-height:none}}
 @media(max-width:500px){.product-grid{grid-template-columns:1fr 1fr}.product-btn{padding:11px}.payment-grid{grid-template-columns:1fr}}
 
@@ -1542,11 +1540,9 @@ body.tk-dark .topbar{background:rgba(10,16,27,.84);border-color:#1d2635}.tk-dark
 
 <section id="auth" class="auth">
   <div class="auth-card">
-    <div class="auth-accent"></div>
     <div class="brand"><div class="mark">T</div><div><b>Tokokula</b><small>Enterprise Point of Sale</small></div></div>
-    <div class="auth-kicker">BUSINESS MANAGEMENT</div>
     <h1>Selamat datang</h1>
-    <p id="authDesc" class="desc">Masuk untuk mengelola bisnis Anda dengan aman.</p>
+    <p id="authDesc" class="desc">Masuk untuk mengelola bisnis Anda.</p>
     <div id="authError" class="error hidden"></div>
 
     <form id="loginForm">
@@ -1578,7 +1574,7 @@ body.tk-dark .topbar{background:rgba(10,16,27,.84);border-color:#1d2635}.tk-dark
         </div>
       </div>
       <div class="field"><label>Email</label><input id="email" type="email" autocomplete="email" placeholder="nama@email.com" required></div>
-      <div class="field"><label>Password</label><div class="password-wrap"><input id="password" type="password" autocomplete="current-password" placeholder="Masukkan password" required><button id="passwordToggle" class="password-toggle" type="button" aria-label="Tampilkan password" aria-pressed="false">◉</button></div></div>
+      <div class="field"><label>Password</label><input id="password" type="password" autocomplete="current-password" placeholder="••••••••" required></div>
       <button id="loginBtn" class="btn primary" type="submit">Masuk ke Tokokula</button>
     </form>
 
@@ -1587,8 +1583,6 @@ body.tk-dark .topbar{background:rgba(10,16,27,.84);border-color:#1d2635}.tk-dark
       <span class="google-icon">G</span>
       <span>Lanjut dengan Google</span>
     </button>
-
-    <div class="security-note"><span class="security-dot"></span><span>Koneksi aman • Data bisnis terlindungi</span></div>
 
     <button id="registerToggle" type="button"
       style="width:100%;margin-top:12px;border:0;background:transparent;color:#4b5563;font-weight:700;padding:10px">
@@ -1937,19 +1931,6 @@ const SUPABASE_ANON_KEY='sb_publishable_2J_bUvJtxrGC2zUf_NJraw_ri-__A0x';
 const supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY,{
   auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}
 });
-
-const passwordToggle=document.getElementById('passwordToggle');
-const passwordInput=document.getElementById('password');
-if(passwordToggle&&passwordInput){
-  passwordToggle.addEventListener('click',()=>{
-    const visible=passwordInput.type==='text';
-    passwordInput.type=visible?'password':'text';
-    passwordToggle.setAttribute('aria-pressed',String(!visible));
-    passwordToggle.setAttribute('aria-label',visible?'Tampilkan password':'Sembunyikan password');
-    passwordToggle.textContent=visible?'◉':'◌';
-  });
-}
-
 
 /* ================= API CLIENT ================= */
 const API={
