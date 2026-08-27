@@ -11,9 +11,9 @@
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}
 button,input{font:inherit}button{cursor:pointer}.hidden{display:none!important}
 .auth{min-height:100vh;display:grid;place-items:center;padding:22px;background:radial-gradient(circle at 100% 0,#e9eef7,transparent 38%),var(--bg)}
-.auth-card{width:min(100%,430px);background:rgba(255,255,255,.94);border:1px solid #fff;border-radius:28px;padding:34px;box-shadow:0 25px 70px rgba(15,23,42,.12)}
+.auth-card{width:min(100%,430px);background:rgba(255,255,255,.94);border:1px solid #fff;border-radius:28px;padding:34px;box-shadow:0 25px 70px rgba(15,23,42,.12)}.auth-accent{height:4px;width:58px;border-radius:99px;background:var(--dark);margin-bottom:25px}.auth-kicker{font-size:10px;letter-spacing:.18em;font-weight:850;color:#94a3b8;margin-bottom:8px}
 .brand{display:flex;align-items:center;gap:12px;margin-bottom:28px}.mark{width:46px;height:46px;border-radius:14px;background:var(--dark);color:#fff;display:grid;place-items:center;font-weight:900;font-size:20px}.brand b{font-size:22px}.brand small{display:block;color:var(--muted);margin-top:2px}
-h1{margin:0;font-size:28px;letter-spacing:-.8px}.desc{color:var(--muted);font-size:14px;margin:8px 0 25px}.field{margin:0 0 15px}.field label{display:block;font-size:13px;font-weight:750;margin-bottom:7px}.field input{width:100%;padding:14px;border:1px solid var(--line);border-radius:13px;outline:0}.field input:focus{border-color:#9ca3af;box-shadow:0 0 0 4px #f0f2f5}.btn{border:0;border-radius:13px;padding:13px 17px;font-weight:750}.primary{width:100%;background:var(--dark);color:#fff}.error{background:#fef2f2;color:var(--danger);padding:12px;border-radius:12px;font-size:13px;margin-bottom:15px}
+h1{margin:0;font-size:28px;letter-spacing:-.8px}.desc{color:var(--muted);font-size:14px;margin:8px 0 25px}.field{margin:0 0 17px}.field label{display:block;font-size:13px;font-weight:750;margin-bottom:8px}.field input{width:100%;padding:14px 15px;border:1px solid var(--line);border-radius:14px;outline:0;background:#fff;color:var(--text);transition:border-color .18s,box-shadow .18s,background .18s}.field input:focus{border-color:#94a3b8;box-shadow:0 0 0 4px #eef2f7;background:#fff}.password-wrap{position:relative}.password-wrap input{padding-right:52px}.password-toggle{position:absolute;right:7px;top:50%;transform:translateY(-50%);width:40px;height:40px;border:0;border-radius:11px;background:transparent;color:#64748b;display:grid;place-items:center;font-size:19px}.password-toggle:hover{background:#f1f5f9;color:var(--dark)}.password-toggle:focus-visible{outline:3px solid #dbe3ee;outline-offset:1px}.security-note{display:flex;align-items:center;justify-content:center;gap:7px;margin-top:18px;color:#8a94a6;font-size:11px}.security-dot{width:7px;height:7px;border-radius:50%;background:#22c55e;box-shadow:0 0 0 4px #dcfce7}.btn{border:0;border-radius:14px;padding:14px 17px;font-weight:750;transition:transform .16s,box-shadow .16s,background .16s}.primary{width:100%;background:linear-gradient(135deg,#111827,#0b1220);color:#fff;box-shadow:0 10px 24px rgba(15,23,42,.16)}.primary:hover{box-shadow:0 13px 28px rgba(15,23,42,.22);transform:translateY(-1px)}.error{background:#fef2f2;color:var(--danger);padding:12px;border-radius:12px;font-size:13px;margin-bottom:15px}
 .google-btn{width:100%;background:#fff;color:#172033;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;gap:10px;margin-top:10px}
 .google-btn:hover{background:#f8fafc;border-color:#cbd5e1}
 .google-icon{width:20px;height:20px;display:grid;place-items:center;font-weight:900;font-size:17px}
@@ -37,6 +37,8 @@ h1{margin:0;font-size:28px;letter-spacing:-.8px}.desc{color:var(--muted);font-si
 .totals{border-top:1px solid var(--line);margin-top:15px;padding-top:14px;display:grid;gap:9px}.total-row{display:flex;justify-content:space-between}.grand{font-size:20px;font-weight:900}
 .select{width:100%;padding:11px;border:1px solid var(--line);border-radius:11px;background:#fff;margin-top:7px}
 .payment-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}.pay-input{width:100%;padding:12px;border:1px solid var(--line);border-radius:11px}
+@media(max-width:520px){.auth{padding:16px}.auth-card{width:100%;padding:25px 21px;border-radius:24px;box-shadow:0 18px 50px rgba(15,23,42,.12)}.brand{margin-bottom:22px}.mark{width:42px;height:42px;border-radius:13px}.brand b{font-size:20px}h1{font-size:26px}.desc{margin-bottom:21px}.field input{font-size:16px;min-height:50px}.password-toggle{width:42px;height:42px}.google-btn{min-height:50px}.security-note{font-size:10px}}
+
 @media(max-width:900px){.pos-layout{grid-template-columns:1fr}.cart{position:static}.product-grid{grid-template-columns:repeat(2,1fr);max-height:none}}
 @media(max-width:500px){.product-grid{grid-template-columns:1fr 1fr}.product-btn{padding:11px}.payment-grid{grid-template-columns:1fr}}
 
@@ -1308,14 +1310,243 @@ body.tk-dark .topbar{background:rgba(10,16,27,.84);border-color:#1d2635}.tk-dark
 @media(max-width:480px){.executive-kpis{grid-template-columns:1fr 1fr}.executive-kpis .value{font-size:19px}.label{font-size:9px}.performance-chart{gap:15px}.quick-insight{font-size:12px}}
 
 </style>
+<style>
+
+/* =========================================================
+   TOKOKULA RESPONSIVE APP SHELL v2
+   Desktop = enterprise dashboard
+   Mobile = Android-like app experience
+   ========================================================= */
+@media (max-width:760px){
+  html,body{width:100%;overflow-x:hidden;-webkit-text-size-adjust:100%;}
+  body{padding-bottom:76px;}
+
+  /* Top bar behaves like an Android app header */
+  .topbar{
+    height:64px!important;
+    min-height:64px;
+    position:sticky!important;
+    top:0;
+    padding:0 12px!important;
+    gap:8px;
+    z-index:70;
+    box-shadow:0 1px 0 rgba(16,24,40,.04);
+  }
+  .top-left{min-width:0;gap:9px;}
+  .top-left strong{font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .mobile-menu{
+    display:grid!important;
+    place-items:center;
+    flex:0 0 44px;
+    width:44px;height:44px;
+    border-radius:14px;
+    background:#f3f5f8;
+    color:#101828;
+    font-size:23px;
+  }
+  .top-right{gap:7px;flex:0 0 auto;}
+  .avatar{width:40px;height:40px;}
+  .logout{min-height:40px;padding:8px 12px;border-radius:12px;}
+  .top-right .theme-toggle{width:40px!important;height:40px!important;}
+
+  /* Main content */
+  .main{margin-left:0!important;min-width:0;width:100%;}
+  .page{
+    width:100%;
+    max-width:none;
+    padding:20px 14px 92px!important;
+  }
+  .page>section>h1,#dashboard>h1,.module h1{font-size:29px!important;line-height:1.08;letter-spacing:-1px;}
+  .subtitle{font-size:13px;line-height:1.45;}
+
+  /* Dashboard / KPI */
+  .cards,.executive-kpis{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:10px!important;
+  }
+  .card,.executive-kpis .card{
+    min-width:0;
+    padding:15px!important;
+    border-radius:18px!important;
+  }
+  .value,.executive-kpis .value{font-size:20px!important;line-height:1.15;overflow-wrap:anywhere;}
+  .label{font-size:9px!important;letter-spacing:.9px;}
+  .grid,.executive-grid,.performance-grid{grid-template-columns:1fr!important;gap:12px!important;}
+
+  /* App-like horizontal tab bars */
+  .master-tabs,.inventory-tabs{
+    margin:16px -14px 13px!important;
+    padding:0 14px 4px!important;
+    overflow-x:auto;
+    scrollbar-width:none;
+    -webkit-overflow-scrolling:touch;
+  }
+  .master-tabs::-webkit-scrollbar,.inventory-tabs::-webkit-scrollbar{display:none;}
+  .master-tab,.inventory-tab{
+    min-height:42px;
+    padding:10px 13px!important;
+    border-radius:13px!important;
+    flex:0 0 auto;
+  }
+
+  /* Toolbars stack cleanly */
+  .master-toolbar,.inventory-toolbar,.integration-toolbar,.user-toolbar,.pos-toolbar{
+    width:100%;
+    padding:0!important;
+    gap:8px!important;
+  }
+  .master-toolbar .pos-search,.inventory-toolbar .pos-search,.pos-search{
+    min-width:0!important;
+    width:100%;
+    flex:1 1 100%;
+    min-height:48px;
+    font-size:16px;
+  }
+  .master-toolbar .btn,.inventory-toolbar .btn,.integration-toolbar .btn,.user-toolbar .btn{
+    min-height:46px;
+  }
+
+  /* Tables become contained cards instead of breaking the page */
+  .table-card,.user-table-wrap,.table-scroll{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+  .data-table,.user-table{min-width:680px;}
+  .data-table th,.data-table td,.user-table th,.user-table td{padding:11px 10px;}
+
+  /* POS: phone-first */
+  .pos-layout{grid-template-columns:1fr!important;gap:12px!important;}
+  .product-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important;max-height:none!important;}
+  .product-btn{min-height:112px;padding:12px!important;border-radius:15px!important;}
+  .product-name{font-size:13px;line-height:1.3;}
+  .product-price{font-size:14px;margin-top:10px;}
+  .cart{position:static!important;}
+  .cart-list{max-height:none!important;}
+  .payment-grid{grid-template-columns:1fr!important;}
+  .pay-input,.select{min-height:48px;font-size:16px;}
+
+  /* Forms */
+  .field input,.field select,.field textarea,
+  .modal .field input,.modal .field select,.modal .field textarea{
+    min-height:50px!important;
+    font-size:16px!important;
+  }
+  .field textarea,.modal .field textarea{min-height:96px!important;}
+
+  /* Modals: compact, scrollable, keyboard friendly */
+  .modal-backdrop{
+    align-items:flex-end!important;
+    padding:0!important;
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+  }
+  .modal{
+    width:100%!important;
+    max-width:none!important;
+    max-height:92vh!important;
+    max-height:92dvh!important;
+    overflow-y:auto!important;
+    border-radius:26px 26px 0 0!important;
+    padding:20px 16px calc(24px + env(safe-area-inset-bottom))!important;
+    box-shadow:0 -20px 55px rgba(15,23,42,.22)!important;
+  }
+  .modal-head{position:sticky;top:-20px;background:#fff;padding:3px 0 14px;z-index:2;}
+  .close{width:42px;height:42px;border-radius:12px;}
+  .master-modal-grid{grid-template-columns:1fr!important;gap:8px!important;}
+  .master-modal-grid .full{grid-column:auto!important;}
+  .modal-actions{position:sticky;bottom:0;background:#fff;padding-top:10px;}
+  .modal-actions .btn{min-height:50px;}
+
+  /* Inventory KPIs */
+  .inventory-kpis,.integration-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important;}
+  .inv-kpi,.integration-card{padding:14px!important;border-radius:17px!important;}
+  .inv-kpi b,.integration-card .big{font-size:19px!important;}
+
+  /* Mobile navigation: Android-style bottom navigation */
+  .sidebar{
+    position:fixed!important;
+    left:0!important;right:0!important;top:auto!important;bottom:0!important;
+    width:100%!important;height:70px!important;
+    padding:6px 8px calc(6px + env(safe-area-inset-bottom))!important;
+    transform:none!important;
+    border-right:0!important;
+    border-top:1px solid rgba(255,255,255,.08);
+    border-radius:18px 18px 0 0;
+    box-shadow:0 -12px 30px rgba(15,23,42,.16);
+    z-index:90;
+  }
+  .side-brand,.sidebar-foot{display:none!important;}
+  .sidebar .nav{
+    height:100%;
+    display:flex!important;
+    align-items:stretch;
+    gap:3px!important;
+    overflow-x:auto;
+    overflow-y:hidden;
+    scrollbar-width:none;
+  }
+  .sidebar .nav::-webkit-scrollbar{display:none;}
+  .sidebar .nav button{
+    min-width:68px;
+    flex:0 0 68px;
+    height:58px;
+    padding:7px 5px!important;
+    border-radius:13px!important;
+    text-align:center!important;
+    font-size:10px!important;
+    line-height:1.15;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    white-space:normal;
+  }
+  .sidebar .nav button.active:before{display:none!important;}
+  .sidebar .nav button.active{background:#202b3e!important;}
+
+  /* Menu button opens a full navigation drawer on top of bottom nav */
+  .sidebar.open{
+    top:0!important;bottom:0!important;left:0!important;right:auto!important;
+    width:min(88vw,330px)!important;height:100%!important;
+    padding:20px 14px!important;
+    border-radius:0 24px 24px 0;
+    transform:none!important;
+    z-index:120;
+  }
+  .sidebar.open .side-brand{display:flex!important;}
+  .sidebar.open .nav{display:grid!important;height:auto;overflow:visible;}
+  .sidebar.open .nav button{width:100%;height:auto;min-width:0;padding:13px!important;text-align:left!important;font-size:13px!important;display:block;}
+  .sidebar.open .nav button.active:before{display:block!important;}
+
+  /* Touch targets */
+  button,a,select{touch-action:manipulation;}
+  button{min-height:44px;}
+}
+
+@media(max-width:430px){
+  .page{padding-left:12px!important;padding-right:12px!important;}
+  .topbar{padding-left:10px!important;padding-right:10px!important;}
+  .cards,.executive-kpis{gap:8px!important;}
+  .card,.executive-kpis .card{padding:13px!important;}
+  .product-grid{gap:7px!important;}
+  .product-btn{min-height:105px;padding:10px!important;}
+  .integration-grid,.inventory-kpis{gap:8px!important;}
+}
+
+@media(min-width:761px){
+  /* Keep desktop spacious and dashboard-like */
+  .page{padding:34px 36px;}
+  .main{margin-left:266px;}
+  .sidebar{display:block;}
+}
+
+</style>
 </head>
 <body>
 
 <section id="auth" class="auth">
   <div class="auth-card">
+    <div class="auth-accent"></div>
     <div class="brand"><div class="mark">T</div><div><b>Tokokula</b><small>Enterprise Point of Sale</small></div></div>
+    <div class="auth-kicker">BUSINESS MANAGEMENT</div>
     <h1>Selamat datang</h1>
-    <p id="authDesc" class="desc">Masuk untuk mengelola bisnis Anda.</p>
+    <p id="authDesc" class="desc">Masuk untuk mengelola bisnis Anda dengan aman.</p>
     <div id="authError" class="error hidden"></div>
 
     <form id="loginForm">
@@ -1347,7 +1578,7 @@ body.tk-dark .topbar{background:rgba(10,16,27,.84);border-color:#1d2635}.tk-dark
         </div>
       </div>
       <div class="field"><label>Email</label><input id="email" type="email" autocomplete="email" placeholder="nama@email.com" required></div>
-      <div class="field"><label>Password</label><input id="password" type="password" autocomplete="current-password" placeholder="••••••••" required></div>
+      <div class="field"><label>Password</label><div class="password-wrap"><input id="password" type="password" autocomplete="current-password" placeholder="Masukkan password" required><button id="passwordToggle" class="password-toggle" type="button" aria-label="Tampilkan password" aria-pressed="false">◉</button></div></div>
       <button id="loginBtn" class="btn primary" type="submit">Masuk ke Tokokula</button>
     </form>
 
@@ -1356,6 +1587,8 @@ body.tk-dark .topbar{background:rgba(10,16,27,.84);border-color:#1d2635}.tk-dark
       <span class="google-icon">G</span>
       <span>Lanjut dengan Google</span>
     </button>
+
+    <div class="security-note"><span class="security-dot"></span><span>Koneksi aman • Data bisnis terlindungi</span></div>
 
     <button id="registerToggle" type="button"
       style="width:100%;margin-top:12px;border:0;background:transparent;color:#4b5563;font-weight:700;padding:10px">
@@ -1705,6 +1938,19 @@ const supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY
   auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}
 });
 
+const passwordToggle=document.getElementById('passwordToggle');
+const passwordInput=document.getElementById('password');
+if(passwordToggle&&passwordInput){
+  passwordToggle.addEventListener('click',()=>{
+    const visible=passwordInput.type==='text';
+    passwordInput.type=visible?'password':'text';
+    passwordToggle.setAttribute('aria-pressed',String(!visible));
+    passwordToggle.setAttribute('aria-label',visible?'Tampilkan password':'Sembunyikan password');
+    passwordToggle.textContent=visible?'◉':'◌';
+  });
+}
+
+
 /* ================= API CLIENT ================= */
 const API={
   async rpc(name,params={}){
@@ -1764,7 +2010,51 @@ const $=id=>document.getElementById(id);
 const rupiah=v=>new Intl.NumberFormat('id-ID',{style:'currency',currency:'IDR',maximumFractionDigits:0}).format(Number(v||0));
 const iso=d=>d.toISOString().slice(0,10);
 function monthRange(){const n=new Date();return{from:iso(new Date(n.getFullYear(),n.getMonth(),1)),to:iso(n)}}
-function toast(msg){$('toast').textContent=msg;$('toast').classList.remove('hidden');clearTimeout(toast.t);toast.t=setTimeout(()=>$('toast').classList.add('hidden'),3500)}
+/* ================= BUSINESS ERROR MESSAGES ================= */
+function businessError(error,fallback='Terjadi kendala. Silakan coba lagi.'){
+  const raw=String(typeof error==='string'?error:(error?.message||error?.details||error?.hint||'' )).trim();
+  const code=String(error?.code||'').toUpperCase();
+  const text=raw.toLowerCase();
+  if(!raw)return fallback;
+
+  const map=[
+    [['USER_LIMIT_REACHED','user_limit_reached'], 'Batas pengguna tercapai. Paket Anda sudah mencapai jumlah pengguna yang diizinkan.'],
+    [['PRODUCT_LIMIT_REACHED','product_limit_reached'], 'Batas produk tercapai. Paket Anda sudah mencapai jumlah produk yang diizinkan.'],
+    [['OUTLET_LIMIT_REACHED','outlet_limit_reached'], 'Batas outlet tercapai. Paket Anda sudah mencapai jumlah outlet yang diizinkan.'],
+    [['WAREHOUSE_LIMIT_REACHED','warehouse_limit_reached'], 'Batas warehouse tercapai. Paket Anda sudah mencapai jumlah warehouse yang diizinkan.'],
+    [['TRANSACTION_LIMIT_REACHED','transaction_limit_reached'], 'Batas transaksi paket tercapai. Silakan upgrade paket untuk melanjutkan.'],
+    [['FEATURE_NOT_AVAILABLE','FEATURE_LIMIT_REACHED','feature_not_available'], 'Fitur ini belum tersedia pada paket Anda. Silakan upgrade paket untuk menggunakannya.'],
+    [['PERMISSION_DENIED','permission_denied','insufficient_privilege','42501'], 'Anda tidak memiliki izin untuk melakukan tindakan ini.'],
+    [['AUTHENTICATION_REQUIRED','not authenticated','jwt expired','jwt malformed'], 'Sesi Anda sudah berakhir. Silakan masuk kembali.'],
+    [['INVALID_LOGIN_CREDENTIALS','invalid login credentials'], 'Email atau kata sandi tidak sesuai.'],
+    [['EMAIL_NOT_CONFIRMED','email not confirmed'], 'Email belum diverifikasi. Silakan cek email Anda terlebih dahulu.'],
+    [['USER_ALREADY_EXISTS','user already registered','already registered'], 'Email tersebut sudah terdaftar. Silakan gunakan email lain atau masuk dengan akun yang sudah ada.'],
+    [['23505','duplicate key','already exists'], 'Data tersebut sudah ada. Silakan gunakan nilai yang berbeda.'],
+    [['23503','foreign key','violates foreign key'], 'Data terkait masih digunakan sehingga tindakan ini tidak dapat dilakukan.'],
+    [['23514','check constraint'], 'Data yang dimasukkan belum memenuhi aturan sistem. Periksa kembali isinya.'],
+    [['23502','not-null','null value in column'], 'Ada data wajib yang belum diisi. Periksa kembali formulir.'],
+    [['42703','column "','column ', 'does not exist'], 'Terjadi kendala pada konfigurasi data. Silakan coba lagi. Jika masalah berlanjut, hubungi administrator.'],
+    [['42P01','relation ', 'does not exist'], 'Data sistem belum siap sepenuhnya. Silakan coba lagi atau hubungi administrator.'],
+    [['PGRST','postgrest','schema cache'], 'Layanan data sedang mengalami kendala. Silakan coba lagi beberapa saat lagi.'],
+    [['network','failed to fetch','fetch failed','networkerror'], 'Koneksi ke server bermasalah. Periksa internet Anda lalu coba lagi.'],
+    [['rate limit','too many requests'], 'Terlalu banyak percobaan. Tunggu sebentar lalu coba lagi.'],
+    [['insufficient stock','stok tidak cukup','stock not enough'], 'Stok tidak mencukupi untuk melanjutkan transaksi.'],
+    [['shift belum','belum ada shift','shift is not open','no open shift'], 'Kasir belum memiliki shift yang aktif. Buka shift terlebih dahulu.'],
+  ];
+  for(const [keys,msg] of map){
+    if(keys.some(k=>code===String(k).toUpperCase() || text.includes(String(k).toLowerCase()))) return msg;
+  }
+  // Jangan tampilkan detail SQL/PostgREST ke pengguna.
+  if(/\b(sql|postgres|postgrest|supabase|rpc|relation|column|query failed|syntax error|stack trace|internal server error)\b/i.test(raw)){
+    return fallback;
+  }
+  return raw;
+}
+
+function toast(msg){
+  $('toast').textContent=businessError(msg,'Terjadi kendala. Silakan coba lagi.');
+  $('toast').classList.remove('hidden');clearTimeout(toast.t);toast.t=setTimeout(()=>$('toast').classList.add('hidden'),3500)
+}
 function authError(msg){$('authError').textContent=msg;$('authError').classList.remove('hidden')}
 function esc(v){return String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
 
@@ -1825,7 +2115,7 @@ async function login(email,password){
       localStorage.removeItem('tokokula_pending_setup');
     }
     await boot();
-  }catch(e){console.error(e);authError(e.message||'Login gagal.')}
+  }catch(e){console.error(e);authError(businessError(e,'Login gagal.'))}
   finally{$('loginBtn').disabled=false;$('loginBtn').textContent=authMode==='register'?'Daftar ke Tokokula':'Masuk ke Tokokula'}
 }
 
@@ -1899,7 +2189,7 @@ async function register(email,password,name){
     }
   }catch(e){
     console.error(e);
-    authError(e.message||'Pendaftaran gagal.');
+    authError(businessError(e,'Pendaftaran gagal.'));
   }finally{
     $('loginBtn').disabled=false;
     $('loginBtn').textContent=authMode==='register'?'Daftar & Buat Toko':'Masuk ke Tokokula';
@@ -1923,7 +2213,7 @@ async function loginWithGoogle(){
     if(error) throw error;
   }catch(e){
     console.error('Google OAuth:',e);
-    authError(e.message||'Login dengan Google gagal.');
+    authError(businessError(e,'Login dengan Google gagal.'));
     btn.disabled=false;
     btn.innerHTML='<span class="google-icon">G</span><span>Lanjut dengan Google</span>';
   }
@@ -1939,7 +2229,7 @@ async function boot(){
     await loadSubscription();
     await loadDashboard();
     await permissionGuards();
-  }catch(e){console.error(e);toast('Gagal memuat dashboard: '+(e.message||'Periksa schema/RLS Supabase.'))}
+  }catch(e){console.error(e);toast(businessError(e,'Dashboard belum dapat dimuat. Silakan coba lagi.'))}
 }
 async function loadSubscription(){
   const s=await API.currentSubscription();State.subscription=s;
@@ -2004,7 +2294,7 @@ async function loadInventory(){
     const md=await API.masterList('all');
     InventoryState.products=md?.products||[];InventoryState.warehouses=md?.warehouses||[];
     fillInventorySelectors();await loadInventoryOverview();await loadInventoryHistory();
-  }catch(e){console.error(e);toast(e.message||'Gagal memuat Inventory.')}
+  }catch(e){console.error(e);toast(businessError(e,'Gagal memuat Inventory.'))}
 }
 function fillInventorySelectors(){
   const wh=InventoryState.warehouses,pr=InventoryState.products;
@@ -2045,7 +2335,7 @@ async function loadInventoryHistory(){
     const wh=$('movementWarehouse').value||null;
     InventoryState.movements=await API.inventoryMovements(wh,null,100)||[];
     $('movementBody').innerHTML=InventoryState.movements.map(m=>`<tr><td>${new Date(m.created_at).toLocaleString('id-ID')}</td><td><b>${esc(m.product_name)}</b><span class="muted">${esc(m.sku)}</span></td><td>${esc(m.warehouse_name)}</td><td><span class="status-pill">${esc(invTypeLabel[m.movement_type]||m.movement_type)}</span></td><td><b>${fmtQty(m.quantity)}</b></td><td>${esc(m.reference_type||'—')}</td><td>${esc(m.note||'—')}</td></tr>`).join('')||emptyRow(7);
-  }catch(e){console.error(e);$('movementBody').innerHTML=`<tr><td colspan="7" style="padding:20px;color:#b91c1c">${esc(e.message||'Gagal memuat mutasi.')}</td></tr>`}
+  }catch(e){console.error(e);$('movementBody').innerHTML=`<tr><td colspan="7" style="padding:20px;color:#b91c1c">${esc(businessError(e,'Gagal memuat mutasi.'))}</td></tr>`}
 }
 async function submitInventoryAdjust(e){
   e.preventDefault();
@@ -2053,7 +2343,7 @@ async function submitInventoryAdjust(e){
     const result=await API.inventoryAdjust($('adjustWarehouse').value,$('adjustReason').value,[{product_id:$('adjustProduct').value,quantity_delta:Number($('adjustDelta').value)}],$('adjustNote').value||null);
     toast(`Penyesuaian ${result.adjustment_no||''} berhasil.`);
     $('adjustForm').reset();await loadInventory();
-  }catch(e){toast(e.message||'Penyesuaian gagal.')}
+  }catch(e){toast(businessError(e,'Penyesuaian gagal.'))}
 }
 async function submitInventoryTransfer(e){
   e.preventDefault();
@@ -2063,7 +2353,7 @@ async function submitInventoryTransfer(e){
     await API.inventoryCompleteTransfer(r.transfer_id);
     toast(`Transfer ${r.transfer_no||''} selesai.`);
     $('transferForm').reset();await loadInventoryTransfers();await loadInventory();
-  }catch(e){toast(e.message||'Transfer gagal.')}
+  }catch(e){toast(businessError(e,'Transfer gagal.'))}
 }
 async function loadInventoryTransfers(){
   try{
@@ -2078,7 +2368,7 @@ async function submitInventoryOpname(e){
     await API.inventoryCompleteOpname(r.opname_id);
     toast(`Opname ${r.opname_no||''} selesai.`);
     $('opnameForm').reset();await loadInventoryOpnames();await loadInventory();
-  }catch(e){toast(e.message||'Opname gagal.')}
+  }catch(e){toast(businessError(e,'Opname gagal.'))}
 }
 async function loadInventoryOpnames(){
   try{
@@ -2129,7 +2419,7 @@ async function loadCustomersModule(){
     $('custNew').textContent=Number(s.new_customers||0).toLocaleString('id-ID');
     $('custPoints').textContent=Number(s.total_points||IntegrationState.customers.reduce((a,c)=>a+Number(c.points||0),0)).toLocaleString('id-ID');
     renderCustomers();
-  }catch(e){console.error(e);$('customerBody').innerHTML=`<tr><td colspan="4" class="integration-error">${esc(e.message||'Gagal memuat pelanggan.')}</td></tr>`}
+  }catch(e){console.error(e);$('customerBody').innerHTML=`<tr><td colspan="4" class="integration-error">${esc(businessError(e,'Gagal memuat pelanggan.'))}</td></tr>`}
 }
 function renderCustomers(){
   const q=($('customerSearch').value||'').toLowerCase().trim();
@@ -2144,7 +2434,7 @@ async function loadPurchaseModule(){
     fillSelect('purchaseOutlet',IntegrationState.outlets,'Pilih outlet...');
     fillSelect('purchaseWarehouse',IntegrationState.warehouses,'Pilih warehouse...');
     fillSelect('purchaseProduct',IntegrationState.products,'Pilih produk...');
-  }catch(e){toast(e.message||'Gagal memuat data purchase.')}
+  }catch(e){toast(businessError(e,'Gagal memuat data purchase.'))}
 }
 async function submitPurchase(e){
   e.preventDefault();
@@ -2157,10 +2447,10 @@ async function submitPurchase(e){
     const id=r.purchase_order_id||r.id;
     $('confirmPurchaseBtn').onclick=async()=>{
       try{await API.confirmPurchaseOrder(id);toast('Purchase Order dikonfirmasi.');$('purchaseResult').innerHTML='<div class="integration-card">Purchase Order berhasil dikonfirmasi.</div>'}
-      catch(err){toast(err.message||'Konfirmasi gagal.')}
+      catch(err){toast(businessError(err,'Konfirmasi gagal.'))}
     };
     $('purchaseForm').reset();
-  }catch(e){toast(e.message||'Purchase Order gagal dibuat.')}
+  }catch(e){toast(businessError(e,'Purchase Order gagal dibuat.'))}
   finally{btn.disabled=false;btn.textContent='Buat Purchase Order'}
 }
 
@@ -2170,7 +2460,7 @@ async function loadFinanceModule(){
     const r=range30(),f=await API.financialSnapshot(r.from,r.to)||{};
     const rows=[['Revenue',f.revenue],['HPP',f.cogs],['Expense',f.expense],['Laba Bersih',f.net_profit],['Kas',f.cash],['Bank / E-Wallet',f.bank_ewallet],['Piutang',f.receivable],['Hutang',f.payable]];
     $('financeCards').innerHTML=rows.map(x=>`<div class="integration-card"><div class="label">${x[0]}</div><div class="big">${rupiah(x[1])}</div></div>`).join('');
-  }catch(e){$('financeCards').innerHTML=`<div class="integration-error">${esc(e.message||'Gagal memuat finance.')}</div>`}
+  }catch(e){$('financeCards').innerHTML=`<div class="integration-error">${esc(businessError(e,'Gagal memuat finance.'))}</div>`}
 }
 
 async function loadReportsModule(){
@@ -2197,7 +2487,7 @@ async function loadReportsModule(){
     const cs=Array.isArray(cashier)?cashier:cashier?.data||[];
     $('cashierBody').innerHTML=cs.map(x=>`<tr><td>${esc(x.cashier_name||x.full_name||x.name||'—')}</td><td>${Number(x.sales_count||x.transaction_count||x.transactions||0).toLocaleString('id-ID')}</td><td>${rupiah(x.revenue||x.total_sales||x.sales||x.total||0)}</td></tr>`).join('')||`<tr><td colspan="3" class="integration-message">Belum ada data.</td></tr>`;
   }catch(e){
-    $('reportCards').innerHTML=`<div class="integration-error">${esc(e.message||'Gagal memuat laporan.')}</div>`;
+    $('reportCards').innerHTML=`<div class="integration-error">${esc(businessError(e,'Gagal memuat laporan.'))}</div>`;
   }
 }
 
@@ -2210,7 +2500,7 @@ async function loadMasterData(){
     MasterState.categories=r?.categories||[];MasterState.brands=r?.brands||[];MasterState.units=r?.units||[];
     MasterState.suppliers=r?.suppliers||[];MasterState.products=r?.products||[];MasterState.warehouses=r?.warehouses||[];
     renderMasterProducts();renderMasterSimple();
-  }catch(e){console.error(e);toast(e.message||'Gagal memuat Master Data.')}
+  }catch(e){console.error(e);toast(businessError(e,'Gagal memuat Master Data.'))}
 }
 function renderMasterProducts(){
   const q=($('masterProductSearch')?.value||'').toLowerCase().trim();
@@ -2233,7 +2523,7 @@ function switchMasterTab(tab){
 }
 function showMasterModal(title,formHtml,submitFn){
   $('masterModalTitle').textContent=title;$('masterModalError').classList.add('hidden');$('masterForm').innerHTML=formHtml;$('masterModal').classList.remove('hidden');
-  $('masterForm').onsubmit=async e=>{e.preventDefault();try{await submitFn();closeMasterModal();await loadMasterData();toast('Data berhasil disimpan.')}catch(err){console.error(err);$('masterModalError').textContent=err.message||'Gagal menyimpan data.';$('masterModalError').classList.remove('hidden')}};
+  $('masterForm').onsubmit=async e=>{e.preventDefault();try{await submitFn();closeMasterModal();await loadMasterData();toast('Data berhasil disimpan.')}catch(err){console.error(err);$('masterModalError').textContent=businessError(err,'Gagal menyimpan data.');$('masterModalError').classList.remove('hidden')}};
 }
 function closeMasterModal(){$('masterModal').classList.add('hidden')}
 function addCategory(){
@@ -2299,7 +2589,7 @@ async function loadUsers(){
     renderUsers();
   }catch(e){
     console.error(e);
-    $('usersBody').innerHTML=`<tr><td colspan="5" style="color:#b91c1c;padding:20px">${esc(e.message||'Gagal memuat user.')}</td></tr>`;
+    $('usersBody').innerHTML=`<tr><td colspan="5" style="color:#b91c1c;padding:20px">${esc(businessError(e,'Gagal memuat user.'))}</td></tr>`;
   }
 }
 function renderUsers(){
@@ -2360,7 +2650,7 @@ async function submitInvite(e){
     await loadUsers();
   }catch(e){
     console.error(e);
-    $('modalError').textContent=e.message||'Gagal membuat undangan.';
+    $('modalError').textContent=businessError(e,'Gagal membuat undangan.');
     $('modalError').classList.remove('hidden');
   }finally{
     $('inviteSubmit').disabled=false;
@@ -2374,13 +2664,13 @@ async function editUser(id){
   const roleCode=prompt('Kode role (contoh: cashier/admin/manager):',u.role?.code||'');if(roleCode===null)return;
   const outletId=prompt('ID outlet (kosong = pertahankan):',u.outlet?.id||'');if(outletId===null)return;
   try{await API.updateUser(id,name,phone,u.status,roleCode,outletId||null);toast('User berhasil diperbarui.');await loadUsers()}
-  catch(e){toast(e.message||'Gagal memperbarui user.')}
+  catch(e){toast(businessError(e,'Gagal memperbarui user.'))}
 }
 async function revokeUser(id){
   const u=UserState.users.find(x=>x.id===id);if(!u)return;
   if(!confirm(`Nonaktifkan ${u.full_name||u.email}?`))return;
   try{await API.revokeUser(id);toast('User dinonaktifkan.');await loadUsers()}
-  catch(e){toast(e.message||'Gagal menonaktifkan user.')}
+  catch(e){toast(businessError(e,'Gagal menonaktifkan user.'))}
 }
 
 /* ================= POS FRONTEND ================= */
@@ -2418,8 +2708,8 @@ async function loadPOS(){
     renderCart();
   }catch(e){
     console.error(e);
-    $('productGrid').innerHTML=`<div style="grid-column:1/-1;color:#b91c1c;padding:15px">${esc(e.message||'POS gagal dimuat.')}</div>`;
-    toast(e.message||'POS gagal dimuat.');
+    $('productGrid').innerHTML=`<div style="grid-column:1/-1;color:#b91c1c;padding:15px">${esc(businessError(e,'POS gagal dimuat.'))}</div>`;
+    toast(businessError(e,'POS gagal dimuat.'));
   }
 }
 
@@ -2497,7 +2787,7 @@ async function completeSale(){
     const result=await API.completeSale(requestId,State.outlet.id,State.warehouse.id,$('customerSelect').value||null,items,payments,0,'Tokokula POS Web');
     toast(`Transaksi berhasil • ${result.invoice_no} • ${rupiah(result.total)} • Kembali ${rupiah(result.change)}`);
     State.cart=[];$('paymentRef').value='';renderCart();await loadProducts();
-  }catch(e){console.error(e);toast(e.message||'Transaksi gagal.')}
+  }catch(e){console.error(e);toast(businessError(e,'Transaksi gagal.'))}
   finally{$('completeSale').disabled=false;$('completeSale').textContent='Bayar & Selesaikan'}
 }
 
