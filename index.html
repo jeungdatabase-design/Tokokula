@@ -344,7 +344,11 @@ async function register(email,password,name){
     const {data,error}=await supabaseClient.auth.signUp({
       email,
       password,
-      options:{data:{full_name:name}}
+      options:{data:{
+        full_name:name,
+        organization_name:setupData.organizationName,
+        outlet_name:setupData.outletName || 'Outlet Utama'
+      }}
     });
     if(error) throw error;
 
