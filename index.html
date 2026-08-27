@@ -167,7 +167,7 @@ h1{margin:0;font-size:28px;letter-spacing:-.8px}.desc{color:var(--muted);font-si
 
       <section id="module" class="module hidden">
         <div id="genericModule">
-          <div id="genericHeader"><h1 id="moduleTitle">Module</h1><div class="subtitle">Modul Tokokula</div></div>
+          <div id="genericHeader" class="hidden"><h1 id="moduleTitle">Module</h1><div class="subtitle">Modul Tokokula</div></div>
 
           <div id="customersModule" class="hidden">
             <h1>Customers + Loyalty</h1>
@@ -920,7 +920,8 @@ async function loadFinanceModule(){
 }
 
 async function loadReportsModule(){
-  const from=$('reportFrom').value||range30().from,to=$('reportTo').value||todayISO();
+  const rr=range30(); if(!$('reportFrom').value)$('reportFrom').value=rr.from; if(!$('reportTo').value)$('reportTo').value=rr.to;
+  const from=$('reportFrom').value,to=$('reportTo').value;
   try{
     setLoading('reportCards');setLoading('topProductsBody');setLoading('cashierBody');
     const [sales,top,cashier,inventory]=await Promise.all([
@@ -928,13 +929,13 @@ async function loadReportsModule(){
     ]);
     const s=Array.isArray(sales)?sales[0]:sales||{},inv=Array.isArray(inventory)?inventory[0]:inventory||{};
     $('reportCards').innerHTML=[
-      ['Penjualan',s.total_sales??s.sales??0],['Transaksi',s.transaction_count??s.total_transactions??0],
+      ['Penjualan',s.net_sales??s.gross_sales??s.total_sales??s.sales??0],['Transaksi',s.sales_count??s.transaction_count??s.total_transactions??0],
       ['Average Basket',rupiah(s.average_transaction??s.avg_transaction??0)],['SKU Stok',inv.total_sku??inv.sku_count??0]
-    ].map(x=>`<div class="integration-card"><div class="label">${x[0]}</div><div class="big">${typeof x[1]==='number'&&x[0]!=='SKU Stok'&&x[0]!=='Transaksi'?rupiah(x[1]):Number(x[1]||0).toLocaleString('id-ID')}</div></div>`).join('');
+    ].map(x=>`<div class="integration-card"><div class="label">${x[0]}</div><div class="big">${x[0]==='Penjualan'||x[0]==='Average Basket'?rupiah(x[1]):Number(x[1]||0).toLocaleString('id-ID')}</div></div>`).join('');
     const tp=Array.isArray(top)?top:top?.data||[];
     $('topProductsBody').innerHTML=tp.map(x=>`<tr><td><b>${esc(x.product_name||x.name||'—')}</b></td><td>${Number(x.quantity||x.qty||0).toLocaleString('id-ID')}</td><td>${rupiah(x.sales||x.revenue||x.total||0)}</td></tr>`).join('')||`<tr><td colspan="3" class="integration-message">Belum ada data.</td></tr>`;
     const cs=Array.isArray(cashier)?cashier:cashier?.data||[];
-    $('cashierBody').innerHTML=cs.map(x=>`<tr><td>${esc(x.cashier_name||x.full_name||x.name||'—')}</td><td>${Number(x.transaction_count||x.transactions||0).toLocaleString('id-ID')}</td><td>${rupiah(x.total_sales||x.sales||x.total||0)}</td></tr>`).join('')||`<tr><td colspan="3" class="integration-message">Belum ada data.</td></tr>`;
+    $('cashierBody').innerHTML=cs.map(x=>`<tr><td>${esc(x.cashier_name||x.full_name||x.name||'—')}</td><td>${Number(x.sales_count||x.transaction_count||x.transactions||0).toLocaleString('id-ID')}</td><td>${rupiah(x.revenue||x.total_sales||x.sales||x.total||0)}</td></tr>`).join('')||`<tr><td colspan="3" class="integration-message">Belum ada data.</td></tr>`;
   }catch(e){
     $('reportCards').innerHTML=`<div class="integration-error">${esc(e.message||'Gagal memuat laporan.')}</div>`;
   }
