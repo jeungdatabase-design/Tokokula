@@ -39,6 +39,12 @@ h1{margin:0;font-size:28px;letter-spacing:-.8px}.desc{color:var(--muted);font-si
 .user-badge{display:inline-block;padding:5px 8px;border-radius:999px;background:#f3f4f6;font-size:11px;font-weight:800}.user-actions{display:flex;gap:6px;flex-wrap:wrap}.mini{border:1px solid var(--line);background:#fff;border-radius:9px;padding:7px 9px;font-size:11px;font-weight:750}.danger-btn{color:#b91c1c}
 .modal-backdrop{position:fixed;inset:0;background:rgba(15,23,42,.45);display:grid;place-items:center;padding:18px;z-index:80}.modal{width:min(100%,480px);background:#fff;border-radius:22px;padding:22px;box-shadow:0 25px 80px rgba(0,0,0,.25)}.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}.close{border:0;background:#f3f4f6;border-radius:9px;width:34px;height:34px}
 @media(max-width:700px){.user-table{min-width:720px}.user-table-wrap{overflow:auto}.user-table th,.user-table td{padding:10px 8px}.user-toolbar .btn{width:auto}}
+
+.master-tabs{display:flex;gap:6px;overflow:auto;margin:20px 0 14px;padding-bottom:2px}.master-tab{border:1px solid var(--line);background:#fff;color:#475569;border-radius:11px;padding:10px 14px;font-weight:750;white-space:nowrap}.master-tab.active{background:var(--dark);color:#fff;border-color:var(--dark)}
+.master-toolbar{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin:0 0 14px}.master-toolbar .pos-search{min-width:240px}.dark-btn{background:var(--dark);color:#fff}.light-btn{background:#fff;border:1px solid var(--line)}.table-card{padding:0;overflow:hidden}.table-scroll{overflow:auto}.data-table{width:100%;border-collapse:collapse;min-width:760px}.data-table th,.data-table td{padding:13px 12px;border-bottom:1px solid var(--line);text-align:left;font-size:13px}.data-table th{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.45px;background:#fafbfc}.data-table td .muted{display:block;color:var(--muted);font-size:11px;margin-top:3px}.status-pill{display:inline-block;padding:5px 8px;border-radius:999px;background:#f1f5f9;font-size:11px;font-weight:800}.status-pill.ok{background:#ecfdf5;color:#166534}.action-btn{border:1px solid var(--line);background:#fff;border-radius:8px;padding:7px 9px;font-size:11px;font-weight:750}.action-btn+.action-btn{margin-left:5px}
+
+.master-modal-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.master-modal-grid .full{grid-column:1/-1}.modal .field{margin-bottom:11px}.modal .field input,.modal .field textarea,.modal .field select{width:100%;padding:11px;border:1px solid var(--line);border-radius:11px;outline:0}.modal .field textarea{min-height:80px;resize:vertical}.modal-actions{display:flex;gap:8px;margin-top:15px}.modal-actions .btn{flex:1}
+@media(max-width:600px){.master-modal-grid{grid-template-columns:1fr}.master-modal-grid .full{grid-column:auto}.master-toolbar .btn{width:auto}}
 </style>
 </head>
 <body>
@@ -106,6 +112,7 @@ h1{margin:0;font-size:28px;letter-spacing:-.8px}.desc{color:var(--muted);font-si
       <button data-page="purchases" data-permission="inventory.view">Purchase</button>
       <button data-page="finance" data-permission="settings.view">Finance</button>
       <button data-page="reports" data-permission="reports.view">Reports</button>
+      <button data-page="master" data-permission="product.manage">Master Data</button>
       <button data-page="settings" data-permission="settings.view">Settings</button>
     </nav>
   </aside>
@@ -135,6 +142,51 @@ h1{margin:0;font-size:28px;letter-spacing:-.8px}.desc{color:var(--muted);font-si
         <div id="genericModule">
           <h1 id="moduleTitle">Module</h1><div class="subtitle">Modul Tokokula</div>
           <div class="card module-box">Frontend module siap dihubungkan ke engine backend.</div>
+        </div>
+
+        <div id="masterModule" class="hidden">
+          <h1>Master Data</h1>
+          <div class="subtitle">Kelola produk, kategori, brand, unit, supplier, dan stok awal.</div>
+
+          <div class="master-tabs">
+            <button class="master-tab active" data-master-tab="products">Produk</button>
+            <button class="master-tab" data-master-tab="categories">Kategori</button>
+            <button class="master-tab" data-master-tab="brands">Brand</button>
+            <button class="master-tab" data-master-tab="units">Unit</button>
+            <button class="master-tab" data-master-tab="suppliers">Supplier</button>
+          </div>
+
+          <div id="master-products" class="master-panel">
+            <div class="master-toolbar">
+              <input id="masterProductSearch" class="pos-search" placeholder="Cari produk, SKU, barcode...">
+              <button class="btn dark-btn" id="addProductBtn">+ Produk</button>
+              <button class="btn light-btn" id="reloadMasterBtn">↻ Refresh</button>
+            </div>
+            <div class="card table-card"><div class="table-scroll"><table class="data-table">
+              <thead><tr><th>Produk</th><th>SKU / Barcode</th><th>Kategori</th><th>Harga Jual</th><th>Stok Min.</th><th>Status</th><th>Aksi</th></tr></thead>
+              <tbody id="masterProductsBody"></tbody>
+            </table></div></div>
+          </div>
+
+          <div id="master-categories" class="master-panel hidden">
+            <div class="master-toolbar"><div class="subtitle">Kelompok produk untuk pencarian dan laporan.</div><button class="btn dark-btn" id="addCategoryBtn">+ Kategori</button></div>
+            <div class="card table-card"><div class="table-scroll"><table class="data-table"><thead><tr><th>Nama</th><th>Kode</th><th>Deskripsi</th><th>Status</th></tr></thead><tbody id="masterCategoriesBody"></tbody></table></div></div>
+          </div>
+
+          <div id="master-brands" class="master-panel hidden">
+            <div class="master-toolbar"><div class="subtitle">Brand/merek produk.</div><button class="btn dark-btn" id="addBrandBtn">+ Brand</button></div>
+            <div class="card table-card"><div class="table-scroll"><table class="data-table"><thead><tr><th>Nama</th><th>Kode</th><th>Status</th></tr></thead><tbody id="masterBrandsBody"></tbody></table></div></div>
+          </div>
+
+          <div id="master-units" class="master-panel hidden">
+            <div class="master-toolbar"><div class="subtitle">Satuan penjualan dan stok.</div><button class="btn dark-btn" id="addUnitBtn">+ Unit</button></div>
+            <div class="card table-card"><div class="table-scroll"><table class="data-table"><thead><tr><th>Nama</th><th>Simbol</th></tr></thead><tbody id="masterUnitsBody"></tbody></table></div></div>
+          </div>
+
+          <div id="master-suppliers" class="master-panel hidden">
+            <div class="master-toolbar"><div class="subtitle">Data pemasok barang.</div><button class="btn dark-btn" id="addSupplierBtn">+ Supplier</button></div>
+            <div class="card table-card"><div class="table-scroll"><table class="data-table"><thead><tr><th>Nama</th><th>Kode</th><th>Kontak</th><th>Email</th><th>Status</th></tr></thead><tbody id="masterSuppliersBody"></tbody></table></div></div>
+          </div>
         </div>
 
         <div id="usersModule" class="hidden">
@@ -203,6 +255,13 @@ h1{margin:0;font-size:28px;letter-spacing:-.8px}.desc{color:var(--muted);font-si
   </main>
 </section>
 
+<div id="masterModal" class="modal-backdrop hidden">
+  <div class="modal">
+    <div class="modal-head"><b id="masterModalTitle">Tambah Data</b><button id="closeMasterModal" class="close">×</button></div>
+    <div id="masterModalError" class="error hidden"></div>
+    <form id="masterForm"></form>
+  </div>
+</div>
 <div id="userModal" class="modal-backdrop hidden">
   <div class="modal">
     <div class="modal-head"><b id="modalTitle">Undang User</b><button id="closeModal" class="close">×</button></div>
@@ -258,7 +317,15 @@ const API={
   receivePurchaseOrder:(id,items,note=null)=>API.rpc('purchase_receive_order',{p_purchase_order_id:id,p_items:items,p_note:note}),
   paySupplier:(id,amount,method,referenceNo=null,note=null)=>API.rpc('purchase_pay_supplier',{p_payable_id:id,p_amount:amount,p_method:method,p_reference_no:referenceNo,p_note:note}),
   openShift:(outletId,openingCash=0,note=null)=>API.rpc('pos_open_shift',{p_outlet_id:outletId,p_opening_cash:openingCash,p_note:note}),
-  completeSale:(requestId,outletId,warehouseId,customerId,items,payments,discount=0,note=null)=>API.rpc('pos_complete_sale',{p_request_id:requestId,p_outlet_id:outletId,p_warehouse_id:warehouseId,p_customer_id:customerId,p_items:items,p_payments:payments,p_discount:discount,p_note:note})
+  completeSale:(requestId,outletId,warehouseId,customerId,items,payments,discount=0,note=null)=>API.rpc('pos_complete_sale',{p_request_id:requestId,p_outlet_id:outletId,p_warehouse_id:warehouseId,p_customer_id:customerId,p_items:items,p_payments:payments,p_discount:discount,p_note:note}),
+  masterList:(type='all')=>API.rpc('master_data_list',{p_type:type}),
+  createCategory:(name,code='',description='')=>API.rpc('master_data_create_category',{p_name:name,p_code:code,p_description:description}),
+  createBrand:(name,code='')=>API.rpc('master_data_create_brand',{p_name:name,p_code:code}),
+  createUnit:(name,symbol)=>API.rpc('master_data_create_unit',{p_name:name,p_symbol:symbol}),
+  createSupplier:(name,code='',phone='',email='',address='')=>API.rpc('master_data_create_supplier',{p_name:name,p_code:code,p_phone:phone,p_email:email,p_address:address}),
+  createProduct:(sku,name,cost,selling,category,brand,unit,barcode,minStock,tax,description,image)=>API.rpc('master_data_create_product',{p_sku:sku,p_name:name,p_cost_price:cost,p_selling_price:selling,p_category_id:category||null,p_brand_id:brand||null,p_unit_id:unit||null,p_barcode:barcode||null,p_min_stock:minStock,p_tax_rate:tax,p_description:description||null,p_image_url:image||null}),
+  updateProduct:(id,sku,name,cost,selling,category,brand,unit,barcode,minStock,tax,description,image,active=true)=>API.rpc('master_data_update_product',{p_product_id:id,p_sku:sku,p_name:name,p_cost_price:cost,p_selling_price:selling,p_category_id:category||null,p_brand_id:brand||null,p_unit_id:unit||null,p_barcode:barcode||null,p_min_stock:minStock,p_tax_rate:tax,p_description:description||null,p_image_url:image||null,p_is_active:active}),
+  openingStock:(product,warehouse,quantity,note='')=>API.rpc('master_data_set_opening_stock',{p_product_id:product,p_warehouse_id:warehouse,p_quantity:quantity,p_note:note})
 };
 
 const State={session:null,user:null,subscription:null,outlet:null,warehouse:null,products:[],customers:[],cart:[]};
@@ -451,13 +518,95 @@ function page(name){
   }else{
     $('dashboard').classList.add('hidden');$('module').classList.remove('hidden');
     $('moduleTitle').textContent=titles[name]||name;
-    $('genericModule').classList.toggle('hidden',name==='pos'||name==='settings'&&false);
+    $('genericModule').classList.toggle('hidden',name==='pos'||name==='settings'||name==='master');
     $('posModule').classList.toggle('hidden',name!=='pos');
     $('usersModule').classList.toggle('hidden',name!=='settings');
+    $('masterModule').classList.toggle('hidden',name!=='master');
     if(name==='pos') loadPOS();
     if(name==='settings') loadUsers();
+    if(name==='master') loadMasterData();
   }
   $('topTitle').textContent=titles[name]||name;
+}
+
+/* ================= MASTER DATA ================= */
+let MasterState={categories:[],brands:[],units:[],suppliers:[],products:[],warehouses:[]};
+
+async function loadMasterData(){
+  try{
+    const r=await API.masterList('all');
+    MasterState.categories=r?.categories||[];MasterState.brands=r?.brands||[];MasterState.units=r?.units||[];
+    MasterState.suppliers=r?.suppliers||[];MasterState.products=r?.products||[];MasterState.warehouses=r?.warehouses||[];
+    renderMasterProducts();renderMasterSimple();
+  }catch(e){console.error(e);toast(e.message||'Gagal memuat Master Data.')}
+}
+function renderMasterProducts(){
+  const q=($('masterProductSearch')?.value||'').toLowerCase().trim();
+  const list=MasterState.products.filter(p=>!q||[p.name,p.sku,p.barcode].some(v=>String(v||'').toLowerCase().includes(q)));
+  $('masterProductsBody').innerHTML=list.map(p=>{
+    const c=MasterState.categories.find(x=>x.id===p.category_id)?.name||'—';
+    return `<tr><td><b>${esc(p.name)}</b><span class="muted">${esc(p.description||'')}</span></td><td>${esc(p.sku)}<span class="muted">${esc(p.barcode||'—')}</span></td><td>${esc(c)}</td><td>${rupiah(p.selling_price)}</td><td>${Number(p.min_stock||0)}</td><td><span class="status-pill ${p.is_active?'ok':''}">${p.is_active?'Aktif':'Nonaktif'}</span></td><td><button class="action-btn" onclick="editMasterProduct('${esc(p.id)}')">Edit</button><button class="action-btn" onclick="setOpeningStock('${esc(p.id)}')">Stok</button></td></tr>`;
+  }).join('')||'<tr><td colspan="7" style="padding:22px;text-align:center;color:#718096">Belum ada produk.</td></tr>';
+}
+function renderMasterSimple(){
+  $('masterCategoriesBody').innerHTML=MasterState.categories.map(x=>`<tr><td><b>${esc(x.name)}</b></td><td>${esc(x.code||'—')}</td><td>${esc(x.description||'—')}</td><td><span class="status-pill ${x.is_active?'ok':''}">${x.is_active?'Aktif':'Nonaktif'}</span></td></tr>`).join('')||emptyRow(4);
+  $('masterBrandsBody').innerHTML=MasterState.brands.map(x=>`<tr><td><b>${esc(x.name)}</b></td><td>${esc(x.code||'—')}</td><td><span class="status-pill ${x.is_active?'ok':''}">${x.is_active?'Aktif':'Nonaktif'}</span></td></tr>`).join('')||emptyRow(3);
+  $('masterUnitsBody').innerHTML=MasterState.units.map(x=>`<tr><td><b>${esc(x.name)}</b></td><td>${esc(x.symbol)}</td></tr>`).join('')||emptyRow(2);
+  $('masterSuppliersBody').innerHTML=MasterState.suppliers.map(x=>`<tr><td><b>${esc(x.name)}</b></td><td>${esc(x.code||'—')}</td><td>${esc(x.phone||'—')}</td><td>${esc(x.email||'—')}</td><td><span class="status-pill ${x.is_active?'ok':''}">${x.is_active?'Aktif':'Nonaktif'}</span></td></tr>`).join('')||emptyRow(5);
+}
+function emptyRow(n){return `<tr><td colspan="${n}" style="padding:22px;text-align:center;color:#718096">Belum ada data.</td></tr>`}
+function switchMasterTab(tab){
+  document.querySelectorAll('.master-tab').forEach(b=>b.classList.toggle('active',b.dataset.masterTab===tab));
+  document.querySelectorAll('.master-panel').forEach(p=>p.classList.toggle('hidden',p.id!=='master-'+tab));
+}
+function showMasterModal(title,formHtml,submitFn){
+  $('masterModalTitle').textContent=title;$('masterModalError').classList.add('hidden');$('masterForm').innerHTML=formHtml;$('masterModal').classList.remove('hidden');
+  $('masterForm').onsubmit=async e=>{e.preventDefault();try{await submitFn();closeMasterModal();await loadMasterData();toast('Data berhasil disimpan.')}catch(err){console.error(err);$('masterModalError').textContent=err.message||'Gagal menyimpan data.';$('masterModalError').classList.remove('hidden')}};
+}
+function closeMasterModal(){$('masterModal').classList.add('hidden')}
+function addCategory(){
+  showMasterModal('Tambah Kategori',`<div class="master-modal-grid"><div class="field"><label>Nama *</label><input id="mName" required></div><div class="field"><label>Kode</label><input id="mCode"></div><div class="field full"><label>Deskripsi</label><textarea id="mDesc"></textarea></div></div><div class="modal-actions"><button class="btn primary" type="submit">Simpan</button></div>`,()=>API.createCategory($('mName').value,$('mCode').value,$('mDesc').value));
+}
+function addBrand(){
+  showMasterModal('Tambah Brand',`<div class="master-modal-grid"><div class="field"><label>Nama *</label><input id="mName" required></div><div class="field"><label>Kode</label><input id="mCode"></div></div><div class="modal-actions"><button class="btn primary" type="submit">Simpan</button></div>`,()=>API.createBrand($('mName').value,$('mCode').value));
+}
+function addUnit(){
+  showMasterModal('Tambah Unit',`<div class="master-modal-grid"><div class="field"><label>Nama *</label><input id="mName" required placeholder="Pieces"></div><div class="field"><label>Simbol *</label><input id="mSymbol" required placeholder="pcs"></div></div><div class="modal-actions"><button class="btn primary" type="submit">Simpan</button></div>`,()=>API.createUnit($('mName').value,$('mSymbol').value));
+}
+function addSupplier(){
+  showMasterModal('Tambah Supplier',`<div class="master-modal-grid"><div class="field"><label>Nama *</label><input id="mName" required></div><div class="field"><label>Kode</label><input id="mCode"></div><div class="field"><label>Telepon</label><input id="mPhone"></div><div class="field"><label>Email</label><input id="mEmail" type="email"></div><div class="field full"><label>Alamat</label><textarea id="mAddress"></textarea></div></div><div class="modal-actions"><button class="btn primary" type="submit">Simpan</button></div>`,()=>API.createSupplier($('mName').value,$('mCode').value,$('mPhone').value,$('mEmail').value,$('mAddress').value));
+}
+function productForm(p=null){
+  const escv=v=>esc(v??'');
+  return `<div class="master-modal-grid">
+    <div class="field"><label>SKU *</label><input id="mSku" value="${escv(p?.sku)}" required></div>
+    <div class="field"><label>Barcode</label><input id="mBarcode" value="${escv(p?.barcode)}"></div>
+    <div class="field full"><label>Nama Produk *</label><input id="mName" value="${escv(p?.name)}" required></div>
+    <div class="field"><label>Harga Modal</label><input id="mCost" type="number" min="0" value="${Number(p?.cost_price||0)}"></div>
+    <div class="field"><label>Harga Jual</label><input id="mSelling" type="number" min="0" value="${Number(p?.selling_price||0)}"></div>
+    <div class="field"><label>Kategori</label><select id="mCategory"><option value="">Tanpa kategori</option>${MasterState.categories.map(x=>`<option value="${esc(x.id)}" ${x.id===p?.category_id?'selected':''}>${esc(x.name)}</option>`).join('')}</select></div>
+    <div class="field"><label>Brand</label><select id="mBrand"><option value="">Tanpa brand</option>${MasterState.brands.map(x=>`<option value="${esc(x.id)}" ${x.id===p?.brand_id?'selected':''}>${esc(x.name)}</option>`).join('')}</select></div>
+    <div class="field"><label>Unit</label><select id="mUnit"><option value="">Tanpa unit</option>${MasterState.units.map(x=>`<option value="${esc(x.id)}" ${x.id===p?.unit_id?'selected':''}>${esc(x.name)} (${esc(x.symbol)})</option>`).join('')}</select></div>
+    <div class="field"><label>Minimum Stok</label><input id="mMin" type="number" min="0" value="${Number(p?.min_stock||0)}"></div>
+    <div class="field"><label>Pajak (%)</label><input id="mTax" type="number" min="0" step="0.01" value="${Number(p?.tax_rate||0)}"></div>
+    <div class="field"><label>URL Gambar</label><input id="mImage" value="${escv(p?.image_url)}"></div>
+    <div class="field full"><label>Deskripsi</label><textarea id="mDesc">${escv(p?.description)}</textarea></div>
+  </div><div class="modal-actions"><button class="btn primary" type="submit">${p?'Simpan Perubahan':'Buat Produk'}</button></div>`;
+}
+function collectProduct(){
+  return {sku:$('mSku').value,name:$('mName').value,cost:Number($('mCost').value||0),selling:Number($('mSelling').value||0),category:$('mCategory').value,brand:$('mBrand').value,unit:$('mUnit').value,barcode:$('mBarcode').value,min:Number($('mMin').value||0),tax:Number($('mTax').value||0),desc:$('mDesc').value,image:$('mImage').value};
+}
+function addProduct(){
+  showMasterModal('Tambah Produk',productForm(),()=>{const x=collectProduct();return API.createProduct(x.sku,x.name,x.cost,x.selling,x.category,x.brand,x.unit,x.barcode,x.min,x.tax,x.desc,x.image)});
+}
+function editMasterProduct(id){
+  const p=MasterState.products.find(x=>x.id===id);if(!p)return;
+  showMasterModal('Edit Produk',productForm(p),()=>{const x=collectProduct();return API.updateProduct(id,x.sku,x.name,x.cost,x.selling,x.category,x.brand,x.unit,x.barcode,x.min,x.tax,x.desc,x.image,true)});
+}
+function setOpeningStock(id){
+  const p=MasterState.products.find(x=>x.id===id);if(!p)return;
+  const options=MasterState.warehouses.map(w=>`<option value="${esc(w.id)}">${esc(w.name)} (${esc(w.code)})</option>`).join('');
+  showMasterModal('Atur Stok Awal',`<div class="field"><label>Produk</label><input value="${esc(p.name)}" disabled></div><div class="field"><label>Warehouse *</label><select id="mWarehouse" required>${options}</select></div><div class="field"><label>Jumlah Stok *</label><input id="mQty" type="number" min="0" step="0.01" value="0" required></div><div class="field"><label>Catatan</label><textarea id="mNote"></textarea></div><div class="modal-actions"><button class="btn primary" type="submit">Simpan Stok</button></div>`,()=>API.openingStock(id,$('mWarehouse').value,Number($('mQty').value||0),$('mNote').value));
 }
 
 /* ================= USER & ROLE MANAGEMENT ================= */
@@ -668,6 +817,15 @@ $('completeSale').addEventListener('click',completeSale);
 $('inviteUser').addEventListener('click',openInvite);
 $('closeModal').addEventListener('click',closeUserModal);
 $('userForm').addEventListener('submit',submitInvite);
+$('masterProductSearch').addEventListener('input',renderMasterProducts);
+$('addProductBtn').addEventListener('click',addProduct);
+$('addCategoryBtn').addEventListener('click',addCategory);
+$('addBrandBtn').addEventListener('click',addBrand);
+$('addUnitBtn').addEventListener('click',addUnit);
+$('addSupplierBtn').addEventListener('click',addSupplier);
+$('reloadMasterBtn').addEventListener('click',loadMasterData);
+$('closeMasterModal').addEventListener('click',closeMasterModal);
+document.querySelectorAll('.master-tab').forEach(b=>b.addEventListener('click',()=>switchMasterTab(b.dataset.masterTab)));
 
 supabaseClient.auth.onAuthStateChange((event,session)=>{
   if(event==='SIGNED_OUT'){$('app').classList.add('hidden');$('auth').classList.remove('hidden')}
