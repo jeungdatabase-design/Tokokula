@@ -1271,6 +1271,42 @@ input::placeholder,textarea::placeholder{
   }
 }
 
+
+/* =========================================================
+   TOKOKULA 2.0 — EXECUTIVE PREMIUM SHELL
+   Visual layer only; backend RPC, IDs and module logic preserved.
+   ========================================================= */
+:root{
+  --tk-bg:#f3f5f8;--tk-surface:#fff;--tk-soft:#f8fafc;--tk-ink:#0f172a;--tk-muted:#7a8494;
+  --tk-line:#e4e8ee;--tk-navy:#0b1220;--tk-navy2:#121c2d;--tk-gold:#b79a68;--tk-green:#087443;
+  --tk-shadow:0 16px 45px rgba(15,23,42,.065);--tk-shadow2:0 26px 80px rgba(15,23,42,.11)
+}
+body{background:radial-gradient(900px 450px at 80% -10%,rgba(183,154,104,.12),transparent 60%),linear-gradient(180deg,#f8fafc 0%,var(--tk-bg) 58%,#eef1f5 100%);color:var(--tk-ink)}
+.sidebar{width:278px;background:linear-gradient(180deg,#0a1120,#0b1322 55%,#080e18);padding:20px 14px;box-shadow:20px 0 60px rgba(4,10,20,.12)}
+.side-brand{padding:8px 13px 25px}.side-brand b{font-size:25px}.side-brand small{font-size:10px;letter-spacing:.08em;text-transform:uppercase}
+.nav{gap:7px}.nav button{display:flex;align-items:center;gap:12px;min-height:48px;padding:11px 13px;border-radius:14px;font-size:13px;color:#9da8ba}.nav button:hover{background:rgba(255,255,255,.055)}.nav button.active{background:linear-gradient(135deg,#202c40,#162033);box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 10px 24px rgba(0,0,0,.14)}.nav button.active:before{width:3px;background:var(--tk-gold);box-shadow:0 0 14px rgba(183,154,104,.45)}
+.nav-icon{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;font-size:14px;font-weight:800;color:#aeb9c9;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.06)}.nav button.active .nav-icon{color:#fff;background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.1)}
+.sidebar-foot{position:absolute;left:27px;right:27px;bottom:22px;padding-top:15px;border-top:1px solid rgba(255,255,255,.07);color:#8c97a9;font-size:10px;display:flex;justify-content:space-between;gap:10px}.sidebar-foot span{color:#d9dee7;font-weight:700}.sidebar-foot small{font-size:9px}
+.main{margin-left:278px}.topbar{height:78px;padding:0 34px;background:rgba(255,255,255,.84);backdrop-filter:blur(22px);border-bottom:1px solid rgba(228,232,238,.85)}.top-left strong{font-size:15px}.top-right{gap:10px}
+.theme-toggle{width:40px;height:40px;border:1px solid var(--tk-line);border-radius:12px;background:#fff;color:#475467;font-size:17px;box-shadow:0 3px 12px rgba(15,23,42,.04)}.theme-toggle:hover{transform:translateY(-1px)}
+.page{max-width:1600px;padding:38px 36px 70px}.page>section>h1,.module h1,#dashboard>h1{font-size:38px;font-weight:780;letter-spacing:-1.8px}.page>section>h1:after{background:linear-gradient(90deg,#111827,var(--tk-gold))}.subtitle{font-size:14px}
+.card{background:rgba(255,255,255,.95);border:1px solid rgba(226,230,236,.95);box-shadow:var(--tk-shadow);border-radius:22px}
+.executive-kpis{grid-template-columns:repeat(4,minmax(0,1fr));gap:15px;margin-top:28px}.executive-kpis .card{min-height:145px;padding:21px;overflow:hidden}.kpi-top{display:flex;align-items:center;justify-content:space-between}.kpi-icon{width:29px;height:29px;border-radius:9px;display:grid;place-items:center;background:#f5f1e9;color:#8a6d3e;font-weight:800;font-size:13px}.executive-kpis small{display:block;color:#9aa3b1;margin-top:9px;font-size:11px}.executive-kpis .value{font-size:28px;margin-top:12px}.kpi-revenue{border-top:2px solid #1b2739}.kpi-profit{border-top:2px solid #087443}.kpi-cogs{border-top:2px solid #b79a68}.kpi-receivable{border-top:2px solid #64748b}
+.executive-grid{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(280px,.7fr);gap:15px;margin-top:15px}.performance-card,.quick-card{padding:22px}.section-head{display:flex;align-items:flex-start;justify-content:space-between;gap:15px}.section-head b{display:block;font-size:16px;letter-spacing:-.3px}.section-head span{display:block;color:var(--tk-muted);font-size:11px;margin-top:4px}.period-chip{padding:7px 10px!important;background:#f7f4ee;border:1px solid #eee4d3;border-radius:999px;color:#846b3e!important;font-weight:700;white-space:nowrap}
+.performance-chart{display:grid;gap:18px;margin-top:26px}.perf-row>div:first-child{display:flex;justify-content:space-between;gap:15px;margin-bottom:8px}.perf-row span{color:#7b8494;font-size:12px}.perf-row b{font-size:12px}.bar-track{height:9px;border-radius:999px;background:#eef1f5;overflow:hidden}.bar-track i{display:block;height:100%;width:0;border-radius:inherit;background:linear-gradient(90deg,#111827,#b79a68);transition:width .6s ease}.perf-row:nth-child(2) .bar-track i{background:linear-gradient(90deg,#64748b,#aab3c0)}.perf-row:nth-child(3) .bar-track i{background:linear-gradient(90deg,#087443,#36a269)}
+.quick-insight{margin-top:24px;padding:16px;border-radius:16px;background:linear-gradient(145deg,#f8f5ee,#fff);border:1px solid #eee4d3;line-height:1.7;font-size:13px;color:#596579}.quick-insight b{color:#172033}.grid{gap:15px;margin-top:15px}.grid>.card{padding:22px}
+.integration-grid{gap:14px}.integration-card,.inv-kpi{box-shadow:var(--tk-shadow)}
+.pos-layout{gap:18px}.product-btn{border-radius:18px;min-height:128px;box-shadow:0 5px 16px rgba(15,23,42,.04)}.product-btn:hover{box-shadow:0 15px 30px rgba(15,23,42,.09)}
+.inventory-tabs,.master-tabs{background:#edf0f4;border-radius:15px;padding:4px}.inventory-tab,.master-tab{padding:10px 15px}
+.master-toolbar,.inventory-toolbar,.integration-toolbar,.user-toolbar{background:rgba(255,255,255,.72);border:1px solid #e5e8ed;box-shadow:0 5px 18px rgba(15,23,42,.035)}
+.modal{border-radius:25px!important;padding:24px!important}.modal-head{padding-bottom:15px}.field input,.field select,.field textarea{min-height:48px!important;border-radius:13px!important}
+/* DARK MODE */
+body.tk-dark{--tk-bg:#080d16;--tk-surface:#101722;--tk-soft:#141d2a;--tk-ink:#eef2f7;--tk-muted:#97a3b5;--tk-line:#253044;background:radial-gradient(900px 450px at 75% -10%,rgba(183,154,104,.09),transparent 60%),linear-gradient(180deg,#0b111c,#080d16 70%,#070b12);color:var(--tk-ink)}
+body.tk-dark .topbar{background:rgba(10,16,27,.84);border-color:#1d2635}.tk-dark .card,body.tk-dark .card{background:rgba(16,23,34,.96);border-color:#263143;color:#eef2f7}.tk-dark .subtitle,body.tk-dark .subtitle{color:#97a3b5}.tk-dark .value,body.tk-dark .value,.tk-dark b,body.tk-dark b{color:#f4f6f8}.tk-dark .theme-toggle,body.tk-dark .theme-toggle,.tk-dark .logout,body.tk-dark .logout{background:#141d2a;color:#eef2f7;border-color:#2a3548}.tk-dark .pill,body.tk-dark .pill{background:#211d16;color:#d9bb83;border-color:#4b3b21}.tk-dark .integration-card,.tk-dark .inv-kpi,body.tk-dark .integration-card,body.tk-dark .inv-kpi{background:linear-gradient(145deg,#121a26,#0f1621);border-color:#273245}.tk-dark .master-toolbar,.tk-dark .inventory-toolbar,.tk-dark .integration-toolbar,.tk-dark .user-toolbar,body.tk-dark .master-toolbar,body.tk-dark .inventory-toolbar,body.tk-dark .integration-toolbar,body.tk-dark .user-toolbar{background:#111a27;border-color:#273245}.tk-dark input,.tk-dark select,.tk-dark textarea,body.tk-dark input,body.tk-dark select,body.tk-dark textarea{background:#0f1724!important;color:#eef2f7!important;border-color:#2a3548!important}.tk-dark .data-table,.tk-dark .integration-table,.tk-dark .user-table,body.tk-dark .data-table,body.tk-dark .integration-table,body.tk-dark .user-table{background:#101722;color:#eef2f7}.tk-dark .data-table th,.tk-dark .integration-table th,.tk-dark .user-table th,body.tk-dark .data-table th,body.tk-dark .integration-table th,body.tk-dark .user-table th{background:#141d2a;color:#96a2b4}.tk-dark .data-table tbody tr:hover,.tk-dark .integration-table tbody tr:hover,body.tk-dark .data-table tbody tr:hover,body.tk-dark .integration-table tbody tr:hover{background:#141d2a}.tk-dark .inventory-tab,.tk-dark .master-tab,body.tk-dark .inventory-tab,body.tk-dark .master-tab{color:#c1cad7}.tk-dark .inventory-tabs,.tk-dark .master-tabs,body.tk-dark .inventory-tabs,body.tk-dark .master-tabs{background:#151d2a}.tk-dark .inventory-tab.active,.tk-dark .master-tab.active,body.tk-dark .inventory-tab.active,body.tk-dark .master-tab.active{background:#fff!important;color:#111827!important}.tk-dark .performance-card,.tk-dark .quick-card,body.tk-dark .performance-card,body.tk-dark .quick-card{background:#101722}.tk-dark .bar-track,body.tk-dark .bar-track{background:#273143}.tk-dark .quick-insight,body.tk-dark .quick-insight{background:linear-gradient(145deg,#1a1b1b,#121923);border-color:#3a3326;color:#aeb8c7}.tk-dark .modal,body.tk-dark .modal{background:#101722!important;border-color:#2b3648!important}.tk-dark .modal-head,body.tk-dark .modal-head{border-color:#273245}.tk-dark .close,body.tk-dark .close{background:#182231!important;color:#eef2f7}.tk-dark .integration-message,body.tk-dark .integration-message{color:#8e9aac}
+@media(max-width:1100px){.executive-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.executive-grid{grid-template-columns:1fr}}
+@media(max-width:760px){.sidebar{width:286px}.main{margin-left:0}.topbar{height:68px;padding:0 13px}.page{padding:25px 14px 55px}.page>section>h1,.module h1,#dashboard>h1{font-size:30px}.executive-kpis{grid-template-columns:1fr 1fr;gap:10px;margin-top:20px}.executive-kpis .card{min-height:116px;padding:15px;border-radius:18px}.executive-kpis .value{font-size:21px}.executive-kpis small{font-size:10px}.performance-card,.quick-card{padding:17px}.period-chip{display:none}.top-right .theme-toggle{width:38px;height:38px}.sidebar-foot{display:none}.grid{grid-template-columns:1fr}.integration-grid,.inventory-kpis{grid-template-columns:1fr 1fr}.master-toolbar,.inventory-toolbar,.integration-toolbar{padding:9px}.modal{max-height:calc(100dvh - 28px)!important}}
+@media(max-width:480px){.executive-kpis{grid-template-columns:1fr 1fr}.executive-kpis .value{font-size:19px}.label{font-size:9px}.performance-chart{gap:15px}.quick-insight{font-size:12px}}
+
 </style>
 </head>
 <body>
@@ -1337,32 +1373,44 @@ input::placeholder,textarea::placeholder{
   <aside id="sidebar" class="sidebar">
     <div class="side-brand"><b>Tokokula</b><small>Enterprise POS • Business OS</small></div>
     <nav class="nav">
-      <button class="active" data-page="dashboard" data-permission="dashboard.view">Dashboard</button>
-      <button data-page="pos" data-permission="sales.view">POS</button>
-      <button data-page="inventory" data-permission="inventory.view">Inventory</button>
-      <button data-page="customers" data-permission="customer.view">Customers</button>
-      <button data-page="purchases" data-permission="inventory.view">Purchase</button>
-      <button data-page="finance" data-permission="settings.view">Finance</button>
-      <button data-page="reports" data-permission="reports.view">Reports</button>
-      <button data-page="master" data-permission="product.manage">Master Data</button>
-      <button data-page="settings" data-permission="settings.view">Settings</button>
+      <button class="active" data-page="dashboard" data-permission="dashboard.view"><span class="nav-icon">⌂</span><span>Dashboard</span></button>
+      <button data-page="pos" data-permission="sales.view"><span class="nav-icon">▣</span><span>Point of Sale</span></button>
+      <button data-page="inventory" data-permission="inventory.view"><span class="nav-icon">◫</span><span>Inventory</span></button>
+      <button data-page="customers" data-permission="customer.view"><span class="nav-icon">♙</span><span>Customers</span></button>
+      <button data-page="purchases" data-permission="inventory.view"><span class="nav-icon">▤</span><span>Purchase</span></button>
+      <button data-page="finance" data-permission="settings.view"><span class="nav-icon">Rp</span><span>Finance</span></button>
+      <button data-page="reports" data-permission="reports.view"><span class="nav-icon">▥</span><span>Reports</span></button>
+      <button data-page="master" data-permission="product.manage"><span class="nav-icon">◈</span><span>Master Data</span></button>
+      <button data-page="settings" data-permission="settings.view"><span class="nav-icon">⚙</span><span>Settings</span></button>
     </nav>
+    <div class="sidebar-foot"><span>Tokokula OS</span><small>Enterprise workspace</small></div>
   </aside>
 
   <main class="main">
     <header class="topbar">
       <div class="top-left"><button id="mobileMenu" class="mobile-menu">☰</button><strong id="topTitle">Dashboard</strong></div>
-      <div class="top-right"><span id="plan" class="pill">Loading...</span><div id="avatar" class="avatar">U</div><button id="logout" class="logout">Keluar</button></div>
+      <div class="top-right"><button id="themeToggle" class="theme-toggle" type="button" aria-label="Ubah tema">☾</button><span id="plan" class="pill">Loading...</span><div id="avatar" class="avatar">U</div><button id="logout" class="logout">Keluar</button></div>
     </header>
 
     <div class="page">
       <section id="dashboard">
         <h1>Dashboard</h1><div class="subtitle">Pusat kendali bisnis — penjualan, stok, kas, dan profit dalam satu layar.</div>
-        <div class="cards">
-          <div class="card"><div class="label">Revenue</div><div id="revenue" class="value">Rp0</div></div>
-          <div class="card"><div class="label">HPP</div><div id="cogs" class="value">Rp0</div></div>
-          <div class="card"><div class="label">Net Profit</div><div id="profit" class="value">Rp0</div></div>
-          <div class="card"><div class="label">Piutang</div><div id="receivable" class="value">Rp0</div></div>
+        <div class="cards executive-kpis">
+          <div class="card kpi-revenue"><div class="kpi-top"><span class="label">Revenue</span><span class="kpi-icon">↗</span></div><div id="revenue" class="value">Rp0</div><small>Bulan berjalan</small></div>
+          <div class="card kpi-cogs"><div class="kpi-top"><span class="label">HPP</span><span class="kpi-icon">◌</span></div><div id="cogs" class="value">Rp0</div><small>Biaya barang terjual</small></div>
+          <div class="card kpi-profit"><div class="kpi-top"><span class="label">Net Profit</span><span class="kpi-icon">✓</span></div><div id="profit" class="value">Rp0</div><small>Profit setelah biaya</small></div>
+          <div class="card kpi-receivable"><div class="kpi-top"><span class="label">Piutang</span><span class="kpi-icon">○</span></div><div id="receivable" class="value">Rp0</div><small>Belum tertagih</small></div>
+        </div>
+        <div class="executive-grid">
+          <div class="card performance-card">
+            <div class="section-head"><div><b>Performance</b><span>Perbandingan revenue, HPP, dan profit</span></div><span class="period-chip">Bulan berjalan</span></div>
+            <div class="performance-chart">
+              <div class="perf-row"><div><span>Penjualan</span><b id="chartRevenueLabel">Rp0</b></div><div class="bar-track"><i id="chartRevenueBar"></i></div></div>
+              <div class="perf-row"><div><span>HPP</span><b id="chartCogsLabel">Rp0</b></div><div class="bar-track"><i id="chartCogsBar"></i></div></div>
+              <div class="perf-row"><div><span>Net Profit</span><b id="chartProfitLabel">Rp0</b></div><div class="bar-track"><i id="chartProfitBar"></i></div></div>
+            </div>
+          </div>
+          <div class="card quick-card"><div class="section-head"><div><b>Quick insight</b><span>Status operasional</span></div></div><div id="quickInsight" class="quick-insight">Menyiapkan ringkasan...</div></div>
         </div>
         <div class="grid">
           <div class="card"><b>Financial Snapshot</b><div id="financial" style="margin-top:17px" class="rows">Memuat...</div></div>
@@ -1907,6 +1955,7 @@ async function loadDashboard(){
   $('financial').innerHTML=[
     ['Revenue',f?.revenue],['HPP',f?.cogs],['Expense',f?.expense],['Net Profit',f?.net_profit],['Cash',f?.cash],['Bank / E-Wallet',f?.bank_ewallet],['Payable',f?.payable]
   ].map(x=>`<div class="row"><span>${x[0]}</span><b>${rupiah(x[1])}</b></div>`).join('');
+  updateExecutiveChart(f);
 }
 async function permissionGuards(){
   for(const b of document.querySelectorAll('[data-permission]')){
@@ -2133,9 +2182,15 @@ async function loadReportsModule(){
       API.salesSummary(from,to),API.topProducts(from,to,10),API.salesByCashier(from,to,50),API.inventorySummary()
     ]);
     const s=Array.isArray(sales)?sales[0]:sales||{},inv=Array.isArray(inventory)?inventory[0]:inventory||{};
+    const totalSales=Number(s.net_sales??s.gross_sales??s.total_sales??s.sales??0)||0;
+    const transactionCount=Number(s.sales_count??s.transaction_count??s.total_transactions??s.transactions??0)||0;
+    const backendAverage=Number(s.average_transaction??s.avg_transaction??s.average_basket);
+    const averageBasket=Number.isFinite(backendAverage)&&backendAverage>=0
+      ? backendAverage
+      : (transactionCount>0 ? totalSales/transactionCount : 0);
     $('reportCards').innerHTML=[
-      ['Penjualan',s.net_sales??s.gross_sales??s.total_sales??s.sales??0],['Transaksi',s.sales_count??s.transaction_count??s.total_transactions??0],
-      ['Average Basket',rupiah(s.average_transaction??s.avg_transaction??0)],['SKU Stok',inv.total_sku??inv.sku_count??0]
+      ['Penjualan',totalSales],['Transaksi',transactionCount],
+      ['Average Basket',averageBasket],['SKU Stok',inv.total_sku??inv.sku_count??0]
     ].map(x=>`<div class="integration-card"><div class="label">${x[0]}</div><div class="big">${x[0]==='Penjualan'||x[0]==='Average Basket'?rupiah(x[1]):Number(x[1]||0).toLocaleString('id-ID')}</div></div>`).join('');
     const tp=Array.isArray(top)?top:top?.data||[];
     $('topProductsBody').innerHTML=tp.map(x=>`<tr><td><b>${esc(x.product_name||x.name||'—')}</b></td><td>${Number(x.quantity||x.qty||0).toLocaleString('id-ID')}</td><td>${rupiah(x.sales||x.revenue||x.total||0)}</td></tr>`).join('')||`<tr><td colspan="3" class="integration-message">Belum ada data.</td></tr>`;
@@ -2267,18 +2322,50 @@ function openInvite(){
   $('modalTitle').textContent='Undang User';
   $('modalError').classList.add('hidden');
   $('inviteEmail').value='';
-  $('inviteRole').innerHTML=UserState.roles.map(r=>`<option value="${esc(r.code)}">${esc(r.name)}</option>`).join('');
+  const sourceRoles=Array.isArray(UserState.roles)?UserState.roles:[];
+  const seen=new Set();
+  const roles=sourceRoles.filter(r=>{
+    const code=String(r?.code||'').trim();
+    if(!code || code.toLowerCase()==='owner' || seen.has(code.toLowerCase())) return false;
+    seen.add(code.toLowerCase());
+    return true;
+  });
+  const roleSelect=$('inviteRole');
+  if(roles.length){
+    roleSelect.innerHTML='<option value="" disabled selected>Pilih role...</option>'+roles.map(r=>`<option value="${esc(r.code)}">${esc(r.name||r.code)}</option>`).join('');
+    roleSelect.disabled=false;
+  }else{
+    roleSelect.innerHTML='<option value="">Role belum tersedia</option>';
+    roleSelect.disabled=true;
+  }
   $('inviteOutlet').innerHTML='<option value="">Tidak ditentukan</option>'+UserState.outlets.map(o=>`<option value="${esc(o.id)}">${esc(o.name)}</option>`).join('');
   $('userModal').classList.remove('hidden');
 }
 function closeUserModal(){$('userModal').classList.add('hidden')}
 async function submitInvite(e){
-  e.preventDefault();$('modalError').classList.add('hidden');$('inviteSubmit').disabled=true;$('inviteSubmit').textContent='Mengirim...';
+  e.preventDefault();
+  $('modalError').classList.add('hidden');
+  const roleCode=$('inviteRole').value;
+  if(!roleCode){
+    $('modalError').textContent='Silakan pilih role terlebih dahulu.';
+    $('modalError').classList.remove('hidden');
+    return;
+  }
+  $('inviteSubmit').disabled=true;
+  $('inviteSubmit').textContent='Mengirim...';
   try{
-    const r=await API.inviteUser($('inviteEmail').value.trim(),$('inviteRole').value,$('inviteOutlet').value||null);
-    closeUserModal();toast(`Undangan dibuat untuk ${r.email||$('inviteEmail').value.trim()}`);await loadUsers();
-  }catch(e){console.error(e);$('modalError').textContent=e.message||'Gagal membuat undangan.';$('modalError').classList.remove('hidden')}
-  finally{$('inviteSubmit').disabled=false;$('inviteSubmit').textContent='Kirim Undangan'}
+    const r=await API.inviteUser($('inviteEmail').value.trim(),roleCode,$('inviteOutlet').value||null);
+    closeUserModal();
+    toast(`Undangan dibuat untuk ${r.email||$('inviteEmail').value.trim()}`);
+    await loadUsers();
+  }catch(e){
+    console.error(e);
+    $('modalError').textContent=e.message||'Gagal membuat undangan.';
+    $('modalError').classList.remove('hidden');
+  }finally{
+    $('inviteSubmit').disabled=false;
+    $('inviteSubmit').textContent='Kirim Undangan';
+  }
 }
 async function editUser(id){
   const u=UserState.users.find(x=>x.id===id);if(!u)return;
@@ -2414,6 +2501,30 @@ async function completeSale(){
   finally{$('completeSale').disabled=false;$('completeSale').textContent='Bayar & Selesaikan'}
 }
 
+
+/* ================= THEME + EXECUTIVE UI ================= */
+function applyTheme(mode){
+  const dark=mode==='dark';
+  document.body.classList.toggle('tk-dark',dark);
+  const b=$('themeToggle'); if(b){b.textContent=dark?'☀':'☾';b.title=dark?'Gunakan tema terang':'Gunakan tema gelap'}
+  localStorage.setItem('tokokula_theme',dark?'dark':'light');
+}
+function initTheme(){applyTheme(localStorage.getItem('tokokula_theme')||'light')}
+function updateExecutiveChart(f){
+  const rev=Number(f?.revenue)||0,cogs=Number(f?.cogs)||0,profit=Number(f?.net_profit)||0;
+  const max=Math.max(rev,cogs,profit,1);
+  [['chartRevenueLabel','chartRevenueBar',rev],['chartCogsLabel','chartCogsBar',cogs],['chartProfitLabel','chartProfitBar',profit]].forEach(([l,b,v])=>{
+    if($(l))$(l).textContent=rupiah(v); if($(b))$(b).style.width=Math.max(0,Math.min(100,v/max))+'%';
+  });
+  if($('quickInsight')){
+    const margin=rev>0?(profit/rev)*100:0;
+    $('quickInsight').innerHTML=rev>0
+      ? `<b>Margin bersih ${margin.toFixed(1)}%</b><br>Revenue ${rupiah(rev)} dengan HPP ${rupiah(cogs)}. ${profit>=0?'Operasional berada di area profit.':'Perlu perhatian pada biaya dan margin.'}`
+      : '<b>Belum ada penjualan bulan ini.</b><br>Mulai dari POS untuk membangun data penjualan, stok, dan keuangan secara otomatis.';
+  }
+}
+initTheme();
+
 /* ================= EVENTS ================= */
 $('loginForm').addEventListener('submit',e=>{
   e.preventDefault();
@@ -2435,6 +2546,7 @@ $('reportsRefresh').addEventListener('click',loadReportsModule);
 $('logout').addEventListener('click',logout);
 document.querySelectorAll('.nav button').forEach(b=>b.addEventListener('click',()=>{page(b.dataset.page);$('sidebar').classList.remove('open')}));
 $('mobileMenu').addEventListener('click',()=>$('sidebar').classList.toggle('open'));
+$('themeToggle').addEventListener('click',()=>applyTheme(document.body.classList.contains('tk-dark')?'light':'dark'));
 $('productSearch').addEventListener('input',renderProducts);
 $('reloadProducts').addEventListener('click',()=>loadPOS());
 $('completeSale').addEventListener('click',completeSale);
