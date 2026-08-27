@@ -33,6 +33,12 @@ h1{margin:0;font-size:28px;letter-spacing:-.8px}.desc{color:var(--muted);font-si
 .payment-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}.pay-input{width:100%;padding:12px;border:1px solid var(--line);border-radius:11px}
 @media(max-width:900px){.pos-layout{grid-template-columns:1fr}.cart{position:static}.product-grid{grid-template-columns:repeat(2,1fr);max-height:none}}
 @media(max-width:500px){.product-grid{grid-template-columns:1fr 1fr}.product-btn{padding:11px}.payment-grid{grid-template-columns:1fr}}
+
+.user-toolbar{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin:18px 0}
+.user-table{width:100%;border-collapse:collapse}.user-table th,.user-table td{padding:12px 10px;border-bottom:1px solid var(--line);text-align:left;font-size:13px}.user-table th{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px}
+.user-badge{display:inline-block;padding:5px 8px;border-radius:999px;background:#f3f4f6;font-size:11px;font-weight:800}.user-actions{display:flex;gap:6px;flex-wrap:wrap}.mini{border:1px solid var(--line);background:#fff;border-radius:9px;padding:7px 9px;font-size:11px;font-weight:750}.danger-btn{color:#b91c1c}
+.modal-backdrop{position:fixed;inset:0;background:rgba(15,23,42,.45);display:grid;place-items:center;padding:18px;z-index:80}.modal{width:min(100%,480px);background:#fff;border-radius:22px;padding:22px;box-shadow:0 25px 80px rgba(0,0,0,.25)}.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}.close{border:0;background:#f3f4f6;border-radius:9px;width:34px;height:34px}
+@media(max-width:700px){.user-table{min-width:720px}.user-table-wrap{overflow:auto}.user-table th,.user-table td{padding:10px 8px}.user-toolbar .btn{width:auto}}
 </style>
 </head>
 <body>
@@ -131,6 +137,21 @@ h1{margin:0;font-size:28px;letter-spacing:-.8px}.desc{color:var(--muted);font-si
           <div class="card module-box">Frontend module siap dihubungkan ke engine backend.</div>
         </div>
 
+        <div id="usersModule" class="hidden">
+          <h1>User & Role Management</h1>
+          <div class="subtitle">Kelola anggota organisasi, role, outlet, dan status akses.</div>
+          <div class="user-toolbar">
+            <div id="userSummary" class="subtitle">Memuat pengguna...</div>
+            <button id="inviteUser" class="btn" style="background:#111827;color:#fff">+ Undang User</button>
+          </div>
+          <div class="card user-table-wrap">
+            <table class="user-table">
+              <thead><tr><th>User</th><th>Role</th><th>Outlet</th><th>Status</th><th>Aksi</th></tr></thead>
+              <tbody id="usersBody"></tbody>
+            </table>
+          </div>
+        </div>
+
         <div id="posModule" class="hidden">
           <h1>Point of Sale</h1>
           <div class="subtitle">Kasir cepat, mobile-friendly, dan terhubung langsung ke inventory.</div>
@@ -182,6 +203,18 @@ h1{margin:0;font-size:28px;letter-spacing:-.8px}.desc{color:var(--muted);font-si
   </main>
 </section>
 
+<div id="userModal" class="modal-backdrop hidden">
+  <div class="modal">
+    <div class="modal-head"><b id="modalTitle">Undang User</b><button id="closeModal" class="close">×</button></div>
+    <div id="modalError" class="error hidden"></div>
+    <form id="userForm">
+      <div class="field"><label>Email</label><input id="inviteEmail" type="email" placeholder="user@email.com" required></div>
+      <div class="field"><label>Role</label><select id="inviteRole" class="select" style="margin-top:0" required></select></div>
+      <div class="field"><label>Outlet</label><select id="inviteOutlet" class="select" style="margin-top:0"><option value="">Semua / belum ditentukan</option></select></div>
+      <button id="inviteSubmit" class="btn primary" type="submit">Kirim Undangan</button>
+    </form>
+  </div>
+</div>
 <div id="toast" class="toast hidden"></div>
 
 <script>
@@ -203,6 +236,11 @@ const API={
   currentSubscription:()=>API.rpc('current_subscription'),
   hasFeature:feature=>API.rpc('has_feature',{p_feature_code:feature}),
   hasPermission:permission=>API.rpc('has_permission',{p_code:permission}),
+  users:()=>API.rpc('user_management_list'),
+  roles:()=>API.rpc('user_management_roles'),
+  inviteUser:(email,roleCode,outletId=null)=>API.rpc('user_management_invite',{p_email:email,p_role_code:roleCode,p_outlet_id:outletId}),
+  updateUser:(id,name,phone,status,roleCode,outletId=null)=>API.rpc('user_management_update',{p_user_id:id,p_full_name:name,p_phone:phone,p_status:status,p_role_code:roleCode,p_outlet_id:outletId}),
+  revokeUser:id=>API.rpc('user_management_revoke',{p_user_id:id}),
   featureLimit:feature=>API.rpc('feature_limit',{p_feature_code:feature}),
   checkLimit:(key,current)=>API.rpc('subscription_check_limit',{p_limit_key:key,p_current_value:current}),
   financialSnapshot:(from,to)=>API.rpc('reporting_financial_snapshot',{p_from:from,p_to:to}),
@@ -344,11 +382,7 @@ async function register(email,password,name){
     const {data,error}=await supabaseClient.auth.signUp({
       email,
       password,
-      options:{data:{
-        full_name:name,
-        organization_name:setupData.organizationName,
-        outlet_name:setupData.outletName || 'Outlet Utama'
-      }}
+      options:{data:{full_name:name}}
     });
     if(error) throw error;
 
@@ -417,11 +451,83 @@ function page(name){
   }else{
     $('dashboard').classList.add('hidden');$('module').classList.remove('hidden');
     $('moduleTitle').textContent=titles[name]||name;
-    $('genericModule').classList.toggle('hidden',name==='pos');
+    $('genericModule').classList.toggle('hidden',name==='pos'||name==='settings'&&false);
     $('posModule').classList.toggle('hidden',name!=='pos');
+    $('usersModule').classList.toggle('hidden',name!=='settings');
     if(name==='pos') loadPOS();
+    if(name==='settings') loadUsers();
   }
   $('topTitle').textContent=titles[name]||name;
+}
+
+/* ================= USER & ROLE MANAGEMENT ================= */
+let UserState={users:[],roles:[],outlets:[]};
+
+async function loadUsers(){
+  try{
+    const [{data:outlets,error:oErr}]=await Promise.all([
+      supabaseClient.from('outlets').select('id,name,code').eq('is_active',true).order('name')
+    ]);
+    if(oErr) throw oErr;
+    State.outlets=outlets||[];
+    UserState.outlets=State.outlets;
+    const [users,roles]=await Promise.all([API.users(),API.roles()]);
+    UserState.users=Array.isArray(users)?users:(users||[]);
+    UserState.roles=Array.isArray(roles)?roles:(roles||[]);
+    $('userSummary').textContent=`${UserState.users.length} pengguna • ${UserState.roles.length} role aktif`;
+    renderUsers();
+  }catch(e){
+    console.error(e);
+    $('usersBody').innerHTML=`<tr><td colspan="5" style="color:#b91c1c;padding:20px">${esc(e.message||'Gagal memuat user.')}</td></tr>`;
+  }
+}
+function renderUsers(){
+  $('usersBody').innerHTML=UserState.users.map(u=>{
+    const role=u.role?.name||u.role?.code||'—';
+    const outlet=u.outlet?.name||'—';
+    const status=u.status||'—';
+    return `<tr>
+      <td><b>${esc(u.full_name||'Tanpa Nama')}</b><div class="product-meta">${esc(u.email||'')}</div></td>
+      <td><span class="user-badge">${esc(role)}</span></td>
+      <td>${esc(outlet)}</td>
+      <td><span class="user-badge">${esc(status)}</span>${u.is_owner?' <span class="user-badge">OWNER</span>':''}</td>
+      <td><div class="user-actions">
+        ${u.is_owner?'':`<button class="mini" onclick="editUser('${esc(u.id)}')">Edit</button><button class="mini danger-btn" onclick="revokeUser('${esc(u.id)}')">Nonaktifkan</button>`}
+      </div></td>
+    </tr>`;
+  }).join('')||'<tr><td colspan="5" style="padding:20px;text-align:center;color:#718096">Belum ada pengguna.</td></tr>';
+}
+function openInvite(){
+  $('modalTitle').textContent='Undang User';
+  $('modalError').classList.add('hidden');
+  $('inviteEmail').value='';
+  $('inviteRole').innerHTML=UserState.roles.map(r=>`<option value="${esc(r.code)}">${esc(r.name)}</option>`).join('');
+  $('inviteOutlet').innerHTML='<option value="">Tidak ditentukan</option>'+UserState.outlets.map(o=>`<option value="${esc(o.id)}">${esc(o.name)}</option>`).join('');
+  $('userModal').classList.remove('hidden');
+}
+function closeUserModal(){$('userModal').classList.add('hidden')}
+async function submitInvite(e){
+  e.preventDefault();$('modalError').classList.add('hidden');$('inviteSubmit').disabled=true;$('inviteSubmit').textContent='Mengirim...';
+  try{
+    const r=await API.inviteUser($('inviteEmail').value.trim(),$('inviteRole').value,$('inviteOutlet').value||null);
+    closeUserModal();toast(`Undangan dibuat untuk ${r.email||$('inviteEmail').value.trim()}`);await loadUsers();
+  }catch(e){console.error(e);$('modalError').textContent=e.message||'Gagal membuat undangan.';$('modalError').classList.remove('hidden')}
+  finally{$('inviteSubmit').disabled=false;$('inviteSubmit').textContent='Kirim Undangan'}
+}
+async function editUser(id){
+  const u=UserState.users.find(x=>x.id===id);if(!u)return;
+  const name=prompt('Nama user:',u.full_name||'');if(name===null)return;
+  const phone=prompt('No. telepon:',u.phone||'');if(phone===null)return;
+  const roleCode=prompt('Kode role (contoh: cashier/admin/manager):',u.role?.code||'');if(roleCode===null)return;
+  const outletId=prompt('ID outlet (kosong = pertahankan):',u.outlet?.id||'');if(outletId===null)return;
+  try{await API.updateUser(id,name,phone,u.status,roleCode,outletId||null);toast('User berhasil diperbarui.');await loadUsers()}
+  catch(e){toast(e.message||'Gagal memperbarui user.')}
+}
+async function revokeUser(id){
+  const u=UserState.users.find(x=>x.id===id);if(!u)return;
+  if(!confirm(`Nonaktifkan ${u.full_name||u.email}?`))return;
+  try{await API.revokeUser(id);toast('User dinonaktifkan.');await loadUsers()}
+  catch(e){toast(e.message||'Gagal menonaktifkan user.')}
 }
 
 /* ================= POS FRONTEND ================= */
@@ -559,6 +665,9 @@ $('mobileMenu').addEventListener('click',()=>$('sidebar').classList.toggle('open
 $('productSearch').addEventListener('input',renderProducts);
 $('reloadProducts').addEventListener('click',()=>loadPOS());
 $('completeSale').addEventListener('click',completeSale);
+$('inviteUser').addEventListener('click',openInvite);
+$('closeModal').addEventListener('click',closeUserModal);
+$('userForm').addEventListener('submit',submitInvite);
 
 supabaseClient.auth.onAuthStateChange((event,session)=>{
   if(event==='SIGNED_OUT'){$('app').classList.add('hidden');$('auth').classList.remove('hidden')}
