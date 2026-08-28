@@ -76,6 +76,41 @@ h1{margin:0;font-size:28px;letter-spacing:-.8px}.desc{color:var(--muted);font-si
 .platform-grid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(300px,.8fr);gap:15px;margin-top:15px}.platform-card{background:rgba(255,255,255,.96);border:1px solid #e2e6ec;border-radius:20px;box-shadow:0 14px 40px rgba(15,23,42,.055);padding:21px}.platform-card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:15px}.platform-card-head b{font-size:16px}.platform-card-head span{display:block;color:#8a93a2;font-size:11px;margin-top:4px}.platform-chip{padding:7px 10px;border-radius:999px;background:#f7f2e9;border:1px solid #eee2cc;color:#846b3e;font-size:10px;font-weight:800;white-space:nowrap}.platform-bars{display:grid;gap:17px;margin-top:25px}.platform-bar-row>div:first-child{display:flex;justify-content:space-between;font-size:12px;margin-bottom:7px}.platform-bar-row span{color:#7b8494}.platform-track{height:9px;border-radius:999px;background:#eef1f5;overflow:hidden}.platform-track i{display:block;height:100%;width:0;border-radius:inherit;background:linear-gradient(90deg,#111827,#b79a68);transition:width .5s ease}.platform-stat-list{display:grid;gap:0;margin-top:16px}.platform-stat{display:flex;align-items:center;justify-content:space-between;padding:13px 0;border-bottom:1px solid #eef0f3;font-size:13px}.platform-stat:last-child{border-bottom:0}.platform-stat span{color:#7b8494}.platform-stat b{font-weight:800}.platform-table-card{margin-top:15px;padding:0;overflow:hidden}.platform-toolbar{display:flex;align-items:center;gap:10px;padding:14px;border-bottom:1px solid #edf0f3}.platform-search{flex:1;min-height:44px;border:1px solid #e0e4ea;border-radius:12px;padding:11px 13px;outline:none}.platform-search:focus{border-color:#98a2b3;box-shadow:0 0 0 4px rgba(16,24,40,.05)}.platform-refresh{border:1px solid #111827;background:#111827;color:#fff;border-radius:12px;padding:11px 14px;font-weight:700}.platform-table{width:100%;border-collapse:collapse;min-width:850px}.platform-table th,.platform-table td{padding:14px;border-bottom:1px solid #eef0f3;text-align:left;font-size:12px}.platform-table th{background:#f8f9fb;color:#7b8494;font-size:9px;text-transform:uppercase;letter-spacing:.1em}.platform-table tr:hover td{background:#fafbfc}.platform-status{display:inline-flex;padding:5px 8px;border-radius:999px;background:#f2f4f7;color:#667085;font-size:10px;font-weight:800}.platform-status.active{background:#ecfdf3;color:#027a48}.platform-status.suspended{background:#fef3f2;color:#b42318}.platform-empty{text-align:center;color:#98a2b3;padding:30px}.platform-loading{padding:25px;text-align:center;color:#98a2b3}.platform-access-denied{min-height:100vh;display:grid;place-items:center;padding:24px;background:#f4f6f8}.platform-denied-card{width:min(100%,460px);padding:30px;border-radius:24px;background:#fff;border:1px solid #e4e7ec;box-shadow:0 25px 70px rgba(15,23,42,.10);text-align:center}.platform-denied-card h2{margin:10px 0 6px}.platform-denied-card p{color:#7b8494;line-height:1.6;font-size:13px}.platform-denied-card button{border:0;border-radius:12px;background:#111827;color:#fff;padding:12px 18px;font-weight:750}
 @media(max-width:1100px){.platform-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.platform-grid{grid-template-columns:1fr}}@media(max-width:760px){.platform-sidebar{width:286px;transform:translateX(-100%);transition:transform .22s ease}.platform-sidebar.open{transform:translateX(0)}.platform-main{margin-left:0}.platform-topbar{height:68px;padding:0 14px}.platform-menu{display:block}.platform-user-meta{display:none}.platform-page{padding:25px 14px 55px}.platform-page h1{font-size:30px}.platform-kpis{grid-template-columns:1fr 1fr;gap:10px;margin-top:20px}.platform-kpi{min-height:112px;padding:15px;border-radius:17px}.platform-kpi .k-value{font-size:22px}.platform-grid{gap:11px}.platform-card{padding:17px}.platform-table-card{overflow:hidden}.platform-toolbar{flex-wrap:wrap}.platform-search{min-width:100%}.platform-side-foot{display:none}}@media(max-width:390px){.platform-kpis{gap:8px}.platform-kpi{padding:13px}.platform-kpi .k-value{font-size:19px}}
 
+
+/* ================= OWNER WORKSPACE — ALIGNED WITH SUPER ADMIN ================= */
+#app{min-height:100vh;background:radial-gradient(900px 450px at 80% -10%,rgba(183,154,104,.10),transparent 60%),linear-gradient(180deg,#f8fafc 0%,#f3f5f8 58%,#eef1f5 100%);color:#101828}
+#app .sidebar{width:286px;padding:22px 15px;background:linear-gradient(180deg,#08101d,#0b1424 55%,#070d17);box-shadow:20px 0 60px rgba(4,10,20,.13);color:#fff}
+#app .side-brand{padding:9px 13px 25px;border-bottom:1px solid rgba(255,255,255,.07);margin-bottom:16px}
+#app .side-brand b{font-size:25px;letter-spacing:-1px}
+#app .side-brand small{display:block;color:#8f9aac;font-size:10px;letter-spacing:.09em;text-transform:uppercase;margin-top:4px}
+.owner-badge{display:inline-flex;margin-top:13px;padding:6px 9px;border:1px solid rgba(183,154,104,.35);background:rgba(183,154,104,.11);color:#d7bb87;border-radius:999px;font-size:10px;font-weight:800}
+#app .nav{gap:6px}
+#app .nav button{display:flex;align-items:center;gap:12px;width:100%;min-height:48px;padding:11px 13px;border-radius:14px;color:#9eabbd;font-weight:650;position:relative}
+#app .nav button:hover{background:rgba(255,255,255,.055);color:#fff}
+#app .nav button.active{background:linear-gradient(135deg,#202d41,#172235);color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 10px 24px rgba(0,0,0,.14)}
+#app .nav button.active:before{content:"";position:absolute;left:0;width:3px;height:26px;border-radius:3px;background:#b79a68}
+.owner-nav-icon{width:28px;height:28px;display:grid;place-items:center;border-radius:9px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);font-size:13px;flex:0 0 28px}
+#app .nav button.active .owner-nav-icon{background:rgba(183,154,104,.13);color:#e3c994;border-color:rgba(183,154,104,.25)}
+.owner-side-foot{position:absolute;left:28px;right:28px;bottom:22px;border-top:1px solid rgba(255,255,255,.07);padding-top:15px;color:#8c97a9;font-size:10px}.owner-side-foot b{display:block;color:#e0e5ed;margin-bottom:4px}
+#app .main{margin-left:286px}
+#app .topbar{height:78px;padding:0 34px;background:rgba(255,255,255,.88);backdrop-filter:blur(22px);border-bottom:1px solid #e5e8ed}
+.owner-top-left{display:flex;align-items:center;gap:12px}.owner-context{display:block;color:#8a93a2;font-size:10px;margin-top:2px}
+.owner-user-meta{text-align:right}.owner-user-meta b{display:block;font-size:12px}.owner-user-meta span{display:block;color:#8a93a2;font-size:10px;margin-top:2px}
+#app .top-right{gap:10px}.owner-plan{background:#f7f2e9!important;color:#846b3e!important;border:1px solid #eee2cc}
+#app .avatar{width:40px;height:40px;border-radius:13px;background:linear-gradient(145deg,#1d293d,#0b1220)}
+#app .logout{border:1px solid #e1e5eb;border-radius:12px;padding:9px 13px;font-weight:700}
+#app .page{max-width:1600px;padding:36px 34px 70px}
+.owner-hero{display:flex;justify-content:space-between;align-items:flex-start;gap:20px}.owner-hero h1{font-size:38px;letter-spacing:-1.7px}.owner-sub{color:#7b8494;font-size:13px;margin-top:7px}.owner-live{padding:7px 10px;border-radius:999px;background:#ecfdf3;color:#027a48;font-size:10px;font-weight:800;white-space:nowrap}
+#app .cards{grid-template-columns:repeat(4,minmax(0,1fr));gap:15px;margin-top:28px}
+#app .card{background:rgba(255,255,255,.96);border:1px solid #e2e6ec;border-radius:20px;box-shadow:0 14px 40px rgba(15,23,42,.055)}
+.owner-kpi{min-height:132px;padding:20px}.owner-kpi .label{font-size:10px;letter-spacing:.1em}.owner-kpi .value{font-size:29px;letter-spacing:-1px;margin-top:12px}.owner-kpi:nth-child(1){border-top:2px solid #111827}.owner-kpi:nth-child(2){border-top:2px solid #b79a68}.owner-kpi:nth-child(3){border-top:2px solid #087443}.owner-kpi:nth-child(4){border-top:2px solid #64748b}
+.owner-grid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(300px,.8fr);gap:15px;margin-top:15px}.owner-card{padding:21px}.owner-card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:15px}.owner-card-head b{font-size:16px}.owner-card-head span{display:block;color:#8a93a2;font-size:11px;margin-top:4px}.owner-chip{padding:7px 10px;border-radius:999px;background:#f7f2e9;border:1px solid #eee2cc;color:#846b3e;font-size:10px;font-weight:800}.owner-actions{display:grid;gap:0;margin-top:16px}.owner-action{display:flex;align-items:center;justify-content:space-between;width:100%;padding:14px 0;border:0;border-bottom:1px solid #eef0f3;background:transparent;text-align:left;cursor:pointer}.owner-action:last-child{border-bottom:0}.owner-action span{color:#7b8494}.owner-action b{font-weight:800}
+.owner-table-card{margin-top:15px;padding:0;overflow:hidden}.owner-table{width:100%;border-collapse:collapse;min-width:760px}.owner-table th,.owner-table td{padding:13px 14px;border-bottom:1px solid #eef0f3;text-align:left;font-size:12px}.owner-table th{background:#f8f9fb;color:#7b8494;font-size:9px;text-transform:uppercase;letter-spacing:.1em}
+.owner-section-title{font-size:38px;letter-spacing:-1.7px;margin:0}.owner-section-sub{color:#7b8494;font-size:13px;margin-top:7px}.owner-toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:22px 0 14px}.owner-toolbar input,.owner-toolbar select{min-height:44px;border:1px solid #e0e4ea;border-radius:12px;padding:11px 13px;background:#fff}.owner-toolbar input{flex:1;min-width:220px}.owner-refresh{border:1px solid #111827;background:#111827;color:#fff;border-radius:12px;padding:11px 14px;font-weight:700}
+.owner-empty{padding:30px;text-align:center;color:#98a2b3}.owner-error{padding:20px;color:#b42318}
+@media(max-width:1100px){#app .cards{grid-template-columns:repeat(2,minmax(0,1fr))}.owner-grid{grid-template-columns:1fr}}
+@media(max-width:760px){#app .sidebar{width:286px;transform:translateX(-100%);transition:transform .22s ease}#app .sidebar.open{transform:translateX(0)}#app .main{margin-left:0}#app .topbar{height:68px;padding:0 14px}.owner-user-meta{display:none}#app .page{padding:25px 14px 55px}.owner-hero h1,.owner-section-title{font-size:30px}#app .cards{grid-template-columns:1fr 1fr;gap:10px;margin-top:20px}.owner-kpi{min-height:112px;padding:15px;border-radius:17px}.owner-kpi .value{font-size:22px}.owner-side-foot{display:none}}
+@media(max-width:390px){#app .cards{gap:8px}.owner-kpi{padding:13px}.owner-kpi .value{font-size:19px}}
 </style>
 </head>
 <body>
@@ -193,40 +228,45 @@ h1{margin:0;font-size:28px;letter-spacing:-.8px}.desc{color:var(--muted);font-si
 
 <section id="app" class="app hidden">
   <aside id="sidebar" class="sidebar">
-    <div class="side-brand"><b>Tokokula</b><small>Enterprise POS</small></div>
+    <div class="side-brand"><b>Tokokula</b><small>Enterprise POS</small><span class="owner-badge">OWNER WORKSPACE</span></div>
     <nav class="nav">
-      <button class="active" data-page="dashboard" data-permission="dashboard.view">Dashboard</button>
-      <button data-page="pos" data-permission="sales.view">POS</button>
-      <button data-page="inventory" data-permission="inventory.view">Inventory</button>
-      <button data-page="customers" data-permission="customer.view">Customers</button>
-      <button data-page="purchases" data-permission="inventory.view">Purchase</button>
-      <button data-page="finance" data-permission="settings.view">Finance</button>
-      <button data-page="reports" data-permission="reports.view">Reports</button>
-      <button data-page="master" data-permission="product.manage">Master Data</button>
-      <button data-page="settings" data-permission="settings.view">Settings</button>
+      <button class="active" data-page="dashboard" data-permission="dashboard.view"><span class="owner-nav-icon">⌂</span><span>Dashboard</span></button>
+      <button data-page="pos" data-permission="sales.view"><span class="owner-nav-icon">▣</span><span>Point of Sale</span></button>
+      <button data-page="inventory" data-permission="inventory.view"><span class="owner-nav-icon">▤</span><span>Inventory</span></button>
+      <button data-page="customers" data-permission="customer.view"><span class="owner-nav-icon">♙</span><span>Customers</span></button>
+      <button data-page="purchases" data-permission="inventory.view"><span class="owner-nav-icon">↙</span><span>Purchase</span></button>
+      <button data-page="finance" data-permission="settings.view"><span class="owner-nav-icon">Rp</span><span>Finance</span></button>
+      <button data-page="reports" data-permission="reports.view"><span class="owner-nav-icon">≋</span><span>Reports</span></button>
+      <button data-page="master" data-permission="product.manage"><span class="owner-nav-icon">◇</span><span>Master Data</span></button>
+      <button data-page="settings" data-permission="settings.view"><span class="owner-nav-icon">⚙</span><span>Team & Settings</span></button>
     </nav>
+    <div class="owner-side-foot"><b>Tokokula Owner</b>Business management workspace</div>
   </aside>
 
   <main class="main">
     <header class="topbar">
-      <div class="top-left"><button id="mobileMenu" class="mobile-menu">☰</button><strong id="topTitle">Dashboard</strong></div>
-      <div class="top-right"><span id="plan" class="pill">Loading...</span><div id="avatar" class="avatar">U</div><button id="logout" class="logout">Keluar</button></div>
+      <div class="top-left owner-top-left"><button id="mobileMenu" class="mobile-menu">☰</button><div><strong id="topTitle">Dashboard</strong><span class="owner-context">Owner Workspace</span></div></div>
+      <div class="top-right"><span id="plan" class="pill owner-plan">Loading...</span><div class="owner-user-meta"><b id="ownerEmail">Owner</b><span>Pemilik Bisnis</span></div><div id="avatar" class="avatar">U</div><button id="logout" class="logout">Keluar</button></div>
     </header>
 
     <div class="page">
       <section id="dashboard">
-        <h1>Dashboard</h1><div class="subtitle">Ringkasan bisnis Tokokula</div>
-        <div class="cards">
-          <div class="card"><div class="label">Revenue</div><div id="revenue" class="value">Rp0</div></div>
-          <div class="card"><div class="label">HPP</div><div id="cogs" class="value">Rp0</div></div>
-          <div class="card"><div class="label">Net Profit</div><div id="profit" class="value">Rp0</div></div>
-          <div class="card"><div class="label">Piutang</div><div id="receivable" class="value">Rp0</div></div>
-        </div>
-        <div class="grid">
-          <div class="card"><b>Financial Snapshot</b><div id="financial" style="margin-top:17px" class="rows">Memuat...</div></div>
-          <div class="card"><b>Subscription</b><div id="subscription" style="margin-top:17px">Memuat...</div></div>
-        </div>
-      </section>
+  <div class="owner-hero"><div><h1>Business Dashboard</h1><div class="owner-sub">Pusat kendali bisnis Anda — penjualan, keuangan, persediaan, dan akses tim.</div></div><span class="owner-live">● LIVE</span></div>
+  <div class="cards">
+    <div class="card owner-kpi"><div class="label">Revenue</div><div id="revenue" class="value">Rp0</div></div>
+    <div class="card owner-kpi"><div class="label">HPP</div><div id="cogs" class="value">Rp0</div></div>
+    <div class="card owner-kpi"><div class="label">Net Profit</div><div id="profit" class="value">Rp0</div></div>
+    <div class="card owner-kpi"><div class="label">Piutang</div><div id="receivable" class="value">Rp0</div></div>
+  </div>
+  <div class="owner-grid">
+    <div class="card owner-card"><div class="owner-card-head"><div><b>Financial Snapshot</b><span>Ringkasan periode berjalan</span></div><span class="owner-chip">REAL-TIME</span></div><div id="financial" style="margin-top:17px" class="rows">Memuat...</div></div>
+    <div class="card owner-card"><div class="owner-card-head"><div><b>Subscription</b><span>Status paket Tokokula</span></div></div><div id="subscription" style="margin-top:17px">Memuat...</div></div>
+  </div>
+  <div class="owner-grid">
+    <div class="card owner-card"><div class="owner-card-head"><div><b>Quick Actions</b><span>Akses cepat operasional</span></div></div><div class="owner-actions"><button class="owner-action" data-owner-jump="pos"><span>Buka Point of Sale</span><b>→</b></button><button class="owner-action" data-owner-jump="inventory"><span>Kelola Inventory</span><b>→</b></button><button class="owner-action" data-owner-jump="master"><span>Master Data</span><b>→</b></button></div></div>
+    <div class="card owner-card"><div class="owner-card-head"><div><b>Team & Access</b><span>Kelola anggota organisasi</span></div></div><div class="owner-actions"><button class="owner-action" data-owner-jump="settings"><span>User & Role Management</span><b>→</b></button><button class="owner-action" data-owner-jump="reports"><span>Reports & Analytics</span><b>→</b></button></div></div>
+  </div>
+</section>
 
       <section id="module" class="module hidden">
         <div id="genericModule">
@@ -373,7 +413,27 @@ h1{margin:0;font-size:28px;letter-spacing:-.8px}.desc{color:var(--muted);font-si
           </div>
         </div>
 
-        <div id="usersModule" class="hidden">
+        <div id="customersModule" class="hidden">
+  <h1 class="owner-section-title">Customers</h1><div class="owner-section-sub">Daftar pelanggan aktif dan ringkasan poin.</div>
+  <div class="owner-toolbar"><input id="customerSearch" placeholder="Cari nama / telepon..."><button id="customerRefresh" class="owner-refresh">↻ Refresh</button></div>
+  <div class="card owner-table-card"><div style="overflow:auto"><table class="owner-table"><thead><tr><th>Nama</th><th>Telepon</th><th>Poin</th><th>Status</th></tr></thead><tbody id="customerBody"></tbody></table></div></div>
+</div>
+<div id="purchasesModule" class="hidden">
+  <h1 class="owner-section-title">Purchase & Supplier</h1><div class="owner-section-sub">Ringkasan purchase order dan hutang supplier dari data organisasi.</div>
+  <div class="owner-toolbar"><button id="purchaseRefresh" class="owner-refresh">↻ Refresh</button></div>
+  <div class="card owner-table-card"><div style="overflow:auto"><table class="owner-table"><thead><tr><th>Purchase Order</th><th>Supplier</th><th>Status</th><th>Total</th><th>Tanggal</th></tr></thead><tbody id="purchaseBody"></tbody></table></div></div>
+</div>
+<div id="financeModule" class="hidden">
+  <h1 class="owner-section-title">Finance</h1><div class="owner-section-sub">Ringkasan arus nilai bisnis berdasarkan financial snapshot.</div>
+  <div class="cards" style="margin-top:22px"><div class="card owner-kpi"><div class="label">Revenue</div><div id="finRevenue" class="value">Rp0</div></div><div class="card owner-kpi"><div class="label">Expense</div><div id="finExpense" class="value">Rp0</div></div><div class="card owner-kpi"><div class="label">Cash</div><div id="finCash" class="value">Rp0</div></div><div class="card owner-kpi"><div class="label">Payable</div><div id="finPayable" class="value">Rp0</div></div></div>
+  <div class="card owner-card" style="margin-top:15px"><div class="owner-card-head"><div><b>Financial Detail</b><span>Periode bulan berjalan</span></div></div><div id="financeDetail" style="margin-top:17px" class="rows"></div></div>
+</div>
+<div id="reportsModule" class="hidden">
+  <h1 class="owner-section-title">Reports & Analytics</h1><div class="owner-section-sub">Analitik penjualan dan produk terlaris untuk periode bulan berjalan.</div>
+  <div class="cards" style="margin-top:22px"><div class="card owner-kpi"><div class="label">Sales</div><div id="reportSales" class="value">Rp0</div></div><div class="card owner-kpi"><div class="label">Transactions</div><div id="reportTransactions" class="value">0</div></div><div class="card owner-kpi"><div class="label">Customers</div><div id="reportCustomers" class="value">0</div></div><div class="card owner-kpi"><div class="label">Top Products</div><div id="reportTopCount" class="value">0</div></div></div>
+  <div class="owner-grid"><div class="card owner-card"><div class="owner-card-head"><div><b>Sales Summary</b><span>Periode bulan berjalan</span></div></div><div id="reportSalesDetail" style="margin-top:17px" class="rows"></div></div><div class="card owner-card"><div class="owner-card-head"><div><b>Top Products</b><span>Produk terlaris</span></div></div><div id="reportTopProducts" style="margin-top:17px" class="rows"></div></div></div>
+</div>
+<div id="usersModule" class="hidden">
           <h1>User & Role Management</h1>
           <div class="subtitle">Kelola anggota organisasi, role, outlet, dan status akses.</div>
           <div class="user-toolbar">
@@ -624,7 +684,7 @@ async function loginWithGoogle(){
     }
 
     btn.innerHTML='<span class="google-icon">G</span><span>Menghubungkan ke Google...</span>';
-    const redirectTo=window.location.origin+window.location.pathname;
+    const redirectTo=(window.location.protocol==='http:'||window.location.protocol==='https:')?window.location.origin+window.location.pathname:'https://tokokula.vercel.app/';
     const {error}=await supabaseClient.auth.signInWithOAuth({
       provider:'google',
       options:{
@@ -741,7 +801,9 @@ async function logout(){await supabaseClient.auth.signOut();State.session=null;S
 async function boot(){
   $('auth').classList.add('hidden');$('app').classList.remove('hidden');
   $('avatar').textContent=(State.user?.email||'U').charAt(0).toUpperCase();
+  $('ownerEmail').textContent=State.user?.email||'Owner';
   try{
+    await completePendingSetup();
     await loadSubscription();
     await loadDashboard();
     await permissionGuards();
@@ -774,21 +836,30 @@ async function permissionGuards(){
 }
 function page(name){
   document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===name));
-  const titles={dashboard:'Dashboard',pos:'Point of Sale',inventory:'Inventory',customers:'Customers',purchases:'Purchase & Supplier',finance:'Finance',reports:'Reports & Analytics',settings:'Settings',master:'Master Data',inventory:'Inventory'};
+  const titles={dashboard:'Dashboard',pos:'Point of Sale',inventory:'Inventory',customers:'Customers',purchases:'Purchase & Supplier',finance:'Finance',reports:'Reports & Analytics',settings:'Team & Settings',master:'Master Data'};
   if(name==='dashboard'){
     $('dashboard').classList.remove('hidden');$('module').classList.add('hidden');
   }else{
     $('dashboard').classList.add('hidden');$('module').classList.remove('hidden');
     $('moduleTitle').textContent=titles[name]||name;
-    $('genericModule').classList.toggle('hidden',name==='pos'||name==='settings'||name==='master');
+    const realModules=['pos','settings','master','inventory','customers','purchases','finance','reports'];
+    $('genericModule').classList.add('hidden');
     $('posModule').classList.toggle('hidden',name!=='pos');
     $('usersModule').classList.toggle('hidden',name!=='settings');
     $('masterModule').classList.toggle('hidden',name!=='master');
     $('inventoryModule').classList.toggle('hidden',name!=='inventory');
+    $('customersModule').classList.toggle('hidden',name!=='customers');
+    $('purchasesModule').classList.toggle('hidden',name!=='purchases');
+    $('financeModule').classList.toggle('hidden',name!=='finance');
+    $('reportsModule').classList.toggle('hidden',name!=='reports');
     if(name==='pos') loadPOS();
     if(name==='settings') loadUsers();
     if(name==='master') loadMasterData();
     if(name==='inventory') loadInventory();
+    if(name==='customers') loadCustomersModule();
+    if(name==='purchases') loadPurchasesModule();
+    if(name==='finance') loadFinanceModule();
+    if(name==='reports') loadReportsModule();
   }
   $('topTitle').textContent=titles[name]||name;
 }
@@ -1043,6 +1114,24 @@ async function revokeUser(id){
   catch(e){toast(e.message||'Gagal menonaktifkan user.')}
 }
 
+/* ================= OWNER BUSINESS MODULES ================= */
+let CustomerModuleState={rows:[]};
+async function loadCustomersModule(){
+  try{const {data,error}=await supabaseClient.from('customers').select('id,name,phone,points,is_active').order('name').limit(500);if(error)throw error;CustomerModuleState.rows=data||[];renderCustomersModule()}
+  catch(e){$('customerBody').innerHTML=`<tr><td colspan="4" class="owner-error">${esc(businessError(e,'Customers belum dapat dimuat.'))}</td></tr>`}
+}
+function renderCustomersModule(){const q=($('customerSearch').value||'').toLowerCase().trim();const rows=CustomerModuleState.rows.filter(x=>!q||[x.name,x.phone].some(v=>String(v||'').toLowerCase().includes(q)));$('customerBody').innerHTML=rows.map(x=>`<tr><td><b>${esc(x.name||'—')}</b></td><td>${esc(x.phone||'—')}</td><td>${platformFormat(x.points)}</td><td>${x.is_active?'Aktif':'Nonaktif'}</td></tr>`).join('')||'<tr><td colspan="4" class="owner-empty">Belum ada pelanggan.</td></tr>'}
+async function loadPurchasesModule(){
+  try{const {data,error}=await supabaseClient.from('purchase_orders').select('id,order_no,status,total_amount,created_at,supplier_id,suppliers(name)').order('created_at',{ascending:false}).limit(200);if(error)throw error;const rows=data||[];$('purchaseBody').innerHTML=rows.map(x=>`<tr><td><b>${esc(x.order_no||x.id)}</b></td><td>${esc(x.suppliers?.name||'—')}</td><td>${esc(x.status||'—')}</td><td>${rupiah(x.total_amount)}</td><td>${esc(platformDate(x.created_at))}</td></tr>`).join('')||'<tr><td colspan="5" class="owner-empty">Belum ada purchase order.</td></tr>'}
+  catch(e){$('purchaseBody').innerHTML=`<tr><td colspan="5" class="owner-error">${esc(businessError(e,'Purchase belum dapat dimuat.'))}</td></tr>`}
+}
+async function loadFinanceModule(){
+  try{const r=monthRange(),f=await API.financialSnapshot(r.from,r.to);$('finRevenue').textContent=rupiah(f?.revenue);$('finExpense').textContent=rupiah(f?.expense);$('finCash').textContent=rupiah(f?.cash);$('finPayable').textContent=rupiah(f?.payable);$('financeDetail').innerHTML=[['Revenue',f?.revenue],['HPP',f?.cogs],['Expense',f?.expense],['Net Profit',f?.net_profit],['Cash',f?.cash],['Bank / E-Wallet',f?.bank_ewallet],['Receivable',f?.receivable],['Payable',f?.payable]].map(x=>`<div class="row"><span>${x[0]}</span><b>${rupiah(x[1])}</b></div>`).join('')}catch(e){$('financeDetail').innerHTML=`<div class="owner-error">${esc(businessError(e,'Finance belum dapat dimuat.'))}</div>`}
+}
+async function loadReportsModule(){
+  try{const r=monthRange();const [sales,top,cust]=await Promise.all([API.salesSummary(r.from,r.to),API.topProducts(r.from,r.to,10),API.customerSummary(r.from,r.to)]);const s=sales||{};$('reportSales').textContent=rupiah(s.revenue??s.total_sales??s.sales);$('reportTransactions').textContent=platformFormat(s.transactions??s.transaction_count??s.total_transactions);$('reportCustomers').textContent=platformFormat(cust?.customers??cust?.total_customers??cust?.count);$('reportTopCount').textContent=platformFormat((top||[]).length);$('reportSalesDetail').innerHTML=Object.entries(s).slice(0,8).map(([k,v])=>`<div class="row"><span>${esc(k.replaceAll('_',' '))}</span><b>${typeof v==='number'?rupiah(v):esc(v??'—')}</b></div>`).join('')||'<div class="owner-empty">Belum ada data.</div>';$('reportTopProducts').innerHTML=(top||[]).map(x=>`<div class="row"><span>${esc(x.product_name||x.name||'—')}</span><b>${platformFormat(x.quantity??x.qty??0)}</b></div>`).join('')||'<div class="owner-empty">Belum ada produk.</div>'}catch(e){$('reportSalesDetail').innerHTML=`<div class="owner-error">${esc(businessError(e,'Reports belum dapat dimuat.'))}</div>`}
+}
+
 /* ================= POS FRONTEND ================= */
 async function loadPOS(){
   try{
@@ -1212,8 +1301,16 @@ $('opnameForm').addEventListener('submit',submitInventoryOpname);
 document.querySelectorAll('.inventory-tab').forEach(b=>b.addEventListener('click',()=>switchInventoryTab(b.dataset.invTab)));
 document.querySelectorAll('.master-tab').forEach(b=>b.addEventListener('click',()=>switchMasterTab(b.dataset.masterTab)));
 
+document.querySelectorAll('[data-owner-jump]').forEach(b=>b.addEventListener('click',()=>page(b.dataset.ownerJump)));
+$('customerSearch')?.addEventListener('input',renderCustomersModule);
+$('customerRefresh')?.addEventListener('click',loadCustomersModule);
+$('purchaseRefresh')?.addEventListener('click',loadPurchasesModule);
+
 supabaseClient.auth.onAuthStateChange((event,session)=>{
-  if(event==='SIGNED_OUT'){$('app').classList.add('hidden');$('auth').classList.remove('hidden')}
+  if(event==='SIGNED_OUT'){
+    PlatformState.isAdmin=false;State.session=null;State.user=null;
+    $('app').classList.add('hidden');$('platformApp').classList.add('hidden');$('platformDenied').classList.add('hidden');$('auth').classList.remove('hidden');setAuthMode('login');
+  }
 });
 
 
