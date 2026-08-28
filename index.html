@@ -387,6 +387,11 @@ tr:last-child td{border-bottom:0!important}
 #reportCards,#customerReportCards{grid-template-columns:repeat(4,minmax(0,1fr))}
 #customerReportBody .muted{font-size:11px;color:#98a2b3;margin-top:2px}
 @media(max-width:760px){#reportCards,#customerReportCards{grid-template-columns:1fr 1fr}}
+</style><style id="tokokula-report-fixed-v11">
+#reportCards,#customerReportCards{grid-template-columns:repeat(4,minmax(0,1fr))}
+#customerReportCards:empty,#reportCards:empty{display:none}
+.integration-message{padding:16px;text-align:center;color:#667085}
+@media(max-width:760px){#reportCards,#customerReportCards{grid-template-columns:1fr 1fr}}
 </style></head>
 <body>
 
@@ -1215,7 +1220,7 @@ function page(name){
     if(name==='customers') loadCustomersModule();
     if(name==='purchases') loadPurchasesModule();
     if(name==='finance') loadFinanceModule();
-    if(name==='reports') loadReportsModule();
+    if(name==='reports'){ $('reportsModule').classList.remove('hidden'); loadReportsModule(); }
   }
   $('topTitle').textContent=titles[name]||name;
 }
@@ -1551,23 +1556,29 @@ async function loadFinanceModule(){
   try{const r=monthRange(),f=await API.financialSnapshot(r.from,r.to);$('finRevenue').textContent=rupiah(f?.revenue);$('finExpense').textContent=rupiah(f?.expense);$('finCash').textContent=rupiah(f?.cash);$('finPayable').textContent=rupiah(f?.payable);$('financeDetail').innerHTML=[['Penjualan',f?.revenue],['HPP / Modal Barang Terjual',f?.cogs],['Pengeluaran',f?.expense],['Laba Bersih',f?.net_profit],['Kas',f?.cash],['Bank / E-Wallet',f?.bank_ewallet],['Piutang',f?.receivable],['Utang',f?.payable]].map(x=>`<div class="row"><span>${x[0]}</span><b>${rupiah(x[1])}</b></div>`).join('')}catch(e){$('financeDetail').innerHTML=`<div class="owner-error">${esc(businessError(e,'Finance belum dapat dimuat.'))}</div>`}
 }
 async function loadReportsModule(){
-  const rr=range30();
-  if(!$('reportFrom').value)$('reportFrom').value=rr.from;
-  if(!$('reportTo').value)$('reportTo').value=rr.to;
+  const now=new Date(), end=new Date(now.getTime()-now.getTimezoneOffset()*60000);
+  const start=new Date(end); start.setDate(start.getDate()-29);
+  const iso=d=>d.toISOString().slice(0,10);
+  if(!$('reportFrom').value)$('reportFrom').value=iso(start);
+  if(!$('reportTo').value)$('reportTo').value=iso(end);
   const from=$('reportFrom').value,to=$('reportTo').value;
   if(!from||!to||from>to){
     $('reportCards').innerHTML='<div class="integration-error">Periode laporan tidak valid. Pilih tanggal mulai dan tanggal akhir yang benar.</div>';
     return;
   }
   try{
-    setLoading('reportCards');setLoading('customerReportCards','Memuat ringkasan pelanggan...');setLoading('customerReportBody');setLoading('topProductsBody');setLoading('cashierBody');
+    $('reportCards').innerHTML='<div class="integration-message">Memuat laporan...</div>';
+    $('customerReportCards').innerHTML='<div class="integration-message">Memuat data pelanggan...</div>';
+    $('customerReportBody').innerHTML='<tr><td colspan="4" class="integration-message">Memuat...</td></tr>';
+    $('topProductsBody').innerHTML='<tr><td colspan="3" class="integration-message">Memuat...</td></tr>';
+    $('cashierBody').innerHTML='<tr><td colspan="3" class="integration-message">Memuat...</td></tr>';
     const [sales,top,cashier,inventory,customerSummary,customerRows]=await Promise.all([
       API.salesSummary(from,to),API.topProducts(from,to,10),API.salesByCashier(from,to,50),API.inventorySummary(),
       API.customerSummary(from,to),
       supabaseClient.from('sales').select('customer_id,total,completed_at,customers:customer_id(id,name,phone)')
         .eq('status','completed').gte('completed_at',from+'T00:00:00').lt('completed_at',to+'T23:59:59.999').not('customer_id','is',null)
     ]);
-    if(customerRows.error)throw customerRows.error;
+    const customerData=customerRows.error?[]:(customerRows.data||[]);
     const s=Array.isArray(sales)?sales[0]:sales||{},inv=Array.isArray(inventory)?inventory[0]:inventory||{},cs=Array.isArray(customerSummary)?customerSummary[0]:customerSummary||{};
     const totalSales=Number(s.net_sales??s.gross_sales??s.total_sales??s.sales??0)||0;
     const transactionCount=Number(s.sales_count??s.transaction_count??s.total_transactions??s.transactions??0)||0;
@@ -1578,7 +1589,7 @@ async function loadReportsModule(){
     $('customerReportCards').innerHTML=[['Pelanggan Aktif',cs.total_customers||0],['Pelanggan Berbelanja',cs.buyers||0],['Transaksi dengan Pelanggan',cs.orders_with_customer||0],['Penjualan dari Pelanggan',cs.customer_revenue||0]]
       .map(x=>`<div class="integration-card"><div class="label">${x[0]}</div><div class="big">${x[0]==='Penjualan dari Pelanggan'?rupiah(x[1]):Number(x[1]||0).toLocaleString('id-ID')}</div></div>`).join('');
     const grouped={};
-    (customerRows.data||[]).forEach(row=>{
+    (customerData||[]).forEach(row=>{
       const c=Array.isArray(row.customers)?row.customers[0]:row.customers;
       if(!c?.id)return;
       if(!grouped[c.id])grouped[c.id]={name:c.name||'Pelanggan',phone:c.phone||'',orders:0,total:0};
@@ -1595,6 +1606,8 @@ async function loadReportsModule(){
     if($('customerReportBody'))$('customerReportBody').innerHTML=`<tr><td colspan="4" class="integration-error">${esc(businessError(e,'Data pelanggan belum dapat dimuat.'))}</td></tr>`;
   }
 }
+
+$('reportsRefresh').addEventListener('click',loadReportsModule);
 
 async function loadPOS(){
   try{
