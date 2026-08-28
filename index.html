@@ -1827,8 +1827,9 @@ function setAuthMode(mode){
   const desc=$('authDesc');
 
   if(mode==='register'){
-    $('googleLoginBtn').classList.add('hidden');
-    $('googleDivider').classList.add('hidden');
+    $('googleLoginBtn').classList.remove('hidden');
+    $('googleDivider').classList.remove('hidden');
+    $('googleLoginBtn').innerHTML='<span class="google-icon">G</span><span>Daftar dengan Google</span>';
     title.textContent='Buat akun';
     desc.textContent='Daftar untuk mulai menggunakan Tokokula.';
     nameField.classList.remove('hidden');
@@ -1843,6 +1844,7 @@ function setAuthMode(mode){
   }else{
     $('googleLoginBtn').classList.remove('hidden');
     $('googleDivider').classList.remove('hidden');
+    $('googleLoginBtn').innerHTML='<span class="google-icon">G</span><span>Lanjut dengan Google</span>';
     title.textContent='Selamat datang';
     desc.textContent='Masuk untuk mengelola bisnis Anda.';
     nameField.classList.add('hidden');
@@ -1954,7 +1956,7 @@ async function loginWithGoogle(){
   $('authError').classList.add('hidden');
   const btn=$('googleLoginBtn');
   btn.disabled=true;
-  btn.innerHTML='<span class="google-icon">G</span><span>Menghubungkan ke Google...</span>';
+  btn.innerHTML='<span class="google-icon">G</span><span>'+(authMode==='register'?'Membuka pendaftaran Google...':'Menghubungkan ke Google...')+'</span>';
   try{
     const redirectTo=window.location.origin + window.location.pathname;
     const {error}=await supabaseClient.auth.signInWithOAuth({
