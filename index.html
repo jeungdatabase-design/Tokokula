@@ -132,6 +132,24 @@ h1{margin:0;font-size:28px;letter-spacing:-.8px}.desc{color:var(--muted);font-si
 @media(max-width:760px){#app .sidebar{width:286px;transform:translateX(-100%);transition:transform .22s ease}#app .sidebar.open{transform:translateX(0)}#app .main{margin-left:0}#app .topbar{height:68px;padding:0 14px}.owner-user-meta{display:none}#app .page{padding:25px 14px 55px}.owner-hero h1,.owner-section-title{font-size:30px}#app .cards{grid-template-columns:1fr 1fr;gap:10px;margin-top:20px}.owner-kpi{min-height:112px;padding:15px;border-radius:17px}.owner-kpi .value{font-size:22px}}
 @media(max-width:390px){#app .cards{gap:8px}.owner-kpi{padding:13px}.owner-kpi .value{font-size:19px}}
 </style>
+
+<style id="tokokula-settings-chevron-premium">
+.settings-chevron{
+  flex:0 0 auto;
+  width:16px!important;
+  height:16px!important;
+  margin-left:auto;
+  opacity:.62;
+  transition:transform .22s ease,opacity .18s ease;
+  display:block;
+}
+[aria-expanded="true"] .settings-chevron,
+.is-open .settings-chevron,
+.open .settings-chevron{
+  transform:rotate(180deg);
+  opacity:.9;
+}
+</style>
 </head>
 <body>
 
@@ -258,7 +276,9 @@ h1{margin:0;font-size:28px;letter-spacing:-.8px}.desc{color:var(--muted);font-si
 
       <div class="nav-group" id="teamSettingsGroup">
         <button type="button" class="nav-group-toggle" id="teamSettingsToggle" aria-expanded="false">
-          <span class="owner-nav-icon">⚙</span><span>Tim & Pengaturan</span><span class="nav-chevron">⌄</span>
+          <span class="owner-nav-icon">⚙</span><span>Tim & Pengaturan</span><svg class="settings-chevron" width="16" height="16" viewBox="0 0 24 24"
+fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
         </button>
         <div class="nav-submenu" id="teamSettingsSubmenu">
           <button type="button" data-page="customers" data-permission="customer.view"><span class="submenu-dot"></span><span>Pelanggan</span></button>
