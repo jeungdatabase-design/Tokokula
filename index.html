@@ -392,7 +392,45 @@ tr:last-child td{border-bottom:0!important}
 #customerReportCards:empty,#reportCards:empty{display:none}
 .integration-message{padding:16px;text-align:center;color:#667085}
 @media(max-width:760px){#reportCards,#customerReportCards{grid-template-columns:1fr 1fr}}
-</style></head>
+</style>
+<style id="tokokula-report-premium-v12">
+.tk-report-page{max-width:1500px;margin:0 auto;padding-bottom:40px}
+.tk-report-hero{display:flex;justify-content:space-between;gap:28px;align-items:flex-end;padding:8px 0 24px}
+.tk-report-eyebrow{font-size:11px;font-weight:850;letter-spacing:.16em;color:#7b8794;margin-bottom:7px}
+.tk-report-hero h1{margin:0;font-size:32px;letter-spacing:-.04em;color:#111827}
+.tk-report-hero p{margin:8px 0 0;color:#667085;font-size:14px}
+.tk-report-filter{background:#fff;border:1px solid #e7eaf0;border-radius:18px;padding:13px 14px;box-shadow:0 8px 24px rgba(15,23,42,.05)}
+.tk-report-filter label{display:block;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:#8a94a6;margin:0 0 7px 2px}
+.tk-report-dates{display:flex;align-items:center;gap:8px}
+.tk-report-dates input{height:40px;border:1px solid #dfe4ec;border-radius:10px;padding:0 10px;color:#182230;background:#fbfcfe;font:inherit;font-size:12px}
+.tk-report-dates span{color:#98a2b3}
+.tk-report-refresh{height:40px;border:0;border-radius:10px;padding:0 14px;background:#111827;color:#fff;font-weight:800;cursor:pointer}
+.tk-report-refresh:hover{opacity:.9}
+.tk-report-section-title{display:flex;justify-content:space-between;align-items:end;margin:4px 0 11px}
+.tk-report-section-title b{display:block;font-size:17px;color:#182230;letter-spacing:-.02em}
+.tk-report-section-title span{display:block;margin-top:3px;font-size:12px;color:#8a94a6}
+.tk-report-gap{margin-top:25px}
+.tk-report-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.tk-report-kpis .integration-card{position:relative;border:1px solid #e8ebf1;border-radius:16px;background:#fff;padding:18px 19px;min-height:104px;box-shadow:0 5px 18px rgba(15,23,42,.04);overflow:hidden}
+.tk-report-kpis .integration-card:after{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:#d9dee7}
+.tk-report-kpis .label{font-size:11px;font-weight:750;color:#7b8794;text-transform:none;letter-spacing:.01em}
+.tk-report-kpis .big{font-size:23px;font-weight:900;color:#111827;margin-top:10px;letter-spacing:-.03em}
+.tk-report-panel{background:#fff;border:1px solid #e8ebf1;border-radius:18px;box-shadow:0 7px 22px rgba(15,23,42,.04);overflow:hidden}
+.tk-report-panel-head{padding:17px 19px;border-bottom:1px solid #edf0f4}
+.tk-report-panel-head b{display:block;font-size:15px;color:#182230}
+.tk-report-panel-head span{display:block;font-size:11px;color:#8a94a6;margin-top:3px}
+.tk-report-table-wrap{overflow:auto}
+.tk-report-table{width:100%;border-collapse:collapse;min-width:520px}
+.tk-report-table th{background:#fafbfc;color:#7b8794;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.07em;font-weight:850;padding:12px 18px;white-space:nowrap}
+.tk-report-table td{padding:14px 18px;border-top:1px solid #f0f2f5;color:#344054;font-size:12px;white-space:nowrap}
+.tk-report-table tbody tr:hover{background:#fafcff}
+.tk-report-table td b{color:#182230}
+.tk-report-table .muted{font-size:10px;color:#98a2b3;margin-top:3px}
+.tk-report-two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+@media(max-width:900px){.tk-report-hero{align-items:stretch;flex-direction:column}.tk-report-filter{width:100%;box-sizing:border-box}.tk-report-kpis{grid-template-columns:1fr 1fr}.tk-report-two-col{grid-template-columns:1fr}}
+@media(max-width:520px){.tk-report-page{padding:0 2px 30px}.tk-report-hero h1{font-size:27px}.tk-report-dates{display:grid;grid-template-columns:1fr auto 1fr}.tk-report-dates input{width:100%;box-sizing:border-box}.tk-report-refresh{grid-column:1/-1;width:100%}.tk-report-kpis{gap:8px}.tk-report-kpis .integration-card{padding:15px;min-height:96px}.tk-report-kpis .big{font-size:19px}.tk-report-section-title b{font-size:15px}}
+</style>
+</head>
 <body>
 
 <section id="auth" class="auth">
@@ -722,46 +760,56 @@ stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
   <div class="cards" style="margin-top:22px"><div class="card owner-kpi"><div class="label">Revenue</div><div id="finRevenue" class="value">Rp0</div></div><div class="card owner-kpi"><div class="label">Expense</div><div id="finExpense" class="value">Rp0</div></div><div class="card owner-kpi"><div class="label">Cash</div><div id="finCash" class="value">Rp0</div></div><div class="card owner-kpi"><div class="label">Payable</div><div id="finPayable" class="value">Rp0</div></div></div>
   <div class="card owner-card" style="margin-top:15px"><div class="owner-card-head"><div><b>Financial Detail</b><span>Periode bulan berjalan</span></div></div><div id="financeDetail" style="margin-top:17px" class="rows"></div></div>
 </div>
-<div id="reportsModule" class="hidden">
-  <h1 class="owner-section-title">Reports & Analytics</h1>
-  <div class="owner-section-sub">Laporan penjualan, pelanggan, produk dan kasir berdasarkan periode yang dipilih.</div>
-
-  <div class="integration-toolbar" style="margin-top:18px">
-    <input id="reportFrom" type="date">
-    <input id="reportTo" type="date">
-    <button id="reportsRefresh" class="btn dark-btn">↻ Muat Laporan</button>
+<div id="reportsModule" class="hidden tk-report-page">
+  <div class="tk-report-hero">
+    <div>
+      <div class="tk-report-eyebrow">ANALISIS BISNIS</div>
+      <h1>Laporan Bisnis</h1>
+      <p>Pantau penjualan, pelanggan, produk, dan kinerja kasir dalam satu tampilan.</p>
+    </div>
+    <div class="tk-report-filter">
+      <label>Periode laporan</label>
+      <div class="tk-report-dates">
+        <input id="reportFrom" type="date" aria-label="Tanggal mulai">
+        <span>—</span>
+        <input id="reportTo" type="date" aria-label="Tanggal akhir">
+        <button id="reportsRefresh" class="tk-report-refresh" type="button">↻ <span>Muat</span></button>
+      </div>
+    </div>
   </div>
 
-  <div class="integration-grid" id="reportCards" style="margin-top:14px"></div>
+  <div class="tk-report-section-title"><div><b>Ringkasan Penjualan</b><span>Gambaran utama bisnis pada periode terpilih</span></div></div>
+  <div class="tk-report-kpis" id="reportCards"></div>
 
-  <div class="integration-grid" id="customerReportCards" style="margin-top:14px"></div>
+  <div class="tk-report-section-title tk-report-gap"><div><b>Pelanggan</b><span>Aktivitas pelanggan yang benar-benar tercatat dalam transaksi</span></div></div>
+  <div class="tk-report-kpis" id="customerReportCards"></div>
 
-  <div class="card owner-card" style="margin-top:14px">
-    <div class="owner-card-head">
-      <div><b>Detail Pelanggan</b><span>Hanya transaksi selesai dengan pelanggan pada periode terpilih</span></div>
+  <div class="tk-report-panel tk-report-gap">
+    <div class="tk-report-panel-head">
+      <div><b>Aktivitas Pelanggan</b><span>Urut berdasarkan nilai belanja terbesar</span></div>
     </div>
-    <div class="table-scroll">
-      <table class="integration-table">
-        <thead><tr><th>Pelanggan</th><th>Transaksi</th><th>Belanja</th><th>Rata-rata</th></tr></thead>
+    <div class="tk-report-table-wrap">
+      <table class="tk-report-table">
+        <thead><tr><th>Pelanggan</th><th>Transaksi</th><th>Total Belanja</th><th>Rata-rata</th></tr></thead>
         <tbody id="customerReportBody"></tbody>
       </table>
     </div>
   </div>
 
-  <div class="owner-grid" style="margin-top:14px">
-    <div class="card owner-card">
-      <div class="owner-card-head"><div><b>Produk Terlaris</b><span>Periode terpilih</span></div></div>
-      <div class="table-scroll">
-        <table class="integration-table">
-          <thead><tr><th>Produk</th><th>Qty</th><th>Penjualan</th></tr></thead>
+  <div class="tk-report-two-col">
+    <div class="tk-report-panel">
+      <div class="tk-report-panel-head"><div><b>Produk Terlaris</b><span>Produk dengan penjualan tertinggi</span></div></div>
+      <div class="tk-report-table-wrap">
+        <table class="tk-report-table">
+          <thead><tr><th>Produk</th><th>Terjual</th><th>Penjualan</th></tr></thead>
           <tbody id="topProductsBody"></tbody>
         </table>
       </div>
     </div>
-    <div class="card owner-card">
-      <div class="owner-card-head"><div><b>Penjualan per Kasir</b><span>Periode terpilih</span></div></div>
-      <div class="table-scroll">
-        <table class="integration-table">
+    <div class="tk-report-panel">
+      <div class="tk-report-panel-head"><div><b>Kinerja Kasir</b><span>Penjualan berdasarkan kasir</span></div></div>
+      <div class="tk-report-table-wrap">
+        <table class="tk-report-table">
           <thead><tr><th>Kasir</th><th>Transaksi</th><th>Penjualan</th></tr></thead>
           <tbody id="cashierBody"></tbody>
         </table>
