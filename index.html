@@ -379,7 +379,11 @@ tr:last-child td{border-bottom:0!important}
   border-radius:99px;
 }
 </style>
-<style id="tokokula-superadmin-v8">.platform-id{color:#98a2b3;font-size:10px;margin-top:3px;word-break:break-all}.platform-action:disabled,.platform-refresh:disabled{opacity:.55;cursor:wait}</style></head>
+<style id="tokokula-customer-report-sync-v9">
+#customerReportCards{grid-template-columns:repeat(4,minmax(0,1fr))}
+#customerReportBody .muted{font-size:11px;color:#98a2b3;margin-top:2px}
+@media(max-width:760px){#customerReportCards{grid-template-columns:1fr 1fr}}
+</style></head>
 <body>
 
 <section id="auth" class="auth">
@@ -1501,51 +1505,41 @@ async function loadFinanceModule(){
   try{const r=monthRange(),f=await API.financialSnapshot(r.from,r.to);$('finRevenue').textContent=rupiah(f?.revenue);$('finExpense').textContent=rupiah(f?.expense);$('finCash').textContent=rupiah(f?.cash);$('finPayable').textContent=rupiah(f?.payable);$('financeDetail').innerHTML=[['Penjualan',f?.revenue],['HPP / Modal Barang Terjual',f?.cogs],['Pengeluaran',f?.expense],['Laba Bersih',f?.net_profit],['Kas',f?.cash],['Bank / E-Wallet',f?.bank_ewallet],['Piutang',f?.receivable],['Utang',f?.payable]].map(x=>`<div class="row"><span>${x[0]}</span><b>${rupiah(x[1])}</b></div>`).join('')}catch(e){$('financeDetail').innerHTML=`<div class="owner-error">${esc(businessError(e,'Finance belum dapat dimuat.'))}</div>`}
 }
 async function loadReportsModule(){
+  const rr=range30();
+  if(!$('reportFrom').value)$('reportFrom').value=rr.from;
+  if(!$('reportTo').value)$('reportTo').value=rr.to;
+  const from=$('reportFrom').value,to=$('reportTo').value;
   try{
-    const r=monthRange();
-    const [sales,top,cust]=await Promise.all([
-      API.salesSummary(r.from,r.to),
-      API.topProducts(r.from,r.to,10),
-      API.customerSummary(r.from,r.to)
+    setLoading('reportCards');setLoading('customerReportCards','Memuat ringkasan pelanggan...');setLoading('customerReportBody');setLoading('topProductsBody');setLoading('cashierBody');
+    const [sales,top,cashier,inventory,customerSummary,customerRows]=await Promise.all([
+      API.salesSummary(from,to),API.topProducts(from,to,10),API.salesByCashier(from,to,50),API.inventorySummary(),
+      API.customerSummary(from,to),
+      supabaseClient.from('sales').select('customer_id,total,completed_at,customers:customer_id(id,name,phone)')
+        .eq('status','completed').gte('completed_at',from+'T00:00:00').lt('completed_at',to+'T23:59:59.999').not('customer_id','is',null)
     ]);
-    const s=sales||{};
-    const list=Array.isArray(top)?top:[];
-    $('reportSales').textContent=rupiah(s.net_sales ?? 0);
-    $('reportTransactions').textContent=platformFormat(s.sales_count ?? 0);
-    $('reportCustomers').textContent=platformFormat(cust?.buyers ?? 0);
-    $('reportTopCount').textContent=platformFormat(list.length);
-
-    const detail=[
-      ['Periode',`${platformDate(r.from)} — ${platformDate(r.to)}`],
-      ['Penjualan',rupiah(s.net_sales ?? 0)],
-      ['Jumlah transaksi',platformFormat(s.sales_count ?? 0)],
-      ['Diskon',rupiah(s.discount ?? 0)],
-      ['Pajak',rupiah(s.tax ?? 0)],
-      ['Retur',rupiah(s.refunds ?? 0)],
-      ['HPP',rupiah(s.cogs ?? 0)],
-      ['Laba kotor',rupiah(s.gross_profit ?? 0)],
-      ['Margin laba',`${Number(s.gross_margin_pct ?? 0).toLocaleString('id-ID')}%`],
-      ['Pelanggan yang berbelanja',platformFormat(cust?.buyers ?? 0)]
-    ];
-    $('reportSalesDetail').innerHTML=detail.map(([k,v])=>`<div class="row"><span>${esc(k)}</span><b>${esc(String(v))}</b></div>`).join('');
-
-    $('reportTopProducts').innerHTML=list.map(x=>`
-      <div class="row">
-        <span><b>${esc(x.product_name||'—')}</b><small class="muted">${esc(x.sku||'')}</small></span>
-        <b>${platformFormat(x.quantity??0)} terjual<br><small class="muted">${rupiah(x.revenue??0)}</small></b>
-      </div>`).join('')||'<div class="owner-empty">Belum ada produk terjual pada periode ini.</div>';
+    if(customerRows.error)throw customerRows.error;
+    const s=Array.isArray(sales)?sales[0]:sales||{},inv=Array.isArray(inventory)?inventory[0]:inventory||{},cs=Array.isArray(customerSummary)?customerSummary[0]:customerSummary||{};
+    const totalSales=Number(s.net_sales??s.gross_sales??s.total_sales??s.sales??0)||0;
+    const transactionCount=Number(s.sales_count??s.transaction_count??s.total_transactions??s.transactions??0)||0;
+    const avgRaw=Number(s.average_transaction??s.avg_transaction??s.average_basket);
+    const averageBasket=Number.isFinite(avgRaw)&&avgRaw>=0?avgRaw:(transactionCount?totalSales/transactionCount:0);
+    $('reportCards').innerHTML=[['Penjualan',totalSales],['Transaksi',transactionCount],['Rata-rata Transaksi',averageBasket],['SKU Stok',inv.total_sku??inv.sku_count??0]]
+      .map(x=>`<div class="integration-card"><div class="label">${x[0]}</div><div class="big">${x[0]==='Penjualan'||x[0]==='Rata-rata Transaksi'?rupiah(x[1]):Number(x[1]||0).toLocaleString('id-ID')}</div></div>`).join('');
+    $('customerReportCards').innerHTML=[['Pelanggan Aktif',cs.total_customers||0],['Pelanggan Berbelanja',cs.buyers||0],['Transaksi dengan Pelanggan',cs.orders_with_customer||0],['Penjualan dari Pelanggan',cs.customer_revenue||0]]
+      .map(x=>`<div class="integration-card"><div class="label">${x[0]}</div><div class="big">${x[0]==='Penjualan dari Pelanggan'?rupiah(x[1]):Number(x[1]||0).toLocaleString('id-ID')}</div></div>`).join('');
+    const grouped={};
+    (customerRows.data||[]).forEach(row=>{const c=row.customers;if(!c?.id)return;if(!grouped[c.id])grouped[c.id]={name:c.name||'Pelanggan',phone:c.phone||'',orders:0,total:0};grouped[c.id].orders++;grouped[c.id].total+=Number(row.total||0)});
+    const customers=Object.values(grouped).sort((a,b)=>b.total-a.total);
+    $('customerReportBody').innerHTML=customers.map(c=>`<tr><td><b>${esc(c.name)}</b>${c.phone?`<div class="muted">${esc(c.phone)}</div>`:''}</td><td>${c.orders.toLocaleString('id-ID')}</td><td>${rupiah(c.total)}</td><td>${rupiah(c.orders?c.total/c.orders:0)}</td></tr>`).join('')||`<tr><td colspan="4" class="integration-message">Belum ada pelanggan yang bertransaksi pada periode ini.</td></tr>`;
+    const tp=Array.isArray(top)?top:top?.data||[];$('topProductsBody').innerHTML=tp.map(x=>`<tr><td><b>${esc(x.product_name||x.name||'—')}</b></td><td>${Number(x.quantity||x.qty||0).toLocaleString('id-ID')}</td><td>${rupiah(x.sales||x.revenue||x.total||0)}</td></tr>`).join('')||`<tr><td colspan="3" class="integration-message">Belum ada data.</td></tr>`;
+    const cr=Array.isArray(cashier)?cashier:cashier?.data||[];$('cashierBody').innerHTML=cr.map(x=>`<tr><td>${esc(x.cashier_name||x.full_name||x.name||'—')}</td><td>${Number(x.sales_count||x.transaction_count||x.transactions||0).toLocaleString('id-ID')}</td><td>${rupiah(x.revenue||x.total_sales||x.sales||x.total||0)}</td></tr>`).join('')||`<tr><td colspan="3" class="integration-message">Belum ada data.</td></tr>`;
   }catch(e){
-    const msg=businessError(e,'Laporan belum dapat dimuat. Silakan coba lagi.');
-    $('reportSales').textContent='—';
-    $('reportTransactions').textContent='—';
-    $('reportCustomers').textContent='—';
-    $('reportTopCount').textContent='—';
-    $('reportSalesDetail').innerHTML=`<div class="owner-error">${esc(msg)}</div>`;
-    $('reportTopProducts').innerHTML='';
+    console.error(e);$('reportCards').innerHTML=`<div class="integration-error">${esc(businessError(e,'Laporan belum dapat dimuat.'))}</div>`;
+    if($('customerReportCards'))$('customerReportCards').innerHTML=`<div class="integration-error">${esc(businessError(e,'Ringkasan pelanggan belum dapat dimuat.'))}</div>`;
+    if($('customerReportBody'))$('customerReportBody').innerHTML=`<tr><td colspan="4" class="integration-error">${esc(businessError(e,'Data pelanggan belum dapat dimuat.'))}</td></tr>`;
   }
 }
 
-/* ================= POS FRONTEND ================= */
 async function loadPOS(){
   try{
     const [{data:outlets,error:oErr},{data:customers,error:cErr}]=await Promise.all([
@@ -1726,24 +1720,7 @@ $('customerModal')?.addEventListener('click',e=>{if(e.target.id==='customerModal
 $('purchaseRefresh')?.addEventListener('click',loadPurchasesModule);
 $('purchaseAddSupplier')?.addEventListener('click',()=>{addSupplier();});
 
-let __authBooting=false;
-async function handleAuthenticatedSession(session){
-  if(!session || __authBooting) return;
-  __authBooting=true;
-  try{
-    State.session=session;State.user=session.user;
-    $('auth')?.classList.add('hidden');
-    const isPlatform=await PlatformAPI.isAdmin();
-    if(isPlatform){PlatformState.isAdmin=true;await bootPlatform();}
-    else{PlatformState.isAdmin=false;await completePendingSetup();await boot();}
-  }catch(e){
-    console.error('Auth session boot:',e);
-    if(typeof authError==='function') authError(businessError(e,'Login berhasil, tetapi data Tokokula gagal dimuat. Silakan refresh halaman.'));
-  }finally{__authBooting=false;}
-}
 supabaseClient.auth.onAuthStateChange((event,session)=>{
-  if((event==='SIGNED_IN'||event==='INITIAL_SESSION')&&session)setTimeout(()=>handleAuthenticatedSession(session),0);
-  if(event==='TOKEN_REFRESHED'&&session){State.session=session;State.user=session.user;}
   if(event==='SIGNED_OUT'){
     PlatformState.isAdmin=false;State.session=null;State.user=null;
     $('app').classList.add('hidden');$('platformApp').classList.add('hidden');$('platformDenied').classList.add('hidden');$('auth').classList.remove('hidden');setAuthMode('login');
@@ -1795,41 +1772,12 @@ async function loadPlatformDashboard(){
   }catch(e){console.error(e);toast(businessError(e,'Dashboard platform belum dapat dimuat.'))}
 }
 function renderPlatformAudit(rows){$('platformAuditBody').innerHTML=(rows||[]).map(x=>`<tr><td>${esc(platformDate(x.created_at))}</td><td><span class="platform-status active">${esc(x.action||'—')}</span></td><td>${esc(x.resource_type||'—')}</td><td>${esc(x.description||'—')}</td></tr>`).join('')||'<tr><td colspan="4" class="platform-empty">Belum ada aktivitas platform.</td></tr>'}
-async function loadPlatformTenants(){
-  try{
-    $('platformTenantBody').innerHTML='<tr><td colspan="7" class="platform-loading">Memuat tenant...</td></tr>';
-    const q=$('platformTenantSearch').value.trim()||null;
-    const rows=await PlatformAPI.tenants(q,200);
-    const email=String(State.user?.email||'').toLowerCase();
-    const myOrg=State.user?.user_metadata?.organization_id||State.user?.app_metadata?.organization_id||null;
-    PlatformState.tenants=(rows||[]).filter(x=>(!myOrg||String(x.organization_id)!==String(myOrg))&&(!email||String(x.owner_email||'').toLowerCase()!==email));
-    $('platformTenantBody').innerHTML=PlatformState.tenants.map(x=>{
-      const suspended=String(x.org_status).toLowerCase()==='suspended';
-      return `<tr><td><b>${esc(x.organization_name)}</b><div class="platform-id">${esc(x.organization_id)}</div></td><td>${esc(platformPlanLabel(x.plan))}</td><td>${platformFormat(x.users_count)}</td><td><b>${esc(x.owner_name||'—')}</b><div class="platform-id">${esc(x.owner_email||'')}</div></td><td>${esc(x.subscription_status||'—')}</td><td><span class="platform-status ${suspended?'suspended':'active'}">${esc(x.org_status||'—')}</span></td><td><button class="platform-action ${suspended?'good':'danger'}" data-tenant-action="${x.organization_id}" data-tenant-status="${suspended?'active':'suspended'}">${suspended?'Aktifkan':'Suspend'}</button></td></tr>`;
-    }).join('')||'<tr><td colspan="7" class="platform-empty">Belum ada tenant.</td></tr>';
-  }catch(e){$('platformTenantBody').innerHTML=`<tr><td colspan="7" class="platform-empty">${esc(businessError(e,'Tenant belum dapat dimuat.'))}</td></tr>`}
-}
-async function loadPlatformSubscriptions(){
-  try{
-    $('platformSubscriptionBody').innerHTML='<tr><td colspan="7" class="platform-loading">Memuat subscription...</td></tr>';
-    const q=$('platformSubscriptionSearch').value.trim()||null;
-    const rows=await PlatformAPI.subscriptions(q,200);
-    const email=String(State.user?.email||'').toLowerCase();
-    const myOrg=State.user?.user_metadata?.organization_id||State.user?.app_metadata?.organization_id||null;
-    const list=(rows||[]).filter(x=>(!myOrg||String(x.organization_id)!==String(myOrg))&&(!email||String(x.owner_email||'').toLowerCase()!==email));
-    $('platformSubscriptionBody').innerHTML=list.map(x=>`<tr><td><b>${esc(x.organization_name)}</b></td><td><select class="platform-search platform-mini" data-sub-plan="${x.organization_id}"><option value="free" ${x.plan==='free'?'selected':''}>Free</option><option value="pro" ${x.plan==='pro'?'selected':''}>Pro</option><option value="business" ${x.plan==='business'?'selected':''}>Business</option><option value="enterprise" ${x.plan==='enterprise'?'selected':''}>Enterprise</option></select></td><td><select class="platform-search platform-mini" data-sub-status="${x.organization_id}"><option value="active" ${x.status==='active'?'selected':''}>Active</option><option value="trialing" ${x.status==='trialing'?'selected':''}>Trial</option><option value="past_due" ${x.status==='past_due'?'selected':''}>Past due</option><option value="cancelled" ${x.status==='cancelled'?'selected':''}>Cancelled</option><option value="expired" ${x.status==='expired'?'selected':''}>Expired</option></select></td><td>${platformFormat(x.users_count)}</td><td>${platformFormat(x.outlets_count)}</td><td>${esc(platformDate(x.period_end))}</td><td><button class="platform-action" data-sub-save="${x.organization_id}">Simpan</button></td></tr>`).join('')||'<tr><td colspan="7" class="platform-empty">Belum ada subscription.</td></tr>';
-  }catch(e){$('platformSubscriptionBody').innerHTML=`<tr><td colspan="7" class="platform-empty">${esc(businessError(e,'Subscription belum dapat dimuat.'))}</td></tr>`}
-}
+async function loadPlatformTenants(){try{$('platformTenantBody').innerHTML='<tr><td colspan="7" class="platform-loading">Memuat tenant...</td></tr>';const q=$('platformTenantSearch').value.trim()||null;const rows=await PlatformAPI.tenants(q,200);PlatformState.tenants=rows||[];$('platformTenantBody').innerHTML=PlatformState.tenants.map(x=>{const suspended=String(x.org_status).toLowerCase()==='suspended';return `<tr><td><b>${esc(x.organization_name)}</b><div style="color:#98a2b3;font-size:10px">${esc(x.organization_id)}</div></td><td>${esc(platformPlanLabel(x.plan))}</td><td>${platformFormat(x.users_count)}</td><td><b>${esc(x.owner_name||'—')}</b><div style="color:#98a2b3;font-size:10px">${esc(x.owner_email||'')}</div></td><td>${esc(x.subscription_status||'—')}</td><td><span class="platform-status ${suspended?'suspended':'active'}">${esc(x.org_status||'—')}</span></td><td><button class="platform-action ${suspended?'good':'danger'}" data-tenant-action="${x.organization_id}" data-tenant-status="${suspended?'active':'suspended'}">${suspended?'Aktifkan':'Suspend'}</button></td></tr>`}).join('')||'<tr><td colspan="7" class="platform-empty">Belum ada tenant.</td></tr>'}catch(e){$('platformTenantBody').innerHTML=`<tr><td colspan="7" class="platform-empty">${esc(businessError(e,'Tenant belum dapat dimuat.'))}</td></tr>`}}
+async function loadPlatformSubscriptions(){try{$('platformSubscriptionBody').innerHTML='<tr><td colspan="7" class="platform-loading">Memuat subscription...</td></tr>';const q=$('platformSubscriptionSearch').value.trim()||null;const rows=await PlatformAPI.subscriptions(q,200);$('platformSubscriptionBody').innerHTML=(rows||[]).map(x=>`<tr><td><b>${esc(x.organization_name)}</b></td><td><select class="platform-search platform-mini" data-sub-plan="${x.organization_id}"><option value="free" ${x.plan==='free'?'selected':''}>Free</option><option value="pro" ${x.plan==='pro'?'selected':''}>Pro</option><option value="business" ${x.plan==='business'?'selected':''}>Business</option><option value="enterprise" ${x.plan==='enterprise'?'selected':''}>Enterprise</option></select></td><td><select class="platform-search platform-mini" data-sub-status="${x.organization_id}"><option value="active" ${x.status==='active'?'selected':''}>Active</option><option value="trialing" ${x.status==='trialing'?'selected':''}>Trial</option><option value="past_due" ${x.status==='past_due'?'selected':''}>Past due</option><option value="cancelled" ${x.status==='cancelled'?'selected':''}>Cancelled</option><option value="expired" ${x.status==='expired'?'selected':''}>Expired</option></select></td><td>${platformFormat(x.users_count)}</td><td>${platformFormat(x.outlets_count)}</td><td>${esc(platformDate(x.period_end))}</td><td><button class="platform-action" data-sub-save="${x.organization_id}">Simpan</button></td></tr>`).join('')||'<tr><td colspan="7" class="platform-empty">Belum ada subscription.</td></tr>'}catch(e){$('platformSubscriptionBody').innerHTML=`<tr><td colspan="7" class="platform-empty">${esc(businessError(e,'Subscription belum dapat dimuat.'))}</td></tr>`}}
 async function loadPlatformPlans(){try{const rows=await PlatformAPI.plans();PlatformState.plans=rows||[];$('platformPlansGrid').innerHTML=PlatformState.plans.map(x=>`<div class="platform-kpi"><div class="k-label">${esc(platformPlanLabel(x.plan))}</div><div class="k-value">${rupiah(x.monthly_price)}</div><div class="k-meta">${rupiah(x.yearly_price)} / tahun</div><div style="margin-top:9px;color:#7b8494;font-size:11px">${platformFormat(x.enabled_features)} / ${platformFormat(x.feature_count)} feature aktif</div><div style="margin-top:10px"><button class="platform-action" data-plan-edit="${esc(x.plan)}">Edit Paket</button></div></div>`).join('')||'<div class="platform-card platform-empty">Belum ada konfigurasi plan.</div>';await loadPlatformFeatures()}catch(e){$('platformPlansGrid').innerHTML=`<div class="platform-card platform-empty">${esc(businessError(e,'Plan belum dapat dimuat.'))}</div>`}}
 async function loadPlatformFeatures(){try{const rows=await PlatformAPI.features($('platformFeaturePlan').value);$('platformFeatureBody').innerHTML=(rows||[]).map(x=>`<tr><td><b>${esc(x.feature_name)}</b><div style="color:#98a2b3;font-size:10px">${esc(x.feature_code)}</div></td><td><input class="platform-feature-toggle" type="checkbox" ${x.enabled?'checked':''} data-feature-enabled="${esc(x.feature_code)}"></td><td><input class="platform-search platform-mini" type="number" min="0" value="${x.limit_value==null?'':x.limit_value}" data-feature-limit="${esc(x.feature_code)}" placeholder="Tanpa batas"></td><td><button class="platform-action" data-feature-save="${esc(x.feature_code)}">Simpan</button></td></tr>`).join('')||'<tr><td colspan="4" class="platform-empty">Belum ada feature.</td></tr>'}catch(e){$('platformFeatureBody').innerHTML=`<tr><td colspan="4" class="platform-empty">${esc(businessError(e,'Feature belum dapat dimuat.'))}</td></tr>`}}
 async function loadPlatformBilling(){try{const status=$('platformBillingStatus').value||null;const rows=await PlatformAPI.billing(status,200);$('platformBillingBody').innerHTML=(rows||[]).map(x=>`<tr><td><b>${esc(x.invoice_number)}</b></td><td>${esc(x.organization_name)}</td><td><span class="platform-status ${x.status==='paid'?'active':''}">${esc(x.status)}</span></td><td>${rupiah(x.amount)}</td><td>${esc(platformDate(x.due_at))}</td><td>${platformFormat(x.payment_count)}${x.last_payment_method?` · ${esc(x.last_payment_method)}`:''}</td><td>${x.status!=='paid'?`<button class="platform-action good" data-pay-invoice="${x.invoice_id}" data-pay-amount="${x.amount}">Catat Bayar</button>`:'<span style="color:#027a48;font-size:11px;font-weight:700">Lunas</span>'}</td></tr>`).join('')||'<tr><td colspan="7" class="platform-empty">Belum ada invoice.</td></tr>';const payments=await PlatformAPI.payments(200);$('platformPaymentBody').innerHTML=(payments||[]).map(x=>`<tr><td>${esc(platformDate(x.created_at))}</td><td>${esc(x.invoice_number)}</td><td>${esc(x.organization_name)}</td><td>${rupiah(x.amount)}</td><td>${esc(x.method)}</td><td>${esc(x.status)}</td><td>${esc(x.reference_no||'—')}</td></tr>`).join('')||'<tr><td colspan="7" class="platform-empty">Belum ada pembayaran.</td></tr>';await loadPlatformInvoiceTenants()}catch(e){$('platformBillingBody').innerHTML=`<tr><td colspan="7" class="platform-empty">${esc(businessError(e,'Billing belum dapat dimuat.'))}</td></tr>`}}
-async function loadPlatformInvoiceTenants(){
-  const rows=PlatformState.tenants.length?PlatformState.tenants:await PlatformAPI.tenants(null,200);
-  const email=String(State.user?.email||'').toLowerCase();
-  const myOrg=State.user?.user_metadata?.organization_id||State.user?.app_metadata?.organization_id||null;
-  const list=(rows||[]).filter(x=>(!myOrg||String(x.organization_id)!==String(myOrg))&&(!email||String(x.owner_email||'').toLowerCase()!==email));
-  $('platformInvoiceTenant').innerHTML='<option value="">Pilih tenant</option>'+list.map(x=>`<option value="${x.organization_id}">${esc(x.organization_name)}</option>`).join('');
-}
+async function loadPlatformInvoiceTenants(){const rows=PlatformState.tenants.length?PlatformState.tenants:await PlatformAPI.tenants(null,200);$('platformInvoiceTenant').innerHTML='<option value="">Pilih tenant</option>'+(rows||[]).map(x=>`<option value="${x.organization_id}">${esc(x.organization_name)}</option>`).join('')}
 
 async function loadPlatformAuditFull(){try{const rows=await PlatformAPI.audit(200);$('platformAuditFullBody').innerHTML=rows.map(x=>`<tr><td>${esc(platformDate(x.created_at))}</td><td>${esc(x.action||'—')}</td><td>${esc(x.resource_type||'—')}</td><td>${esc(x.resource_id||'—')}</td><td>${esc(x.description||'—')}</td></tr>`).join('')||'<tr><td colspan="5" class="platform-empty">Belum ada aktivitas.</td></tr>'}catch(e){$('platformAuditFullBody').innerHTML=`<tr><td colspan="5" class="platform-empty">${esc(businessError(e,'Audit log belum dapat dimuat.'))}</td></tr>`}}
 function platformRoute(name='dashboard'){
@@ -1848,72 +1796,9 @@ window.addEventListener('hashchange',()=>{if(location.hash.startsWith('#/super-a
 
 (async()=>{
   try{
-    const {data,error}=await supabaseClient.auth.getSession();
-    if(error)throw error;
-    if(data.session)await handleAuthenticatedSession(data.session);
-  }catch(e){console.error('Session restore:',e);toast('Tidak dapat memulihkan session.')}
-})();
-</script>
-
-<script id="tokokula-superadmin-actions-v8">
-(function(){
-  const fail=e=>String(e?.message||e||'Perubahan belum dapat disimpan.');
-  const say=m=>typeof toast==='function'&&toast(m);
-  document.addEventListener('click',async ev=>{
-    const tenant=ev.target.closest('[data-tenant-action]');
-    if(tenant){
-      if(!confirm(tenant.dataset.tenantStatus==='suspended'?'Suspend tenant ini?':'Aktifkan tenant ini?'))return;
-      tenant.disabled=true;
-      try{await PlatformAPI.setTenantStatus(tenant.dataset.tenantAction,tenant.dataset.tenantStatus,tenant.dataset.tenantStatus==='suspended'?'Suspended by Super Admin':'Reactivated by Super Admin');say('Status tenant berhasil diperbarui.');await loadPlatformTenants();await loadPlatformDashboard();}
-      catch(e){console.error(e);say(fail(e))}finally{tenant.disabled=false}
-      return;
-    }
-    const sub=ev.target.closest('[data-sub-save]');
-    if(sub){
-      const id=sub.dataset.subSave,plan=document.querySelector(`[data-sub-plan="${CSS.escape(id)}"]`)?.value,status=document.querySelector(`[data-sub-status="${CSS.escape(id)}"]`)?.value;
-      sub.disabled=true;
-      try{await PlatformAPI.setSubscription(id,plan,status,null);say('Subscription berhasil diperbarui.');await loadPlatformSubscriptions();await loadPlatformDashboard();}
-      catch(e){console.error(e);say(fail(e))}finally{sub.disabled=false}
-      return;
-    }
-    const edit=ev.target.closest('[data-plan-edit]');
-    if(edit){
-      const row=(PlatformState.plans||[]).find(x=>String(x.plan)===String(edit.dataset.planEdit));if(!row)return;
-      const name=prompt('Nama paket:',row.name||platformPlanLabel(row.plan));if(name===null)return;
-      const monthly=Number(prompt('Harga per bulan (IDR):',row.monthly_price??0)),yearly=Number(prompt('Harga per tahun (IDR):',row.yearly_price??0));
-      if(!Number.isFinite(monthly)||!Number.isFinite(yearly)||monthly<0||yearly<0){say('Harga tidak valid.');return}
-      try{await PlatformAPI.updatePlan(row.plan,name,row.description||'',monthly,yearly,!!row.active);say('Paket berhasil diperbarui.');await loadPlatformPlans();}catch(e){console.error(e);say(fail(e))}
-      return;
-    }
-    const feat=ev.target.closest('[data-feature-save]');
-    if(feat){
-      const code=feat.dataset.featureSave,plan=$('platformFeaturePlan').value,enabled=document.querySelector(`[data-feature-enabled="${CSS.escape(code)}"]`)?.checked,el=document.querySelector(`[data-feature-limit="${CSS.escape(code)}"]`),limit=el&&el.value!==''?Number(el.value):null;
-      if(limit!==null&&(!Number.isInteger(limit)||limit<0)){say('Limit tidak valid.');return}
-      feat.disabled=true;
-      try{await PlatformAPI.setFeature(plan,code,!!enabled,limit);say('Fitur berhasil disimpan.');await loadPlatformFeatures();}catch(e){console.error(e);say(fail(e))}finally{feat.disabled=false}
-      return;
-    }
-    const pay=ev.target.closest('[data-pay-invoice]');
-    if(pay){
-      const amount=Number(pay.dataset.payAmount||0),method=prompt('Metode pembayaran:','Transfer Bank');if(!method)return;
-      const ref=prompt('Nomor referensi (opsional):','')||null;pay.disabled=true;
-      try{await PlatformAPI.recordPayment(pay.dataset.payInvoice,amount,method,ref,'succeeded');say('Pembayaran berhasil dicatat.');await loadPlatformBilling();await loadPlatformDashboard();}catch(e){console.error(e);say(fail(e))}finally{pay.disabled=false}
-    }
-  });
-  const form=$('platformInvoiceForm');
-  if(form&&!form.dataset.boundV8){
-    form.addEventListener('submit',async ev=>{
-      ev.preventDefault();
-      const org=$('platformInvoiceTenant').value,no=$('platformInvoiceNumber').value.trim(),amount=Number($('platformInvoiceAmount').value),due=$('platformInvoiceDue').value;
-      if(!org||!no||!Number.isFinite(amount)||amount<=0||!due){say('Lengkapi semua data invoice.');return}
-      const btn=form.querySelector('button[type=submit]');if(btn)btn.disabled=true;
-      try{await PlatformAPI.createInvoice(org,no,amount,due,due,due);form.reset();say('Invoice berhasil dibuat.');await loadPlatformBilling();await loadPlatformDashboard();}catch(e){console.error(e);say(fail(e))}finally{if(btn)btn.disabled=false}
-    });
-    form.dataset.boundV8='1';
-  }
-  $('platformSubscriptionRefresh')?.addEventListener('click',loadPlatformSubscriptions);
-  $('platformBillingRefresh')?.addEventListener('click',loadPlatformBilling);
-  $('platformFeaturePlan')?.addEventListener('change',loadPlatformFeatures);
+    const {data}=await supabaseClient.auth.getSession();
+    if(data.session){State.session=data.session;State.user=data.session.user;const isPlatform=await PlatformAPI.isAdmin();if(isPlatform){PlatformState.isAdmin=true;await bootPlatform()}else{await boot()}}
+  }catch(e){console.error(e);toast('Tidak dapat memulihkan session.')}
 })();
 </script>
 </body>
