@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
 <meta name="theme-color" content="#111827">
-<title>Tokokula — Enterprise POS</title>
+<title>Tokokula — Enterprise Business OS</title><!-- Tokokula -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root{--bg:#f5f7fb;--surface:#fff;--text:#172033;--muted:#718096;--line:#e7ebf2;--dark:#111827;--dark2:#1f2937;--success:#15803d;--danger:#b91c1c;--radius:18px}
@@ -76,12 +76,99 @@ h1{margin:0;font-size:28px;letter-spacing:-.8px}.desc{color:var(--muted);font-si
 .platform-grid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(300px,.8fr);gap:15px;margin-top:15px}.platform-card{background:rgba(255,255,255,.96);border:1px solid #e2e6ec;border-radius:20px;box-shadow:0 14px 40px rgba(15,23,42,.055);padding:21px}.platform-card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:15px}.platform-card-head b{font-size:16px}.platform-card-head span{display:block;color:#8a93a2;font-size:11px;margin-top:4px}.platform-chip{padding:7px 10px;border-radius:999px;background:#f7f2e9;border:1px solid #eee2cc;color:#846b3e;font-size:10px;font-weight:800;white-space:nowrap}.platform-bars{display:grid;gap:17px;margin-top:25px}.platform-bar-row>div:first-child{display:flex;justify-content:space-between;font-size:12px;margin-bottom:7px}.platform-bar-row span{color:#7b8494}.platform-track{height:9px;border-radius:999px;background:#eef1f5;overflow:hidden}.platform-track i{display:block;height:100%;width:0;border-radius:inherit;background:linear-gradient(90deg,#111827,#b79a68);transition:width .5s ease}.platform-stat-list{display:grid;gap:0;margin-top:16px}.platform-stat{display:flex;align-items:center;justify-content:space-between;padding:13px 0;border-bottom:1px solid #eef0f3;font-size:13px}.platform-stat:last-child{border-bottom:0}.platform-stat span{color:#7b8494}.platform-stat b{font-weight:800}.platform-table-card{margin-top:15px;padding:0;overflow:hidden}.platform-toolbar{display:flex;align-items:center;gap:10px;padding:14px;border-bottom:1px solid #edf0f3}.platform-search{flex:1;min-height:44px;border:1px solid #e0e4ea;border-radius:12px;padding:11px 13px;outline:none}.platform-search:focus{border-color:#98a2b3;box-shadow:0 0 0 4px rgba(16,24,40,.05)}.platform-refresh{border:1px solid #111827;background:#111827;color:#fff;border-radius:12px;padding:11px 14px;font-weight:700}.platform-table{width:100%;border-collapse:collapse;min-width:850px}.platform-table th,.platform-table td{padding:14px;border-bottom:1px solid #eef0f3;text-align:left;font-size:12px}.platform-table th{background:#f8f9fb;color:#7b8494;font-size:9px;text-transform:uppercase;letter-spacing:.1em}.platform-table tr:hover td{background:#fafbfc}.platform-status{display:inline-flex;padding:5px 8px;border-radius:999px;background:#f2f4f7;color:#667085;font-size:10px;font-weight:800}.platform-status.active{background:#ecfdf3;color:#027a48}.platform-status.suspended{background:#fef3f2;color:#b42318}.platform-empty{text-align:center;color:#98a2b3;padding:30px}.platform-loading{padding:25px;text-align:center;color:#98a2b3}.platform-access-denied{min-height:100vh;display:grid;place-items:center;padding:24px;background:#f4f6f8}.platform-denied-card{width:min(100%,460px);padding:30px;border-radius:24px;background:#fff;border:1px solid #e4e7ec;box-shadow:0 25px 70px rgba(15,23,42,.10);text-align:center}.platform-denied-card h2{margin:10px 0 6px}.platform-denied-card p{color:#7b8494;line-height:1.6;font-size:13px}.platform-denied-card button{border:0;border-radius:12px;background:#111827;color:#fff;padding:12px 18px;font-weight:750}
 @media(max-width:1100px){.platform-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.platform-grid{grid-template-columns:1fr}}@media(max-width:760px){.platform-sidebar{width:286px;transform:translateX(-100%);transition:transform .22s ease}.platform-sidebar.open{transform:translateX(0)}.platform-main{margin-left:0}.platform-topbar{height:68px;padding:0 14px}.platform-menu{display:block}.platform-user-meta{display:none}.platform-page{padding:25px 14px 55px}.platform-page h1{font-size:30px}.platform-kpis{grid-template-columns:1fr 1fr;gap:10px;margin-top:20px}.platform-kpi{min-height:112px;padding:15px;border-radius:17px}.platform-kpi .k-value{font-size:22px}.platform-grid{gap:11px}.platform-card{padding:17px}.platform-table-card{overflow:hidden}.platform-toolbar{flex-wrap:wrap}.platform-search{min-width:100%}.platform-side-foot{display:none}}@media(max-width:390px){.platform-kpis{gap:8px}.platform-kpi{padding:13px}.platform-kpi .k-value{font-size:19px}}
 
+</style>
 
-/* ===== OWNER MODULES FINAL POLISH ===== */
-.owner-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:18px 0}.owner-kpi{padding:20px}.owner-kpi span{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#8490a2;font-weight:800}.owner-kpi b{display:block;margin-top:9px;font-size:26px}.owner-toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}.owner-toolbar>*{min-height:48px}.owner-grid{display:grid;grid-template-columns:1.3fr .7fr;gap:16px}.owner-card{background:#fff;border:1px solid #e6e9ee;border-radius:24px;padding:22px;box-shadow:0 14px 40px rgba(15,23,42,.04)}.owner-card h3{margin:0 0 16px}.owner-table{width:100%;border-collapse:collapse}.owner-table th,.owner-table td{padding:14px 10px;text-align:left;border-bottom:1px solid #edf0f3}.owner-table th{font-size:11px;letter-spacing:.1em;color:#8791a1;text-transform:uppercase}.owner-table td{font-size:14px}.owner-badge{display:inline-flex;padding:6px 10px;border-radius:999px;background:#f2f4f7;font-size:11px;font-weight:800}.chart{display:flex;align-items:end;gap:10px;height:180px;padding-top:10px}.bar{flex:1;min-width:12px;border-radius:9px 9px 3px 3px;background:#111827;position:relative}.bar small{position:absolute;bottom:-22px;left:50%;transform:translateX(-50%);font-size:9px;color:#8b95a5}.bar-value{position:absolute;top:-17px;left:50%;transform:translateX(-50%);font-size:9px;color:#697386;white-space:nowrap}.empty-business{padding:28px;text-align:center;color:#7b8798;border:1px dashed #dce1e8;border-radius:18px;background:#fafbfc}.section-note{color:#7c8798;font-size:13px;line-height:1.6}.report-filters{display:flex;gap:10px;flex-wrap:wrap}.report-filters input{min-height:48px}.report-actions{display:flex;gap:10px;margin-top:12px}.danger-text{color:#b42318}
-@media(max-width:760px){.owner-summary{grid-template-columns:repeat(2,minmax(0,1fr))}.owner-grid{grid-template-columns:1fr}.owner-card{padding:18px;border-radius:20px}.owner-table{min-width:620px}.owner-table-wrap{overflow-x:auto}.report-filters{display:grid;grid-template-columns:1fr 1fr}.report-filters>*{width:100%;box-sizing:border-box}.inventory-tabs{overflow-x:auto;flex-wrap:nowrap;padding-bottom:8px}.inventory-tabs button{flex:0 0 auto}.page{overflow-x:hidden}.module{overflow-x:hidden}}
-@media(min-width:1100px){.owner-summary{grid-template-columns:repeat(4,1fr)}}
+<style id="tokokula-elegant-overrides">
+:root{
+  --tk-ink:#101827;--tk-muted:#667085;--tk-soft:#f5f7fa;--tk-card:#ffffff;
+  --tk-line:#e7ebf0;--tk-gold:#b8924a;--tk-gold-soft:#f5efe4;
+  --tk-navy:#0b1425;--tk-green:#16805b;--tk-red:#c63d3d;--tk-radius:22px;
+}
+*{box-sizing:border-box}
+body{
+  background:linear-gradient(135deg,#f8fafc 0%,#f2f4f7 52%,#eef1f5 100%) !important;
+  color:var(--tk-ink)!important;
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;
+}
+button,input,select,textarea{font:inherit}
+button{transition:.2s ease;cursor:pointer}
+button:hover{transform:translateY(-1px)}
+.tokokula-card,.card,.panel,.modal,.stat-card,.metric-card{
+  border:1px solid rgba(16,24,39,.07)!important;
+  border-radius:var(--tk-radius)!important;
+  box-shadow:0 12px 35px rgba(16,24,39,.055)!important;
+}
+h1,h2,h3,h4{letter-spacing:-.035em!important;color:var(--tk-ink)!important}
+.small,.muted,.description,.subtitle{color:var(--tk-muted)!important}
+input,select,textarea{
+  border:1px solid #dfe4ea!important;border-radius:15px!important;
+  background:#fff!important;min-height:48px;padding:0 15px!important;
+}
+input:focus,select:focus,textarea:focus{
+  outline:none!important;border-color:#b9a071!important;
+  box-shadow:0 0 0 4px rgba(184,146,74,.12)!important;
+}
+table{border-collapse:separate!important;border-spacing:0!important;overflow:hidden;border-radius:18px}
+th{
+  background:#f8f9fb!important;color:#7a8494!important;text-transform:uppercase;
+  font-size:12px!important;letter-spacing:.08em!important;font-weight:750!important;
+}
+td,th{border-bottom:1px solid #edf0f3!important;padding:15px 14px!important}
+tr:last-child td{border-bottom:0!important}
+.badge,.pill,.status{
+  border-radius:999px!important;padding:7px 11px!important;font-size:12px!important;font-weight:750!important;
+}
+a{color:inherit}
+#sidebar,.sidebar,.drawer{
+  background:linear-gradient(180deg,#0b1425 0%,#08111f 100%)!important;
+  box-shadow:18px 0 45px rgba(6,14,27,.13)!important;
+}
+#sidebar .active,.sidebar .active,.nav-item.active{
+  background:linear-gradient(90deg,rgba(255,255,255,.105),rgba(255,255,255,.045))!important;
+  border:1px solid rgba(255,255,255,.08)!important;
+}
+.primary,.btn-primary,.button-primary{
+  background:linear-gradient(135deg,#111c2f,#0b1425)!important;color:white!important;
+  border:1px solid rgba(255,255,255,.04)!important;border-radius:15px!important;
+  box-shadow:0 8px 20px rgba(11,20,37,.16)!important;
+}
+.gold,.btn-gold{background:var(--tk-gold-soft)!important;color:#6d5426!important}
+.danger,.btn-danger{background:#fff2f2!important;color:#b83232!important;border:1px solid #f2cccc!important}
+.empty-state{padding:38px!important;text-align:center!important;color:var(--tk-muted)!important}
+@media(max-width:760px){
+  main,.main,.content{padding:22px 16px!important}
+  h1{font-size:34px!important}
+  .card,.panel{border-radius:20px!important}
+  table{min-width:760px}
+  .table-wrap,.table-responsive{overflow-x:auto!important}
+}
+</style>
 
+<style id="tokokula-final-premium">
+.platform-kpi,.platform-card{border:1px solid rgba(16,24,39,.07)!important;box-shadow:0 12px 35px rgba(16,24,39,.055)!important;transition:.2s ease}
+.platform-kpi:hover,.platform-card:hover{transform:translateY(-1px);box-shadow:0 18px 45px rgba(16,24,39,.08)!important}
+.platform-refresh,.platform-action,.platform-logout{border-radius:14px!important;font-weight:750!important}
+#tkPlatformOverlay{display:none}
+@media(max-width:760px){
+ #platformSidebar{width:min(88vw,360px)!important;z-index:10001!important}
+ #tkPlatformOverlay{position:fixed;inset:0;background:rgba(6,12,22,.48);backdrop-filter:blur(3px);z-index:10000;display:block;opacity:0;pointer-events:none;transition:.2s}
+ body:has(#platformSidebar.open){overflow:hidden}
+ body:has(#platformSidebar.open) #tkPlatformOverlay{opacity:1;pointer-events:auto}
+ .platform-page{padding:22px 16px 80px!important}
+ .platform-kpis{grid-template-columns:1fr 1fr!important;gap:12px!important}
+ .platform-kpi{min-height:125px!important;padding:18px!important}
+ .platform-table{min-width:760px!important}
+}
+</style>
+
+<style id="tokokula-owner-friendly-language">
+/* Bahasa menu Owner dibuat sederhana tanpa mengubah fungsi aplikasi. */
+.owner-nav, .sidebar-nav, .app-sidebar, .main-nav { letter-spacing: -0.01em; }
+@media(max-width:760px){
+  .owner-nav a, .sidebar-nav a, .app-sidebar a, .main-nav a{
+    min-height:48px;
+  }
+}
 </style>
 </head>
 <body>
@@ -89,7 +176,7 @@ h1{margin:0;font-size:28px;letter-spacing:-.8px}.desc{color:var(--muted);font-si
 <section id="auth" class="auth">
   <div class="auth-card">
     <div class="auth-accent"></div>
-    <div class="brand"><div class="mark">T</div><div><b>Tokokula</b><small>Enterprise Point of Sale</small></div></div>
+    <div class="brand"><div class="mark">T</div><div><b>Tokokula</b><small>Enterprise Kasir</small></div></div>
     <div class="auth-kicker">BUSINESS MANAGEMENT</div><h1>Selamat datang</h1>
     <p id="authDesc" class="desc">Masuk untuk mengelola bisnis Anda.</p>
     <div id="authError" class="error hidden"></div>
@@ -148,49 +235,49 @@ h1{margin:0;font-size:28px;letter-spacing:-.8px}.desc{color:var(--muted);font-si
 </section>
 
 
-<!-- ================= SUPER ADMIN FRONTEND ================= -->
+<!-- ================= ADMIN TOKOKULA FRONTEND ================= -->
 <section id="platformApp" class="hidden">
   <div class="platform-shell">
     <aside id="platformSidebar" class="platform-sidebar">
-      <div class="platform-brand"><b>Tokokula</b><small>Platform Administration</small><span class="platform-badge">SUPER ADMIN</span></div>
+      <div class="platform-brand"><b>Tokokula</b><small>Pengelolaan Tokokula</small><span class="platform-badge">ADMIN TOKOKULA</span></div>
       <nav class="platform-nav">
-        <button class="active" data-platform-page="dashboard"><span class="platform-icon">⌂</span><span>Dashboard</span></button>
-        <button data-platform-page="tenants"><span class="platform-icon">▦</span><span>Tenants</span></button>
-        <button data-platform-page="subscriptions"><span class="platform-icon">◈</span><span>Subscriptions</span></button>
-        <button data-platform-page="plans"><span class="platform-icon">◇</span><span>Plans & Features</span></button>
-        <button data-platform-page="billing"><span class="platform-icon">Rp</span><span>Billing</span></button>
-        <button data-platform-page="audit"><span class="platform-icon">≡</span><span>Audit Log</span></button>
+        <button class="active" data-platform-page="dashboard"><span class="platform-icon">⌂</span><span>Ringkasan</span></button>
+        <button data-platform-page="tenants"><span class="platform-icon">▦</span><span>Tokos</span></button>
+        <button data-platform-page="subscriptions"><span class="platform-icon">◈</span><span>Langganan</span></button>
+        <button data-platform-page="plans"><span class="platform-icon">◇</span><span>Paket & Fitur</span></button>
+        <button data-platform-page="billing"><span class="platform-icon">Rp</span><span>Tagihan</span></button>
+        <button data-platform-page="audit"><span class="platform-icon">≡</span><span>Riwayat Aktivitas</span></button>
       </nav>
-      <div class="platform-side-foot"><b>Tokokula Platform</b>Protected administration area</div>
+      <div class="platform-side-foot"><b>Tokokula Platform</b>Area khusus pengelola Tokokula</div>
     </aside>
     <main class="platform-main">
       <header class="platform-topbar">
-        <div class="platform-top-left"><button id="platformMenu" class="platform-menu">☰</button><strong id="platformTitle">Dashboard</strong></div>
-        <div class="platform-user"><div class="platform-user-meta"><b id="platformEmail">Super Admin</b><span>Platform Administrator</span></div><div id="platformAvatar" class="platform-avatar">S</div><button id="platformLogout" class="platform-logout">Keluar</button></div>
+        <div class="platform-top-left"><button id="platformMenu" class="platform-menu">☰</button><strong id="platformTitle">Ringkasan</strong></div>
+        <div class="platform-user"><div class="platform-user-meta"><b id="platformEmail">Super Admin</b><span>Pengelola Tokokula</span></div><div id="platformAvatar" class="platform-avatar">S</div><button id="platformLogout" class="platform-logout">Keluar</button></div>
       </header>
       <div class="platform-page">
-        <section id="platformDashboardPage">
-          <h1>Platform Dashboard</h1><div class="platform-sub">Pusat kendali Tokokula — tenant, pengguna, subscription, dan aktivitas platform.</div>
+        <section id="platformRingkasanPage">
+          <h1>Pusat Kendali</h1><div class="platform-sub">Pusat kendali Tokokula — tenant, pengguna, subscription, dan aktivitas platform.</div>
           <div class="platform-kpis">
-            <div class="platform-kpi"><div class="k-label">Total Tenant</div><div id="pTotalTenants" class="k-value">0</div><div class="k-meta">Seluruh organisasi</div></div>
-            <div class="platform-kpi"><div class="k-label">Tenant Aktif</div><div id="pActiveTenants" class="k-value">0</div><div class="k-meta">Operasional normal</div></div>
-            <div class="platform-kpi"><div class="k-label">Total Pengguna</div><div id="pUsers" class="k-value">0</div><div class="k-meta">Semua tenant</div></div>
-            <div class="platform-kpi"><div class="k-label">Subscription Aktif</div><div id="pSubscriptions" class="k-value">0</div><div class="k-meta">Status active</div></div>
+            <div class="platform-kpi"><div class="k-label">Total Toko</div><div id="pTotalTokos" class="k-value">0</div><div class="k-meta">Semua toko</div></div>
+            <div class="platform-kpi"><div class="k-label">Toko Aktif</div><div id="pAktifTokos" class="k-value">0</div><div class="k-meta">Berjalan normal</div></div>
+            <div class="platform-kpi"><div class="k-label">Total Pengguna</div><div id="pPengguna" class="k-value">0</div><div class="k-meta">Semua toko</div></div>
+            <div class="platform-kpi"><div class="k-label">Langganan Aktif</div><div id="pLangganan" class="k-value">0</div><div class="k-meta">Keadaan active</div></div>
           </div>
           <div class="platform-grid">
-            <div class="platform-card"><div class="platform-card-head"><div><b>Platform Health</b><span>Ringkasan kondisi tenant dan billing</span></div><span class="platform-chip">REAL-TIME</span></div>
-              <div class="platform-bars"><div class="platform-bar-row"><div><span>Tenant aktif</span><b id="pActivePct">0%</b></div><div class="platform-track"><i id="pActiveBar"></i></div></div><div class="platform-bar-row"><div><span>Subscription aktif</span><b id="pSubPct">0%</b></div><div class="platform-track"><i id="pSubBar"></i></div></div></div>
-              <div class="platform-stat-list"><div class="platform-stat"><span>Tenant suspended</span><b id="pSuspended">0</b></div><div class="platform-stat"><span>Invoice terbuka</span><b id="pOpenInvoices">0</b></div><div class="platform-stat"><span>Nilai invoice lunas</span><b id="pPaidInvoices">Rp0</b></div></div>
+            <div class="platform-card"><div class="platform-card-head"><div><b>Kondisi Tokokula</b><span>Ringkasan kondisi tenant dan billing</span></div><span class="platform-chip">TERKINI</span></div>
+              <div class="platform-bars"><div class="platform-bar-row"><div><span>Toko aktif</span><b id="pAktifPct">0%</b></div><div class="platform-track"><i id="pAktifBar"></i></div></div><div class="platform-bar-row"><div><span>Langganan aktif</span><b id="pSubPct">0%</b></div><div class="platform-track"><i id="pSubBar"></i></div></div></div>
+              <div class="platform-stat-list"><div class="platform-stat"><span>Toko suspended</span><b id="pDitangguhkan">0</b></div><div class="platform-stat"><span>Tagihan terbuka</span><b id="pBelumLunasTagihans">0</b></div><div class="platform-stat"><span>Total tagihan lunas</span><b id="pLunasTagihans">Rp0</b></div></div>
             </div>
-            <div class="platform-card"><div class="platform-card-head"><div><b>Quick Access</b><span>Administrasi platform</span></div></div><div class="platform-stat-list"><button class="platform-stat" data-platform-jump="tenants" style="width:100%;border:0;background:transparent;text-align:left"><span>Kelola Tenant</span><b>→</b></button><button class="platform-stat" data-platform-jump="subscriptions" style="width:100%;border:0;background:transparent;text-align:left"><span>Subscription</span><b>→</b></button><button class="platform-stat" data-platform-jump="plans" style="width:100%;border:0;background:transparent;text-align:left"><span>Plans & Features</span><b>→</b></button><button class="platform-stat" data-platform-jump="audit" style="width:100%;border:0;background:transparent;text-align:left"><span>Audit Log</span><b>→</b></button></div></div>
+            <div class="platform-card"><div class="platform-card-head"><div><b>Akses Cepat</b><span>Menu pengelolaan</span></div></div><div class="platform-stat-list"><button class="platform-stat" data-platform-jump="tenants" style="width:100%;border:0;background:transparent;text-align:left"><span>Kelola Toko</span><b>→</b></button><button class="platform-stat" data-platform-jump="subscriptions" style="width:100%;border:0;background:transparent;text-align:left"><span>Langganan</span><b>→</b></button><button class="platform-stat" data-platform-jump="plans" style="width:100%;border:0;background:transparent;text-align:left"><span>Paket & Fitur</span><b>→</b></button><button class="platform-stat" data-platform-jump="audit" style="width:100%;border:0;background:transparent;text-align:left"><span>Riwayat Aktivitas</span><b>→</b></button></div></div>
           </div>
-          <div class="platform-card platform-table-card"><div class="platform-card-head" style="padding:21px"><div><b>Aktivitas Platform Terbaru</b><span>Jejak administrasi Super Admin</span></div><button id="platformAuditRefresh" class="platform-refresh">↻ Refresh</button></div><div style="overflow:auto"><table class="platform-table"><thead><tr><th>Waktu</th><th>Aksi</th><th>Resource</th><th>Deskripsi</th></tr></thead><tbody id="platformAuditBody"></tbody></table></div></div>
+          <div class="platform-card platform-table-card"><div class="platform-card-head" style="padding:21px"><div><b>Aktivitas Platform Terbaru</b><span>Catatan kegiatan admin</span></div><button id="platformAuditPerbarui" class="platform-refresh">↻ Muat Ulang</button></div><div style="overflow:auto"><table class="platform-table"><thead><tr><th>Waktu</th><th>Aksi</th><th>Resource</th><th>Deskripsi</th></tr></thead><tbody id="platformAuditBody"></tbody></table></div></div>
         </section>
-        <section id="platformTenantsPage" class="hidden"><h1>Tenant Management</h1><div class="platform-sub">Daftar seluruh organisasi yang menggunakan Tokokula.</div><div class="platform-card platform-table-card"><div class="platform-toolbar"><input id="platformTenantSearch" class="platform-search" placeholder="Cari tenant..."/><button id="platformTenantRefresh" class="platform-refresh">↻ Refresh</button></div><div style="overflow:auto"><table class="platform-table"><thead><tr><th>Tenant</th><th>Paket</th><th>User</th><th>Owner</th><th>Subscription</th><th>Status</th><th>Dibuat</th></tr></thead><tbody id="platformTenantBody"></tbody></table></div></div></section>
-        <section id="platformSubscriptionsPage" class="hidden"><h1>Subscriptions</h1><div class="platform-sub">Ringkasan subscription seluruh tenant.</div><div class="platform-card platform-table-card"><div class="platform-toolbar"><button id="platformSubscriptionRefresh" class="platform-refresh">↻ Refresh</button></div><div style="padding:25px;color:#8a93a2">Daftar subscription terhubung ke tenant akan ditampilkan pada tahap berikutnya.</div></div></section>
-        <section id="platformPlansPage" class="hidden"><h1>Plans & Features</h1><div class="platform-sub">Konfigurasi paket dan feature limit Tokokula.</div><div id="platformPlansGrid" class="platform-kpis"></div></section>
-        <section id="platformBillingPage" class="hidden"><h1>Billing</h1><div class="platform-sub">Status invoice dan pembayaran platform.</div><div class="platform-card platform-table-card"><div style="overflow:auto"><table class="platform-table"><thead><tr><th>Invoice</th><th>Tenant</th><th>Status</th><th>Jumlah</th><th>Jatuh Tempo</th><th>Dibayar</th></tr></thead><tbody id="platformBillingBody"></tbody></table></div></div></section>
-        <section id="platformAuditPage" class="hidden"><h1>Platform Audit Log</h1><div class="platform-sub">Riwayat aktivitas administratif platform.</div><div class="platform-card platform-table-card"><div class="platform-toolbar"><button id="platformAuditFullRefresh" class="platform-refresh">↻ Refresh</button></div><div style="overflow:auto"><table class="platform-table"><thead><tr><th>Waktu</th><th>Aksi</th><th>Resource</th><th>ID</th><th>Deskripsi</th></tr></thead><tbody id="platformAuditFullBody"></tbody></table></div></div></section>
+        <section id="platformTokosPage" class="hidden"><h1>Kelola Toko</h1><div class="platform-sub">Kelola toko, pemilik, paket, dan statusnya dengan mudah.</div><div class="platform-card platform-table-card"><div class="platform-toolbar"><input id="platformTokoCari" class="platform-search" placeholder="Cari nama toko..."/><button id="platformTokoPerbarui" class="platform-refresh">↻ Muat Ulang</button></div><div style="overflow:auto"><table class="platform-table"><thead><tr><th>Toko</th><th>Paket</th><th>User</th><th>Pemilik</th><th>Langganan</th><th>Keadaan</th><th>Aksi</th></tr></thead><tbody id="platformTokoBody"></tbody></table></div></div></section>
+        <section id="platformLanggananPage" class="hidden"><h1>Langganan</h1><div class="platform-sub">Kelola paket, status, dan periode langganan setiap tenant.</div><div class="platform-card platform-table-card"><div class="platform-toolbar"><input id="platformLanggananCari" class="platform-search" placeholder="Cari nama toko..."/><button id="platformLanggananPerbarui" class="platform-refresh">↻ Muat Ulang</button></div><div style="overflow:auto"><table class="platform-table"><thead><tr><th>Toko</th><th>Paket</th><th>Keadaan</th><th>User</th><th>Outlet</th><th>Berakhir</th><th>Aksi</th></tr></thead><tbody id="platformLanggananBody"></tbody></table></div></div></section>
+        <section id="platformPlansPage" class="hidden"><h1>Paket & Fitur</h1><div class="platform-sub">Atur harga paket dan fitur yang tersedia.</div><div id="platformPlansGrid" class="platform-kpis"></div><div class="platform-card" style="margin-top:14px"><div class="platform-card-head"><div><b>Pengaturan Fitur</b><span>Pilih paket, lalu tentukan fitur dan batas penggunaannya.</span></div><select id="platformFiturPlan" class="platform-search" style="max-width:180px"><option value="free">Gratis</option><option value="pro">Pro</option><option value="business">Bisnis</option><option value="enterprise">Enterprise</option></select></div><div style="overflow:auto"><table class="platform-table"><thead><tr><th>Fitur</th><th>Keadaan</th><th>Batas</th><th>Aksi</th></tr></thead><tbody id="platformFiturBody"></tbody></table></div></div></section>
+        <section id="platformTagihanPage" class="hidden"><h1>Tagihan</h1><div class="platform-sub">Kelola tagihan dan pembayaran langganan toko.</div><div class="platform-card" style="margin-bottom:14px"><div class="platform-card-head"><div><b>Buat Tagihan</b><span>Tagihan baru akan tercatat otomatis dan masuk ke riwayat aktivitas.</span></div></div><form id="platformTagihanForm" class="platform-form-grid"><select id="platformTagihanToko" class="platform-search" required><option value="">Pilih toko</option></select><input id="platformTagihanNumber" class="platform-search" placeholder="Nomor tagihan" required/><input id="platformTagihanAmount" class="platform-search" type="number" min="0" placeholder="Nominal (IDR)" required/><input id="platformTagihanDue" class="platform-search" type="date" required/><button class="platform-refresh" type="submit">+ Buat Tagihan</button></form></div><div class="platform-card platform-table-card"><div class="platform-toolbar"><select id="platformTagihanStatus" class="platform-search" style="max-width:180px"><option value="">Semua status</option><option value="pending">Menunggu</option><option value="paid">Lunas</option><option value="open">Belum Lunas</option><option value="unpaid">Belum Dibayar</option></select><button id="platformTagihanPerbarui" class="platform-refresh">↻ Muat Ulang</button></div><div style="overflow:auto"><table class="platform-table"><thead><tr><th>Tagihan</th><th>Toko</th><th>Keadaan</th><th>Jumlah</th><th>Jatuh Tempo</th><th>Pembayaran</th><th>Aksi</th></tr></thead><tbody id="platformTagihanBody"></tbody></table></div></div><div class="platform-card platform-table-card" style="margin-top:14px"><div class="platform-card-head"><div><b>Pembayaran Terakhir</b><span>Daftar pembayaran yang tercatat di Tokokula.</span></div></div><div style="overflow:auto"><table class="platform-table"><thead><tr><th>Waktu</th><th>Tagihan</th><th>Toko</th><th>Nominal</th><th>Metode</th><th>Keadaan</th><th>Referensi</th></tr></thead><tbody id="platformPembayaranBody"></tbody></table></div></div></section>
+        <section id="platformAuditPage" class="hidden"><h1>Platform Riwayat Aktivitas</h1><div class="platform-sub">Catatan perubahan dan kegiatan pengelolaan Tokokula.</div><div class="platform-card platform-table-card"><div class="platform-toolbar"><button id="platformAuditFullPerbarui" class="platform-refresh">↻ Muat Ulang</button></div><div style="overflow:auto"><table class="platform-table"><thead><tr><th>Waktu</th><th>Aksi</th><th>Resource</th><th>ID</th><th>Deskripsi</th></tr></thead><tbody id="platformAuditFullBody"></tbody></table></div></div></section>
       </div>
     </main>
   </div>
@@ -199,38 +286,38 @@ h1{margin:0;font-size:28px;letter-spacing:-.8px}.desc{color:var(--muted);font-si
 
 <section id="app" class="app hidden">
   <aside id="sidebar" class="sidebar">
-    <div class="side-brand"><b>Tokokula</b><small>Enterprise POS</small></div>
+    <div class="side-brand"><b>Tokokula</b><small>Enterprise Kasir</small></div>
     <nav class="nav">
-      <button class="active" data-page="dashboard" data-permission="dashboard.view">Dashboard</button>
-      <button data-page="pos" data-permission="sales.view">POS</button>
-      <button data-page="inventory" data-permission="inventory.view">Inventory</button>
-      <button data-page="customers" data-permission="customer.view">Customers</button>
-      <button data-page="purchases" data-permission="inventory.view">Purchase</button>
-      <button data-page="finance" data-permission="settings.view">Finance</button>
-      <button data-page="reports" data-permission="reports.view">Reports</button>
+      <button class="active" data-page="dashboard" data-permission="dashboard.view">Ringkasan</button>
+      <button data-page="pos" data-permission="sales.view">Kasir</button>
+      <button data-page="inventory" data-permission="inventory.view">Stok</button>
+      <button data-page="customers" data-permission="customer.view">Pelanggan</button>
+      <button data-page="purchases" data-permission="inventory.view">Pembelian</button>
+      <button data-page="finance" data-permission="settings.view">Keuangan</button>
+      <button data-page="reports" data-permission="reports.view">Laporan</button>
       <button data-page="master" data-permission="product.manage">Master Data</button>
-      <button data-page="settings" data-permission="settings.view">Settings</button>
+      <button data-page="settings" data-permission="settings.view">Pengaturan</button>
     </nav>
   </aside>
 
   <main class="main">
     <header class="topbar">
-      <div class="top-left"><button id="mobileMenu" class="mobile-menu">☰</button><strong id="topTitle">Dashboard</strong></div>
-      <div class="top-right"><span id="plan" class="pill">Loading...</span><div id="avatar" class="avatar">U</div><button id="logout" class="logout">Keluar</button></div>
+      <div class="top-left"><button id="mobileMenu" class="mobile-menu">☰</button><strong id="topTitle">Ringkasan</strong></div>
+      <div class="top-right"><span id="plan" class="pill">Sedang memuat...</span><div id="avatar" class="avatar">U</div><button id="logout" class="logout">Keluar</button></div>
     </header>
 
     <div class="page">
       <section id="dashboard">
-        <h1>Dashboard</h1><div class="subtitle">Ringkasan bisnis Tokokula</div>
+        <h1>Ringkasan</h1><div class="subtitle">Ringkasan bisnis Tokokula</div>
         <div class="cards">
-          <div class="card"><div class="label">Revenue</div><div id="revenue" class="value">Rp0</div></div>
+          <div class="card"><div class="label">Penjualan</div><div id="revenue" class="value">Rp0</div></div>
           <div class="card"><div class="label">HPP</div><div id="cogs" class="value">Rp0</div></div>
-          <div class="card"><div class="label">Net Profit</div><div id="profit" class="value">Rp0</div></div>
+          <div class="card"><div class="label">Keuntungan Bersih</div><div id="profit" class="value">Rp0</div></div>
           <div class="card"><div class="label">Piutang</div><div id="receivable" class="value">Rp0</div></div>
         </div>
         <div class="grid">
           <div class="card"><b>Financial Snapshot</b><div id="financial" style="margin-top:17px" class="rows">Memuat...</div></div>
-          <div class="card"><b>Subscription</b><div id="subscription" style="margin-top:17px">Memuat...</div></div>
+          <div class="card"><b>Langganan</b><div id="subscription" style="margin-top:17px">Memuat...</div></div>
         </div>
       </section>
 
@@ -241,72 +328,32 @@ h1{margin:0;font-size:28px;letter-spacing:-.8px}.desc{color:var(--muted);font-si
         </div>
 
 
-
-        <div id="customersModule" class="hidden owner-module">
-          <h1>Customers</h1><div class="subtitle">Kelola pelanggan, loyalti, dan hubungan transaksi secara rapi.</div>
-          <div class="owner-summary">
-            <div class="card owner-kpi"><span>Total Pelanggan</span><b id="custTotal">0</b></div>
-            <div class="card owner-kpi"><span>Pelanggan Baru</span><b id="custNew">0</b></div>
-            <div class="card owner-kpi"><span>Total Poin</span><b id="custPoints">0</b></div>
-            <div class="card owner-kpi"><span>Nilai Pelanggan</span><b id="custValue">Rp0</b></div>
-          </div>
-          <div class="owner-toolbar"><input id="customerSearch" class="pos-search" placeholder="Cari nama / telepon..."><button id="customerRefresh" class="btn dark-btn">↻ Refresh</button></div>
-          <div class="owner-card owner-table-wrap"><table class="owner-table"><thead><tr><th>Nama</th><th>Telepon</th><th>Poin</th><th>Status</th></tr></thead><tbody id="customerBody"></tbody></table></div>
-        </div>
-
-        <div id="purchaseModule" class="hidden owner-module">
-          <h1>Purchase & Supplier</h1><div class="subtitle">Pantau supplier, pembelian, penerimaan barang, dan kewajiban pembayaran.</div>
-          <div class="owner-summary">
-            <div class="card owner-kpi"><span>Supplier</span><b id="supplierTotal">0</b></div>
-            <div class="card owner-kpi"><span>Hutang</span><b id="purchasePayable">Rp0</b></div>
-            <div class="card owner-kpi"><span>Pembelian Bulan Ini</span><b id="purchaseTotal">Rp0</b></div>
-            <div class="card owner-kpi"><span>Status</span><b id="purchaseStatus">Aktif</b></div>
-          </div>
-          <div class="owner-grid"><div class="owner-card"><h3>Supplier</h3><div class="owner-table-wrap"><table class="owner-table"><thead><tr><th>Supplier</th><th>Kode</th><th>Telepon</th><th>Email</th></tr></thead><tbody id="supplierBody"></tbody></table></div></div><div class="owner-card"><h3>Alur Pembelian</h3><div class="section-note">Buat pesanan → konfirmasi → terima barang → pembayaran supplier. Setiap tahap diproses melalui engine backend.</div><div class="empty-business" style="margin-top:16px">Belum ada pesanan pembelian pada periode ini.</div></div></div>
-        </div>
-
-        <div id="financeModule" class="hidden owner-module">
-          <h1>Finance</h1><div class="subtitle">Ringkasan kas, bank, pendapatan, biaya, laba, dan kewajiban bisnis.</div>
-          <div class="owner-toolbar"><button id="financeRefresh" class="btn dark-btn">↻ Refresh</button></div>
-          <div class="owner-summary">
-            <div class="card owner-kpi"><span>Revenue</span><b id="finRevenue">Rp0</b></div><div class="card owner-kpi"><span>HPP</span><b id="finCogs">Rp0</b></div><div class="card owner-kpi"><span>Laba Bersih</span><b id="finProfit">Rp0</b></div><div class="card owner-kpi"><span>Kas</span><b id="finCash">Rp0</b></div>
-          </div>
-          <div class="owner-grid"><div class="owner-card"><h3>Cashflow Snapshot</h3><div id="financeRows"></div></div><div class="owner-card"><h3>Posisi Dana</h3><div id="financePosition"></div></div></div>
-        </div>
-
-        <div id="reportsModule" class="hidden owner-module">
-          <h1>Reports & Analytics</h1><div class="subtitle">Analitik penjualan, produk, kasir, pelanggan, outlet, dan inventory.</div>
-          <div class="owner-card"><div class="report-filters"><input id="reportFrom" type="date"><input id="reportTo" type="date"></div><div class="report-actions"><button id="reportRefresh" class="btn dark-btn">↻ Muat Laporan</button></div></div>
-          <div class="owner-summary"><div class="card owner-kpi"><span>Penjualan</span><b id="reportSales">Rp0</b></div><div class="card owner-kpi"><span>Transaksi</span><b id="reportTransactions">0</b></div><div class="card owner-kpi"><span>Average Basket</span><b id="reportAverage">Rp0</b></div><div class="card owner-kpi"><span>Produk Terjual</span><b id="reportQty">0</b></div></div>
-          <div class="owner-grid"><div class="owner-card"><h3>Produk Terlaris</h3><div class="owner-table-wrap"><table class="owner-table"><thead><tr><th>Produk</th><th>Qty</th><th>Penjualan</th></tr></thead><tbody id="reportProducts"></tbody></table></div></div><div class="owner-card"><h3>Penjualan per Kasir</h3><div class="owner-table-wrap"><table class="owner-table"><thead><tr><th>Kasir</th><th>Transaksi</th><th>Total</th></tr></thead><tbody id="reportCashiers"></tbody></table></div></div></div>
-        </div>
-
         <div id="inventoryModule" class="hidden">
-          <h1>Inventory</h1>
+          <h1>Stok</h1>
           <div class="subtitle">Kontrol stok real-time, mutasi, penyesuaian, transfer, dan stock opname.</div>
 
           <div class="inventory-tabs">
-            <button class="inventory-tab active" data-inv-tab="overview">Overview</button>
+            <button class="inventory-tab active" data-inv-tab="overview">Ringkasan</button>
             <button class="inventory-tab" data-inv-tab="adjust">Penyesuaian</button>
             <button class="inventory-tab" data-inv-tab="transfer">Transfer</button>
-            <button class="inventory-tab" data-inv-tab="opname">Stock Opname</button>
+            <button class="inventory-tab" data-inv-tab="opname">Cek Stok</button>
             <button class="inventory-tab" data-inv-tab="movement">Mutasi Stok</button>
           </div>
 
           <div id="inv-overview" class="inventory-panel">
             <div class="inventory-toolbar">
               <select id="inventoryWarehouse" class="select"><option value="">Semua Warehouse</option></select>
-              <input id="inventorySearch" class="pos-search" placeholder="Cari produk / SKU...">
-              <button id="inventoryRefresh" class="btn dark-btn">↻ Refresh</button>
+              <input id="inventoryCari" class="pos-search" placeholder="Cari produk / Kode Produk...">
+              <button id="inventoryMuat Ulang" class="btn dark-btn">↻ Muat Ulang</button>
             </div>
             <div class="inventory-kpis">
-              <div class="card inv-kpi"><span>Total SKU</span><b id="invSku">0</b></div>
+              <div class="card inv-kpi"><span>Total Kode Produk</span><b id="invSku">0</b></div>
               <div class="card inv-kpi"><span>Total Qty</span><b id="invQty">0</b></div>
               <div class="card inv-kpi"><span>Stok Menipis</span><b id="invLow">0</b></div>
               <div class="card inv-kpi"><span>Nilai Modal</span><b id="invCost">Rp0</b></div>
             </div>
             <div class="card table-card"><div class="table-scroll"><table class="data-table">
-              <thead><tr><th>Produk</th><th>SKU</th><th>Warehouse</th><th>Qty</th><th>Min.</th><th>Status</th><th>Nilai Modal</th></tr></thead>
+              <thead><tr><th>Produk</th><th>Kode Produk</th><th>Warehouse</th><th>Qty</th><th>Min.</th><th>Keadaan</th><th>Nilai Modal</th></tr></thead>
               <tbody id="inventoryBody"></tbody>
             </table></div></div>
           </div>
@@ -340,14 +387,14 @@ h1{margin:0;font-size:28px;letter-spacing:-.8px}.desc{color:var(--muted);font-si
               </form>
             </div>
             <div class="card table-card" style="margin-top:14px"><div class="table-scroll"><table class="data-table">
-              <thead><tr><th>No.</th><th>Dari</th><th>Ke</th><th>Status</th><th>Tanggal</th></tr></thead>
+              <thead><tr><th>No.</th><th>Dari</th><th>Ke</th><th>Keadaan</th><th>Tanggal</th></tr></thead>
               <tbody id="transferBody"></tbody>
             </table></div></div>
           </div>
 
           <div id="inv-opname" class="inventory-panel hidden">
             <div class="card inv-form-card">
-              <h3>Stock Opname</h3><div class="subtitle">Masukkan hasil hitung fisik; sistem menghitung selisih dan menyesuaikan stok saat diselesaikan.</div>
+              <h3>Cek Stok</h3><div class="subtitle">Masukkan hasil hitung fisik; sistem menghitung selisih dan menyesuaikan stok saat diselesaikan.</div>
               <form id="opnameForm" class="master-modal-grid">
                 <div class="field"><label>Warehouse *</label><select id="opnameWarehouse" required></select></div>
                 <div class="field"><label>Produk *</label><select id="opnameProduct" required></select></div>
@@ -357,7 +404,7 @@ h1{margin:0;font-size:28px;letter-spacing:-.8px}.desc{color:var(--muted);font-si
               </form>
             </div>
             <div class="card table-card" style="margin-top:14px"><div class="table-scroll"><table class="data-table">
-              <thead><tr><th>No.</th><th>Warehouse</th><th>Status</th><th>Item</th><th>Tanggal</th></tr></thead>
+              <thead><tr><th>No.</th><th>Warehouse</th><th>Keadaan</th><th>Item</th><th>Tanggal</th></tr></thead>
               <tbody id="opnameBody"></tbody>
             </table></div></div>
           </div>
@@ -365,7 +412,7 @@ h1{margin:0;font-size:28px;letter-spacing:-.8px}.desc{color:var(--muted);font-si
           <div id="inv-movement" class="inventory-panel hidden">
             <div class="inventory-toolbar">
               <select id="movementWarehouse" class="select"><option value="">Semua Warehouse</option></select>
-              <button id="movementRefresh" class="btn dark-btn">↻ Refresh</button>
+              <button id="movementMuat Ulang" class="btn dark-btn">↻ Muat Ulang</button>
             </div>
             <div class="card table-card"><div class="table-scroll"><table class="data-table">
               <thead><tr><th>Waktu</th><th>Produk</th><th>Warehouse</th><th>Tipe</th><th>Qty</th><th>Referensi</th><th>Catatan</th></tr></thead>
@@ -381,41 +428,41 @@ h1{margin:0;font-size:28px;letter-spacing:-.8px}.desc{color:var(--muted);font-si
           <div class="master-tabs">
             <button class="master-tab active" data-master-tab="products">Produk</button>
             <button class="master-tab" data-master-tab="categories">Kategori</button>
-            <button class="master-tab" data-master-tab="brands">Brand</button>
-            <button class="master-tab" data-master-tab="units">Unit</button>
-            <button class="master-tab" data-master-tab="suppliers">Supplier</button>
+            <button class="master-tab" data-master-tab="brands">Merek</button>
+            <button class="master-tab" data-master-tab="units">Satuan</button>
+            <button class="master-tab" data-master-tab="suppliers">Pemasok</button>
           </div>
 
           <div id="master-products" class="master-panel">
             <div class="master-toolbar">
-              <input id="masterProductSearch" class="pos-search" placeholder="Cari produk, SKU, barcode...">
+              <input id="masterProductCari" class="pos-search" placeholder="Cari produk, Kode Produk, barcode...">
               <button class="btn dark-btn" id="addProductBtn">+ Produk</button>
-              <button class="btn light-btn" id="reloadMasterBtn">↻ Refresh</button>
+              <button class="btn light-btn" id="reloadMasterBtn">↻ Muat Ulang</button>
             </div>
             <div class="card table-card"><div class="table-scroll"><table class="data-table">
-              <thead><tr><th>Produk</th><th>SKU / Barcode</th><th>Kategori</th><th>Harga Jual</th><th>Stok Min.</th><th>Status</th><th>Aksi</th></tr></thead>
+              <thead><tr><th>Produk</th><th>Kode Produk / Barcode</th><th>Kategori</th><th>Harga Jual</th><th>Stok Min.</th><th>Keadaan</th><th>Aksi</th></tr></thead>
               <tbody id="masterProductsBody"></tbody>
             </table></div></div>
           </div>
 
           <div id="master-categories" class="master-panel hidden">
             <div class="master-toolbar"><div class="subtitle">Kelompok produk untuk pencarian dan laporan.</div><button class="btn dark-btn" id="addCategoryBtn">+ Kategori</button></div>
-            <div class="card table-card"><div class="table-scroll"><table class="data-table"><thead><tr><th>Nama</th><th>Kode</th><th>Deskripsi</th><th>Status</th></tr></thead><tbody id="masterCategoriesBody"></tbody></table></div></div>
+            <div class="card table-card"><div class="table-scroll"><table class="data-table"><thead><tr><th>Nama</th><th>Kode</th><th>Deskripsi</th><th>Keadaan</th></tr></thead><tbody id="masterCategoriesBody"></tbody></table></div></div>
           </div>
 
           <div id="master-brands" class="master-panel hidden">
-            <div class="master-toolbar"><div class="subtitle">Brand/merek produk.</div><button class="btn dark-btn" id="addBrandBtn">+ Brand</button></div>
-            <div class="card table-card"><div class="table-scroll"><table class="data-table"><thead><tr><th>Nama</th><th>Kode</th><th>Status</th></tr></thead><tbody id="masterBrandsBody"></tbody></table></div></div>
+            <div class="master-toolbar"><div class="subtitle">Merek/merek produk.</div><button class="btn dark-btn" id="addBrandBtn">+ Merek</button></div>
+            <div class="card table-card"><div class="table-scroll"><table class="data-table"><thead><tr><th>Nama</th><th>Kode</th><th>Keadaan</th></tr></thead><tbody id="masterBrandsBody"></tbody></table></div></div>
           </div>
 
           <div id="master-units" class="master-panel hidden">
-            <div class="master-toolbar"><div class="subtitle">Satuan penjualan dan stok.</div><button class="btn dark-btn" id="addUnitBtn">+ Unit</button></div>
+            <div class="master-toolbar"><div class="subtitle">Satuan penjualan dan stok.</div><button class="btn dark-btn" id="addUnitBtn">+ Satuan</button></div>
             <div class="card table-card"><div class="table-scroll"><table class="data-table"><thead><tr><th>Nama</th><th>Simbol</th></tr></thead><tbody id="masterUnitsBody"></tbody></table></div></div>
           </div>
 
           <div id="master-suppliers" class="master-panel hidden">
-            <div class="master-toolbar"><div class="subtitle">Data pemasok barang.</div><button class="btn dark-btn" id="addSupplierBtn">+ Supplier</button></div>
-            <div class="card table-card"><div class="table-scroll"><table class="data-table"><thead><tr><th>Nama</th><th>Kode</th><th>Kontak</th><th>Email</th><th>Status</th></tr></thead><tbody id="masterSuppliersBody"></tbody></table></div></div>
+            <div class="master-toolbar"><div class="subtitle">Data pemasok barang.</div><button class="btn dark-btn" id="addSupplierBtn">+ Pemasok</button></div>
+            <div class="card table-card"><div class="table-scroll"><table class="data-table"><thead><tr><th>Nama</th><th>Kode</th><th>Kontak</th><th>Email</th><th>Keadaan</th></tr></thead><tbody id="masterSuppliersBody"></tbody></table></div></div>
           </div>
         </div>
 
@@ -428,20 +475,20 @@ h1{margin:0;font-size:28px;letter-spacing:-.8px}.desc{color:var(--muted);font-si
           </div>
           <div class="card user-table-wrap">
             <table class="user-table">
-              <thead><tr><th>User</th><th>Role</th><th>Outlet</th><th>Status</th><th>Aksi</th></tr></thead>
+              <thead><tr><th>User</th><th>Role</th><th>Outlet</th><th>Keadaan</th><th>Aksi</th></tr></thead>
               <tbody id="usersBody"></tbody>
             </table>
           </div>
         </div>
 
         <div id="posModule" class="hidden">
-          <h1>Point of Sale</h1>
+          <h1>Kasir</h1>
           <div class="subtitle">Kasir cepat, mobile-friendly, dan terhubung langsung ke inventory.</div>
 
           <div class="pos-layout">
             <div class="card">
               <div class="pos-toolbar">
-                <input id="productSearch" class="pos-search" placeholder="Cari nama, SKU, atau barcode...">
+                <input id="productCari" class="pos-search" placeholder="Cari nama, Kode Produk, atau barcode...">
                 <button id="reloadProducts" class="btn" style="background:#f3f4f6">↻</button>
               </div>
               <div id="posContext" style="margin-top:12px;color:#718096;font-size:12px">Memuat outlet...</div>
@@ -460,7 +507,7 @@ h1{margin:0;font-size:28px;letter-spacing:-.8px}.desc{color:var(--muted);font-si
               </div>
 
               <div style="margin-top:15px">
-                <label style="font-size:12px;font-weight:800">Customer (opsional)</label>
+                <label style="font-size:12px;font-weight:800">Pelanggan (opsional)</label>
                 <select id="customerSelect" class="select"><option value="">Pelanggan umum</option></select>
               </div>
 
@@ -512,7 +559,7 @@ const SUPABASE_URL='https://rbiszxojihzugnzdoujs.supabase.co';
 const SUPABASE_ANON_KEY='sb_publishable_2J_bUvJtxrGC2zUf_NJraw_ri-__A0x';
 
 const supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY,{
-  auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}
+  auth:{persistSession:true,autoPerbaruiToken:true,detectSessionInUrl:true}
 });
 
 /* ================= API CLIENT ================= */
@@ -522,16 +569,16 @@ const API={
     if(error) throw error;
     return data;
   },
-  currentSubscription:()=>API.rpc('current_subscription'),
-  hasFeature:feature=>API.rpc('has_feature',{p_feature_code:feature}),
+  currentLangganan:()=>API.rpc('current_subscription'),
+  hasFitur:feature=>API.rpc('has_feature',{p_feature_code:feature}),
   hasPermission:permission=>API.rpc('has_permission',{p_code:permission}),
   users:()=>API.rpc('user_management_list'),
   roles:()=>API.rpc('user_management_roles'),
   inviteUser:(email,roleCode,outletId=null)=>API.rpc('user_management_invite',{p_email:email,p_role_code:roleCode,p_outlet_id:outletId}),
   updateUser:(id,name,phone,status,roleCode,outletId=null)=>API.rpc('user_management_update',{p_user_id:id,p_full_name:name,p_phone:phone,p_status:status,p_role_code:roleCode,p_outlet_id:outletId}),
   revokeUser:id=>API.rpc('user_management_revoke',{p_user_id:id}),
-  featureLimit:feature=>API.rpc('feature_limit',{p_feature_code:feature}),
-  checkLimit:(key,current)=>API.rpc('subscription_check_limit',{p_limit_key:key,p_current_value:current}),
+  featureBatas:feature=>API.rpc('feature_limit',{p_feature_code:feature}),
+  checkBatas:(key,current)=>API.rpc('subscription_check_limit',{p_limit_key:key,p_current_value:current}),
   financialSnapshot:(from,to)=>API.rpc('reporting_financial_snapshot',{p_from:from,p_to:to}),
   salesSummary:(from,to,outletId=null)=>API.rpc('reporting_sales_summary',{p_from:from,p_to:to,p_outlet_id:outletId}),
   topProducts:(from,to,limit=10,outletId=null)=>API.rpc('reporting_top_products',{p_from:from,p_to:to,p_limit:limit,p_outlet_id:outletId}),
@@ -556,13 +603,13 @@ const API={
   createProduct:(sku,name,cost,selling,category,brand,unit,barcode,minStock,tax,description,image)=>API.rpc('master_data_create_product',{p_sku:sku,p_name:name,p_cost_price:cost,p_selling_price:selling,p_category_id:category||null,p_brand_id:brand||null,p_unit_id:unit||null,p_barcode:barcode||null,p_min_stock:minStock,p_tax_rate:tax,p_description:description||null,p_image_url:image||null}),
   updateProduct:(id,sku,name,cost,selling,category,brand,unit,barcode,minStock,tax,description,image,active=true)=>API.rpc('master_data_update_product',{p_product_id:id,p_sku:sku,p_name:name,p_cost_price:cost,p_selling_price:selling,p_category_id:category||null,p_brand_id:brand||null,p_unit_id:unit||null,p_barcode:barcode||null,p_min_stock:minStock,p_tax_rate:tax,p_description:description||null,p_image_url:image||null,p_is_active:active}),
   openingStock:(product,warehouse,quantity,note='')=>API.rpc('master_data_set_opening_stock',{p_product_id:product,p_warehouse_id:warehouse,p_quantity:quantity,p_note:note}),
-  inventoryDashboard:(warehouseId=null)=>API.rpc('inventory_dashboard',{p_warehouse_id:warehouseId}),
+  inventoryRingkasan:(warehouseId=null)=>API.rpc('inventory_dashboard',{p_warehouse_id:warehouseId}),
   inventoryMovements:(warehouseId=null,productId=null,limit=100)=>API.rpc('reporting_inventory_movements',{p_warehouse_id:warehouseId,p_product_id:productId,p_limit:limit}),
   inventoryAdjust:(warehouseId,reason,items,note=null)=>API.rpc('inventory_adjust_stock',{p_warehouse_id:warehouseId,p_reason:reason,p_items:items,p_note:note}),
-  inventoryCreateTransfer:(fromId,toId,items,note=null)=>API.rpc('inventory_create_transfer',{p_from_warehouse_id:fromId,p_to_warehouse_id:toId,p_items:items,p_note:note}),
+  inventoryBuatTransfer:(fromId,toId,items,note=null)=>API.rpc('inventory_create_transfer',{p_from_warehouse_id:fromId,p_to_warehouse_id:toId,p_items:items,p_note:note}),
   inventoryCompleteTransfer:id=>API.rpc('inventory_complete_transfer',{p_transfer_id:id}),
   inventoryTransferList:()=>API.rpc('inventory_transfer_list'),
-  inventoryCreateOpname:(warehouseId,items,note=null)=>API.rpc('inventory_create_opname',{p_warehouse_id:warehouseId,p_items:items,p_note:note}),
+  inventoryBuatOpname:(warehouseId,items,note=null)=>API.rpc('inventory_create_opname',{p_warehouse_id:warehouseId,p_items:items,p_note:note}),
   inventoryCompleteOpname:id=>API.rpc('inventory_complete_opname',{p_opname_id:id}),
   inventoryOpnameList:()=>API.rpc('inventory_opname_list')
 };
@@ -696,7 +743,7 @@ async function login(email,password){
     if(await PlatformAPI.isAdmin()){PlatformState.isAdmin=true;await bootPlatform();return;}
     const pending=localStorage.getItem('tokokula_pending_setup');
     if(pending){
-      await setupOrganizationFromData(JSON.parse(pending));
+      await setupTokoFromData(JSON.parse(pending));
       localStorage.removeItem('tokokula_pending_setup');
     }
     await boot();
@@ -704,7 +751,7 @@ async function login(email,password){
   finally{$('loginBtn').disabled=false;$('loginBtn').textContent=authMode==='register'?'Daftar ke Tokokula':'Masuk ke Tokokula'}
 }
 
-async function setupOrganization(){
+async function setupToko(){
   const result=await API.rpc('registration_setup_organization',{
     p_organization_name:$('organizationName').value.trim(),
     p_outlet_name:$('outletName').value.trim()||null,
@@ -716,21 +763,21 @@ async function setupOrganization(){
   return result;
 }
 
-async function completePendingSetup(){
+async function completeMenungguSetup(){
   const raw=localStorage.getItem('tokokula_pending_setup');
   if(!raw || !State.session) return null;
   try{
-    const result=await setupOrganizationFromData(JSON.parse(raw));
+    const result=await setupTokoFromData(JSON.parse(raw));
     localStorage.removeItem('tokokula_pending_setup');
     return result;
   }catch(e){
-    console.error('Pending setup:',e);
+    console.error('Menunggu setup:',e);
     toast('Akun sudah aktif, tetapi setup toko belum selesai. Silakan lengkapi setup.');
     return null;
   }
 }
 
-async function setupOrganizationFromData(data){
+async function setupTokoFromData(data){
   return API.rpc('registration_setup_organization',{
     p_organization_name:data.organizationName,
     p_outlet_name:data.outletName||null,
@@ -764,7 +811,7 @@ async function register(email,password,name){
     if(data.session){
       State.session=data.session;
       State.user=data.user;
-      await setupOrganizationFromData(setupData);
+      await setupTokoFromData(setupData);
       localStorage.removeItem('tokokula_pending_setup');
       await boot();
     }else{
@@ -783,26 +830,25 @@ async function register(email,password,name){
 
 async function logout(){await supabaseClient.auth.signOut();State.session=null;State.user=null;$('app').classList.add('hidden');$('auth').classList.remove('hidden')}
 
-
 /* ================= APP ================= */
 async function boot(){
   $('auth').classList.add('hidden');$('app').classList.remove('hidden');
   $('avatar').textContent=(State.user?.email||'U').charAt(0).toUpperCase();
   try{
-    await loadSubscription();
-    await loadDashboard();
+    await loadLangganan();
+    await loadRingkasan();
     await permissionGuards();
   }catch(e){console.error(e);toast('Gagal memuat dashboard: '+(e.message||'Periksa schema/RLS Supabase.'))}
 }
-async function loadSubscription(){
-  const s=await API.currentSubscription();State.subscription=s;
+async function loadLangganan(){
+  const s=await API.currentLangganan();State.subscription=s;
   $('plan').textContent=s?.plan?.name||s?.plan?.code||'Unknown';
   $('subscription').innerHTML=`<div style="font-size:23px;font-weight:850">${esc(s?.plan?.name||'-')}</div>
   <div style="margin-top:7px;color:#718096">Status: <b>${esc(s?.status||'-')}</b></div>
-  <div style="margin-top:13px;font-size:13px;line-height:1.8">Users: ${limit(s?.plan?.max_users)}<br>Outlet: ${limit(s?.plan?.max_outlets)}<br>Product: ${limit(s?.plan?.max_products)}</div>`;
+  <div style="margin-top:13px;font-size:13px;line-height:1.8">Pengguna: ${limit(s?.plan?.max_users)}<br>Outlet: ${limit(s?.plan?.max_outlets)}<br>Product: ${limit(s?.plan?.max_products)}</div>`;
 }
 function limit(v){return v==null?'Unlimited':Number(v).toLocaleString('id-ID')}
-async function loadDashboard(){
+async function loadRingkasan(){
   const r=monthRange(),f=await API.financialSnapshot(r.from,r.to);
   $('revenue').textContent=rupiah(f?.revenue);$('cogs').textContent=rupiah(f?.cogs);$('profit').textContent=rupiah(f?.net_profit);$('receivable').textContent=rupiah(f?.receivable);
   $('financial').innerHTML=[
@@ -821,56 +867,23 @@ async function permissionGuards(){
 }
 function page(name){
   document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===name));
-  const titles={dashboard:'Dashboard',pos:'Point of Sale',inventory:'Inventory',customers:'Customers',purchases:'Purchase & Supplier',finance:'Finance',reports:'Reports & Analytics',settings:'Settings',master:'Master Data',inventory:'Inventory'};
+  const titles={dashboard:'Ringkasan',pos:'Point of Sale',inventory:'Inventory',customers:'Customers',purchases:'Pembelian & Pemasok',finance:'Finance',reports:'Laporan & Analisis',settings:'Settings',master:'Master Data',inventory:'Inventory'};
   if(name==='dashboard'){
     $('dashboard').classList.remove('hidden');$('module').classList.add('hidden');
   }else{
     $('dashboard').classList.add('hidden');$('module').classList.remove('hidden');
     $('moduleTitle').textContent=titles[name]||name;
-    $('genericModule').classList.add('hidden');
+    $('genericModule').classList.toggle('hidden',name==='pos'||name==='settings'||name==='master');
     $('posModule').classList.toggle('hidden',name!=='pos');
     $('usersModule').classList.toggle('hidden',name!=='settings');
     $('masterModule').classList.toggle('hidden',name!=='master');
     $('inventoryModule').classList.toggle('hidden',name!=='inventory');
-    $('customersModule').classList.toggle('hidden',name!=='customers');
-    $('purchaseModule').classList.toggle('hidden',name!=='purchases');
-    $('financeModule').classList.toggle('hidden',name!=='finance');
-    $('reportsModule').classList.toggle('hidden',name!=='reports');
     if(name==='pos') loadPOS();
-    if(name==='settings') loadUsers();
+    if(name==='settings') loadPengguna();
     if(name==='master') loadMasterData();
     if(name==='inventory') loadInventory();
-    if(name==='customers') loadCustomers();
-    if(name==='purchases') loadPurchases();
-    if(name==='finance') loadFinance();
-    if(name==='reports') loadReports();
   }
   $('topTitle').textContent=titles[name]||name;
-}
-
-
-/* ================= OWNER MODULES ================= */
-function dateRange(){const n=new Date();return{from:iso(new Date(n.getFullYear(),n.getMonth(),1)),to:iso(n)}}
-async function loadCustomers(){
-  try{const r=dateRange(),md=await API.masterList('all'),list=md?.customers||[];const s=await API.customerSummary(r.from,r.to).catch(()=>({}));
-    $('custTotal').textContent=Number(s?.total_customers??list.length??0).toLocaleString('id-ID');$('custNew').textContent=Number(s?.new_customers??0).toLocaleString('id-ID');$('custPoints').textContent=Number(s?.total_points??list.reduce((a,x)=>a+Number(x.points||x.loyalty_points||0),0)).toLocaleString('id-ID');$('custValue').textContent=rupiah(s?.total_value??0);
-    const q=String($('customerSearch').value||'').toLowerCase();const rows=list.filter(x=>!q||[x.name,x.full_name,x.phone].some(v=>String(v||'').toLowerCase().includes(q)));
-    $('customerBody').innerHTML=rows.map(x=>`<tr><td><b>${esc(x.name||x.full_name||'-')}</b></td><td>${esc(x.phone||'-')}</td><td>${Number(x.points||x.loyalty_points||0).toLocaleString('id-ID')}</td><td><span class="owner-badge">${esc(x.status||'Aktif')}</span></td></tr>`).join('')||`<tr><td colspan="4"><div class="empty-business">Belum ada pelanggan. Yuk tambahkan pelanggan saat transaksi atau dari master data.</div></td></tr>`;
-  }catch(e){console.error(e);toast(businessError(e,'Data pelanggan belum dapat dimuat. Silakan coba lagi.'))}
-}
-async function loadPurchases(){
-  try{const r=dateRange(),md=await API.masterList('all'),sup=md?.suppliers||[],f=await API.financialSnapshot(r.from,r.to).catch(()=>({}));$('supplierTotal').textContent=sup.length.toLocaleString('id-ID');$('purchasePayable').textContent=rupiah(f?.payable);$('purchaseTotal').textContent=rupiah(f?.purchases??f?.purchase_total??0);$('supplierBody').innerHTML=sup.map(x=>`<tr><td><b>${esc(x.name||'-')}</b></td><td>${esc(x.code||'-')}</td><td>${esc(x.phone||'-')}</td><td>${esc(x.email||'-')}</td></tr>`).join('')||`<tr><td colspan="4"><div class="empty-business">Belum ada supplier. Yuk tambahkan supplier terlebih dahulu.</div></td></tr>`;
-  }catch(e){console.error(e);toast(businessError(e,'Data pembelian belum dapat dimuat. Silakan coba lagi.'))}
-}
-async function loadFinance(){
-  try{const r=dateRange(),f=await API.financialSnapshot(r.from,r.to);$('finRevenue').textContent=rupiah(f?.revenue);$('finCogs').textContent=rupiah(f?.cogs);$('finProfit').textContent=rupiah(f?.net_profit);$('finCash').textContent=rupiah(f?.cash);$('financeRows').innerHTML=[['Pendapatan',f?.revenue],['HPP',f?.cogs],['Biaya Operasional',f?.expense],['Laba Bersih',f?.net_profit],['Hutang',f?.payable]].map(x=>`<div class="row"><span>${x[0]}</span><b>${rupiah(x[1])}</b></div>`).join('');$('financePosition').innerHTML=[['Kas',f?.cash],['Bank / E-Wallet',f?.bank_ewallet],['Piutang',f?.receivable],['Hutang',f?.payable]].map(x=>`<div class="row"><span>${x[0]}</span><b>${rupiah(x[1])}</b></div>`).join('');
-  }catch(e){console.error(e);toast(businessError(e,'Ringkasan keuangan belum dapat dimuat. Silakan coba lagi.'))}
-}
-async function loadReports(){
-  try{const r={from:$('reportFrom').value||dateRange().from,to:$('reportTo').value||dateRange().to};$('reportFrom').value=r.from;$('reportTo').value=r.to;const [s,p,c]=await Promise.all([API.salesSummary(r.from,r.to),API.topProducts(r.from,r.to,10),API.salesByCashier(r.from,r.to,10)]);const sales=Array.isArray(s)?(s[0]||{}):s||{};const total=Number(sales.total_sales??sales.revenue??sales.total??0);const tx=Number(sales.total_transactions??sales.transactions??sales.transaction_count??0);$('reportSales').textContent=rupiah(total);$('reportTransactions').textContent=tx.toLocaleString('id-ID');$('reportAverage').textContent=rupiah(tx?total/tx:0);$('reportQty').textContent=Number(sales.total_qty??sales.qty??0).toLocaleString('id-ID');
-    const products=Array.isArray(p)?p:[];$('reportProducts').innerHTML=products.map(x=>`<tr><td><b>${esc(x.product_name||x.name||'-')}</b></td><td>${Number(x.qty??x.quantity??0).toLocaleString('id-ID')}</td><td>${rupiah(x.sales??x.total_sales??x.revenue??x.total)}</td></tr>`).join('')||`<tr><td colspan="3"><div class="empty-business">Belum ada penjualan pada periode ini.</div></td></tr>`;
-    const cashiers=Array.isArray(c)?c:[];$('reportCashiers').innerHTML=cashiers.map(x=>`<tr><td><b>${esc(x.cashier_name||x.name||'-')}</b></td><td>${Number(x.transactions??x.transaction_count??0).toLocaleString('id-ID')}</td><td>${rupiah(x.total??x.total_sales??x.revenue)}</td></tr>`).join('')||`<tr><td colspan="3"><div class="empty-business">Belum ada data kasir pada periode ini.</div></td></tr>`;
-  }catch(e){console.error(e);toast(businessError(e,'Laporan belum dapat dimuat. Silakan coba lagi.'))}
 }
 
 /* ================= INVENTORY V2 ================= */
@@ -901,11 +914,11 @@ function fillInventorySelectors(){
 }
 async function loadInventoryOverview(){
   const wh=$('inventoryWarehouse').value||null;
-  const rows=await API.inventoryDashboard(wh);InventoryState.rows=rows||[];
+  const rows=await API.inventoryRingkasan(wh);InventoryState.rows=rows||[];
   renderInventoryRows();
 }
 function renderInventoryRows(){
-  const q=($('inventorySearch').value||'').toLowerCase().trim();
+  const q=($('inventoryCari').value||'').toLowerCase().trim();
   const rows=InventoryState.rows.filter(r=>!q||[r.product_name,r.sku].some(v=>String(v||'').toLowerCase().includes(q)));
   const totalQty=rows.reduce((a,r)=>a+Number(r.quantity||0),0);
   const low=rows.filter(r=>r.stock_status!=='ok').length;
@@ -940,7 +953,7 @@ async function submitInventoryTransfer(e){
   e.preventDefault();
   try{
     if($('transferFrom').value===$('transferTo').value) throw new Error('Warehouse asal dan tujuan harus berbeda.');
-    const r=await API.inventoryCreateTransfer($('transferFrom').value,$('transferTo').value,[{product_id:$('transferProduct').value,quantity:Number($('transferQty').value)}],$('transferNote').value||null);
+    const r=await API.inventoryBuatTransfer($('transferFrom').value,$('transferTo').value,[{product_id:$('transferProduct').value,quantity:Number($('transferQty').value)}],$('transferNote').value||null);
     await API.inventoryCompleteTransfer(r.transfer_id);
     toast(`Transfer ${r.transfer_no||''} selesai.`);
     $('transferForm').reset();await loadInventoryTransfers();await loadInventory();
@@ -955,7 +968,7 @@ async function loadInventoryTransfers(){
 async function submitInventoryOpname(e){
   e.preventDefault();
   try{
-    const r=await API.inventoryCreateOpname($('opnameWarehouse').value,[{product_id:$('opnameProduct').value,counted_quantity:Number($('opnameQty').value)}],$('opnameNote').value||null);
+    const r=await API.inventoryBuatOpname($('opnameWarehouse').value,[{product_id:$('opnameProduct').value,counted_quantity:Number($('opnameQty').value)}],$('opnameNote').value||null);
     await API.inventoryCompleteOpname(r.opname_id);
     toast(`Opname ${r.opname_no||''} selesai.`);
     $('opnameForm').reset();await loadInventoryOpnames();await loadInventory();
@@ -985,11 +998,11 @@ async function loadMasterData(){
   }catch(e){console.error(e);toast(e.message||'Gagal memuat Master Data.')}
 }
 function renderMasterProducts(){
-  const q=($('masterProductSearch')?.value||'').toLowerCase().trim();
+  const q=($('masterProductCari')?.value||'').toLowerCase().trim();
   const list=MasterState.products.filter(p=>!q||[p.name,p.sku,p.barcode].some(v=>String(v||'').toLowerCase().includes(q)));
   $('masterProductsBody').innerHTML=list.map(p=>{
     const c=MasterState.categories.find(x=>x.id===p.category_id)?.name||'—';
-    return `<tr><td><b>${esc(p.name)}</b><span class="muted">${esc(p.description||'')}</span></td><td>${esc(p.sku)}<span class="muted">${esc(p.barcode||'—')}</span></td><td>${esc(c)}</td><td>${rupiah(p.selling_price)}</td><td>${Number(p.min_stock||0)}</td><td><span class="status-pill ${p.is_active?'ok':''}">${p.is_active?'Aktif':'Nonaktif'}</span></td><td><button class="action-btn" onclick="editMasterProduct('${esc(p.id)}')">Edit</button><button class="action-btn" onclick="setOpeningStock('${esc(p.id)}')">Stok</button></td></tr>`;
+    return `<tr><td><b>${esc(p.name)}</b><span class="muted">${esc(p.description||'')}</span></td><td>${esc(p.sku)}<span class="muted">${esc(p.barcode||'—')}</span></td><td>${esc(c)}</td><td>${rupiah(p.selling_price)}</td><td>${Number(p.min_stock||0)}</td><td><span class="status-pill ${p.is_active?'ok':''}">${p.is_active?'Aktif':'Nonaktif'}</span></td><td><button class="action-btn" onclick="editMasterProduct('${esc(p.id)}')">Edit</button><button class="action-btn" onclick="setBelumLunasStock('${esc(p.id)}')">Stok</button></td></tr>`;
   }).join('')||'<tr><td colspan="7" style="padding:22px;text-align:center;color:#718096">Belum ada produk.</td></tr>';
 }
 function renderMasterSimple(){
@@ -1047,7 +1060,7 @@ function editMasterProduct(id){
   const p=MasterState.products.find(x=>x.id===id);if(!p)return;
   showMasterModal('Edit Produk',productForm(p),()=>{const x=collectProduct();return API.updateProduct(id,x.sku,x.name,x.cost,x.selling,x.category,x.brand,x.unit,x.barcode,x.min,x.tax,x.desc,x.image,true)});
 }
-function setOpeningStock(id){
+function setBelumLunasStock(id){
   const p=MasterState.products.find(x=>x.id===id);if(!p)return;
   const options=MasterState.warehouses.map(w=>`<option value="${esc(w.id)}">${esc(w.name)} (${esc(w.code)})</option>`).join('');
   showMasterModal('Atur Stok Awal',`<div class="field"><label>Produk</label><input value="${esc(p.name)}" disabled></div><div class="field"><label>Warehouse *</label><select id="mWarehouse" required>${options}</select></div><div class="field"><label>Jumlah Stok *</label><input id="mQty" type="number" min="0" step="0.01" value="0" required></div><div class="field"><label>Catatan</label><textarea id="mNote"></textarea></div><div class="modal-actions"><button class="btn primary" type="submit">Simpan Stok</button></div>`,()=>API.openingStock(id,$('mWarehouse').value,Number($('mQty').value||0),$('mNote').value));
@@ -1056,7 +1069,7 @@ function setOpeningStock(id){
 /* ================= USER & ROLE MANAGEMENT ================= */
 let UserState={users:[],roles:[],outlets:[]};
 
-async function loadUsers(){
+async function loadPengguna(){
   try{
     const [{data:outlets,error:oErr}]=await Promise.all([
       supabaseClient.from('outlets').select('id,name,code').eq('is_active',true).order('name')
@@ -1068,13 +1081,13 @@ async function loadUsers(){
     UserState.users=Array.isArray(users)?users:(users||[]);
     UserState.roles=Array.isArray(roles)?roles:(roles||[]);
     $('userSummary').textContent=`${UserState.users.length} pengguna • ${UserState.roles.length} role aktif`;
-    renderUsers();
+    renderPengguna();
   }catch(e){
     console.error(e);
     $('usersBody').innerHTML=`<tr><td colspan="5" style="color:#b91c1c;padding:20px">${esc(e.message||'Gagal memuat user.')}</td></tr>`;
   }
 }
-function renderUsers(){
+function renderPengguna(){
   $('usersBody').innerHTML=UserState.users.map(u=>{
     const role=u.role?.name||u.role?.code||'—';
     const outlet=u.outlet?.name||'—';
@@ -1103,7 +1116,7 @@ async function submitInvite(e){
   e.preventDefault();$('modalError').classList.add('hidden');$('inviteSubmit').disabled=true;$('inviteSubmit').textContent='Mengirim...';
   try{
     const r=await API.inviteUser($('inviteEmail').value.trim(),$('inviteRole').value,$('inviteOutlet').value||null);
-    closeUserModal();toast(`Undangan dibuat untuk ${r.email||$('inviteEmail').value.trim()}`);await loadUsers();
+    closeUserModal();toast(`Undangan dibuat untuk ${r.email||$('inviteEmail').value.trim()}`);await loadPengguna();
   }catch(e){console.error(e);$('modalError').textContent=e.message||'Gagal membuat undangan.';$('modalError').classList.remove('hidden')}
   finally{$('inviteSubmit').disabled=false;$('inviteSubmit').textContent='Kirim Undangan'}
 }
@@ -1113,13 +1126,13 @@ async function editUser(id){
   const phone=prompt('No. telepon:',u.phone||'');if(phone===null)return;
   const roleCode=prompt('Kode role (contoh: cashier/admin/manager):',u.role?.code||'');if(roleCode===null)return;
   const outletId=prompt('ID outlet (kosong = pertahankan):',u.outlet?.id||'');if(outletId===null)return;
-  try{await API.updateUser(id,name,phone,u.status,roleCode,outletId||null);toast('User berhasil diperbarui.');await loadUsers()}
+  try{await API.updateUser(id,name,phone,u.status,roleCode,outletId||null);toast('User berhasil diperbarui.');await loadPengguna()}
   catch(e){toast(e.message||'Gagal memperbarui user.')}
 }
 async function revokeUser(id){
   const u=UserState.users.find(x=>x.id===id);if(!u)return;
   if(!confirm(`Nonaktifkan ${u.full_name||u.email}?`))return;
-  try{await API.revokeUser(id);toast('User dinonaktifkan.');await loadUsers()}
+  try{await API.revokeUser(id);toast('User dinonaktifkan.');await loadPengguna()}
   catch(e){toast(e.message||'Gagal menonaktifkan user.')}
 }
 
@@ -1173,7 +1186,7 @@ async function loadProducts(){
 }
 
 function renderProducts(){
-  const q=($('productSearch').value||'').toLowerCase().trim();
+  const q=($('productCari').value||'').toLowerCase().trim();
   const list=State.products.filter(p=>
     !q || [p.name,p.sku,p.barcode].some(v=>String(v||'').toLowerCase().includes(q))
   );
@@ -1267,13 +1280,13 @@ $('backLogin').addEventListener('click',()=>setAuthMode('login'));
 $('logout').addEventListener('click',logout);
 document.querySelectorAll('.nav button').forEach(b=>b.addEventListener('click',()=>{page(b.dataset.page);$('sidebar').classList.remove('open')}));
 $('mobileMenu').addEventListener('click',()=>$('sidebar').classList.toggle('open'));
-$('productSearch').addEventListener('input',renderProducts);
+$('productCari').addEventListener('input',renderProducts);
 $('reloadProducts').addEventListener('click',()=>loadPOS());
 $('completeSale').addEventListener('click',completeSale);
 $('inviteUser').addEventListener('click',openInvite);
 $('closeModal').addEventListener('click',closeUserModal);
 $('userForm').addEventListener('submit',submitInvite);
-$('masterProductSearch').addEventListener('input',renderMasterProducts);
+$('masterProductCari').addEventListener('input',renderMasterProducts);
 $('addProductBtn').addEventListener('click',addProduct);
 $('addCategoryBtn').addEventListener('click',addCategory);
 $('addBrandBtn').addEventListener('click',addBrand);
@@ -1282,18 +1295,14 @@ $('addSupplierBtn').addEventListener('click',addSupplier);
 $('reloadMasterBtn').addEventListener('click',loadMasterData);
 $('closeMasterModal').addEventListener('click',closeMasterModal);
 $('inventoryWarehouse').addEventListener('change',loadInventoryOverview);
-$('inventorySearch').addEventListener('input',renderInventoryRows);
-$('inventoryRefresh').addEventListener('click',loadInventory);
+$('inventoryCari').addEventListener('input',renderInventoryRows);
+$('inventoryMuat Ulang').addEventListener('click',loadInventory);
 $('movementWarehouse').addEventListener('change',loadInventoryHistory);
-$('movementRefresh').addEventListener('click',loadInventoryHistory);
+$('movementMuat Ulang').addEventListener('click',loadInventoryHistory);
 $('adjustForm').addEventListener('submit',submitInventoryAdjust);
 $('transferForm').addEventListener('submit',submitInventoryTransfer);
 $('opnameForm').addEventListener('submit',submitInventoryOpname);
 document.querySelectorAll('.inventory-tab').forEach(b=>b.addEventListener('click',()=>switchInventoryTab(b.dataset.invTab)));
-
-$('customerRefresh')?.addEventListener('click',loadCustomers);$('customerSearch')?.addEventListener('input',loadCustomers);
-$('financeRefresh')?.addEventListener('click',loadFinance);$('reportRefresh')?.addEventListener('click',loadReports);
-
 document.querySelectorAll('.master-tab').forEach(b=>b.addEventListener('click',()=>switchMasterTab(b.dataset.masterTab)));
 
 supabaseClient.auth.onAuthStateChange((event,session)=>{
@@ -1307,13 +1316,22 @@ const PlatformAPI={
   isAdmin:()=>API.rpc('platform_is_super_admin'),
   summary:()=>API.rpc('platform_dashboard_summary'),
   tenants:(search=null,limit=100)=>API.rpc('platform_tenants_list',{p_search:search,p_limit:limit}),
-  plans:()=>API.rpc('platform_plans_list'),
+  subscriptions:(search=null,limit=200)=>API.rpc('platform_subscriptions_list',{p_search:search,p_limit:limit}),
+  plans:()=>API.rpc('platform_plan_catalog_list'),
+  features:(plan)=>API.rpc('platform_plan_features_list',{p_plan:plan}),
+  updatePlan:(plan,name,description,monthly,yearly,active)=>API.rpc('platform_update_plan',{p_plan:plan,p_name:name,p_description:description,p_monthly_price:monthly,p_yearly_price:yearly,p_active:active}),
+  setFitur:(plan,code,enabled,limit)=>API.rpc('platform_set_plan_feature',{p_plan:plan,p_feature_code:code,p_enabled:enabled,p_limit_value:limit}),
+  setTokoStatus:(id,status,reason)=>API.rpc('platform_set_tenant_status',{p_organization_id:id,p_status:status,p_reason:reason}),
+  setLangganan:(id,plan,status,end)=>API.rpc('platform_set_subscription',{p_organization_id:id,p_plan:plan,p_status:status,p_period_end:end}),
   audit:(limit=100)=>API.rpc('platform_audit_list',{p_limit:limit}),
-  billing:async()=>{const {data,error}=await supabaseClient.from('platform_billing_invoices').select('id,organization_id,invoice_number,status,amount,currency_code,due_at,paid_at,created_at').order('created_at',{ascending:false}).limit(100);if(error)throw error;return data||[]}
+  billing:(status=null,limit=200)=>API.rpc('platform_billing_list',{p_status:status,p_limit:limit}),
+  payments:(limit=200)=>API.rpc('platform_billing_payments_list',{p_limit:limit}),
+  createTagihan:(org,no,amount,due,start,end)=>API.rpc('platform_record_invoice',{p_organization_id:org,p_invoice_number:no,p_amount:amount,p_due_at:due,p_period_start:start,p_period_end:end}),
+  recordPembayaran:(invoice,amount,method,ref,status)=>API.rpc('platform_record_payment',{p_invoice_id:invoice,p_amount:amount,p_method:method,p_reference_no:ref,p_status:status})
 };
 function platformFormat(v){return Number(v||0).toLocaleString('id-ID')}
 function platformDate(v){return v?new Date(v).toLocaleString('id-ID',{dateStyle:'medium',timeStyle:'short'}):'—'}
-function platformPlanLabel(v){const m={free:'Free',pro:'Pro',business:'Business',enterprise:'Enterprise'};return m[String(v||'').toLowerCase()]||v||'—'}
+function platformPlanLabel(v){const m={free:'Gratis',pro:'Pro',business:'Bisnis',enterprise:'Enterprise'};return m[String(v||'').toLowerCase()]||v||'—'}
 async function bootPlatform(){
   try{
     const ok=await PlatformAPI.isAdmin();
@@ -1322,37 +1340,39 @@ async function bootPlatform(){
     $('auth').classList.add('hidden');$('app').classList.add('hidden');$('platformDenied').classList.add('hidden');$('platformApp').classList.remove('hidden');
     $('platformEmail').textContent=State.user?.email||'Super Admin';$('platformAvatar').textContent=(State.user?.email||'S').charAt(0).toUpperCase();
     platformRoute(location.hash.replace('#/super-admin/','')||'dashboard');
-    await loadPlatformDashboard();
+    await loadPlatformRingkasan();
     return true;
   }catch(e){console.error(e);showPlatformDenied();return false}
 }
 function showPlatformDenied(){ $('auth').classList.add('hidden');$('app').classList.add('hidden');$('platformApp').classList.add('hidden');$('platformDenied').classList.remove('hidden') }
-async function loadPlatformDashboard(){
+async function loadPlatformRingkasan(){
   try{
     const s=await PlatformAPI.summary();PlatformState.summary=s||{};
-    $('pTotalTenants').textContent=platformFormat(s?.tenants);$('pActiveTenants').textContent=platformFormat(s?.active_tenants);$('pUsers').textContent=platformFormat(s?.users);$('pSubscriptions').textContent=platformFormat(s?.active_subscriptions);$('pSuspended').textContent=platformFormat(s?.suspended_tenants);$('pOpenInvoices').textContent=platformFormat(s?.open_invoices);$('pPaidInvoices').textContent=rupiah(s?.paid_invoices);
-    const total=Number(s?.tenants)||0,active=Number(s?.active_tenants)||0,subs=Number(s?.active_subscriptions)||0;const ap=total?Math.round(active/total*100):0;const sp=total?Math.min(100,Math.round(subs/total*100)):0;$('pActivePct').textContent=ap+'%';$('pActiveBar').style.width=ap+'%';$('pSubPct').textContent=sp+'%';$('pSubBar').style.width=sp+'%';
+    $('pTotalTokos').textContent=platformFormat(s?.tenants);$('pAktifTokos').textContent=platformFormat(s?.active_tenants);$('pPengguna').textContent=platformFormat(s?.users);$('pLangganan').textContent=platformFormat(s?.active_subscriptions);$('pDitangguhkan').textContent=platformFormat(s?.suspended_tenants);$('pBelumLunasTagihans').textContent=platformFormat(s?.open_invoices);$('pLunasTagihans').textContent=rupiah(s?.paid_invoices);
+    const total=Number(s?.tenants)||0,active=Number(s?.active_tenants)||0,subs=Number(s?.active_subscriptions)||0;const ap=total?Math.round(active/total*100):0;const sp=total?Math.min(100,Math.round(subs/total*100)):0;$('pAktifPct').textContent=ap+'%';$('pAktifBar').style.width=ap+'%';$('pSubPct').textContent=sp+'%';$('pSubBar').style.width=sp+'%';
     renderPlatformAudit(s?.recent_activity||[]);
-  }catch(e){console.error(e);toast(businessError(e,'Dashboard platform belum dapat dimuat.'))}
+  }catch(e){console.error(e);toast(businessError(e,'Ringkasan platform belum dapat dimuat.'))}
 }
 function renderPlatformAudit(rows){$('platformAuditBody').innerHTML=(rows||[]).map(x=>`<tr><td>${esc(platformDate(x.created_at))}</td><td><span class="platform-status active">${esc(x.action||'—')}</span></td><td>${esc(x.resource_type||'—')}</td><td>${esc(x.description||'—')}</td></tr>`).join('')||'<tr><td colspan="4" class="platform-empty">Belum ada aktivitas platform.</td></tr>'}
-async function loadPlatformTenants(){
-  try{ $('platformTenantBody').innerHTML='<tr><td colspan="7" class="platform-loading">Memuat tenant...</td></tr>';const q=$('platformTenantSearch').value.trim()||null;const rows=await PlatformAPI.tenants(q,200);PlatformState.tenants=rows||[];$('platformTenantBody').innerHTML=PlatformState.tenants.map(x=>`<tr><td><b>${esc(x.organization_name)}</b><div style="color:#98a2b3;font-size:10px">${esc(x.organization_id)}</div></td><td>${esc(platformPlanLabel(x.plan))}</td><td>${platformFormat(x.users_count)}</td><td><b>${esc(x.owner_name||'—')}</b><div style="color:#98a2b3;font-size:10px">${esc(x.owner_email||'')}</div></td><td>${esc(x.subscription_status||'—')}</td><td><span class="platform-status ${String(x.org_status).toLowerCase()==='active'?'active':'suspended'}">${esc(x.org_status||'—')}</span></td><td>${esc(platformDate(x.created_at))}</td></tr>`).join('')||'<tr><td colspan="7" class="platform-empty">Belum ada tenant.</td></tr>'}catch(e){$('platformTenantBody').innerHTML=`<tr><td colspan="7" class="platform-empty">${esc(businessError(e,'Tenant belum dapat dimuat.'))}</td></tr>`}
-}
-async function loadPlatformPlans(){try{const rows=await PlatformAPI.plans();PlatformState.plans=rows||[];$('platformPlansGrid').innerHTML=PlatformState.plans.map(x=>`<div class="platform-kpi"><div class="k-label">${esc(platformPlanLabel(x.plan))}</div><div class="k-value">${platformFormat(x.feature_count)}</div><div class="k-meta">${platformFormat(x.enabled_features)} feature aktif</div><div style="margin-top:12px;color:#7b8494;font-size:11px">${esc(Object.keys(x.limits||{}).length)} limit terkonfigurasi</div></div>`).join('')||'<div class="platform-card platform-empty">Belum ada konfigurasi plan.</div>'}catch(e){$('platformPlansGrid').innerHTML=`<div class="platform-card platform-empty">${esc(businessError(e,'Plan belum dapat dimuat.'))}</div>`}}
-async function loadPlatformBilling(){try{const rows=await PlatformAPI.billing();$('platformBillingBody').innerHTML=rows.map(x=>`<tr><td><b>${esc(x.invoice_number)}</b></td><td>${esc(x.organization_id)}</td><td><span class="platform-status ${String(x.status).toLowerCase()==='paid'?'active':''}">${esc(x.status)}</span></td><td>${rupiah(x.amount)}</td><td>${esc(platformDate(x.due_at))}</td><td>${esc(platformDate(x.paid_at))}</td></tr>`).join('')||'<tr><td colspan="6" class="platform-empty">Belum ada invoice.</td></tr>'}catch(e){$('platformBillingBody').innerHTML=`<tr><td colspan="6" class="platform-empty">${esc(businessError(e,'Billing belum dapat dimuat.'))}</td></tr>`}}
+async function loadPlatformTokos(){try{$('platformTokoBody').innerHTML='<tr><td colspan="7" class="platform-loading">Sedang memuat daftar toko...</td></tr>';const q=$('platformTokoCari').value.trim()||null;const rows=await PlatformAPI.tenants(q,200);PlatformState.tenants=rows||[];$('platformTokoBody').innerHTML=PlatformState.tenants.map(x=>{const suspended=String(x.org_status).toLowerCase()==='suspended';return `<tr><td><b>${esc(x.organization_name)}</b><div style="color:#98a2b3;font-size:10px">${esc(x.organization_id)}</div></td><td>${esc(platformPlanLabel(x.plan))}</td><td>${platformFormat(x.users_count)}</td><td><b>${esc(x.owner_name||'—')}</b><div style="color:#98a2b3;font-size:10px">${esc(x.owner_email||'')}</div></td><td>${esc(x.subscription_status||'—')}</td><td><span class="platform-status ${suspended?'suspended':'active'}">${esc(x.org_status||'—')}</span></td><td><button class="platform-action ${suspended?'good':'danger'}" data-tenant-action="${x.organization_id}" data-tenant-status="${suspended?'active':'suspended'}">${suspended?'Aktifkan':'Tangguhkan'}</button></td></tr>`}).join('')||'<tr><td colspan="7" class="platform-empty">Belum ada toko.</td></tr>'}catch(e){$('platformTokoBody').innerHTML=`<tr><td colspan="7" class="platform-empty">${esc(businessError(e,'Toko belum dapat dimuat.'))}</td></tr>`}}
+async function loadPlatformLangganan(){try{$('platformLanggananBody').innerHTML='<tr><td colspan="7" class="platform-loading">Sedang memuat langganan...</td></tr>';const q=$('platformLanggananCari').value.trim()||null;const rows=await PlatformAPI.subscriptions(q,200);$('platformLanggananBody').innerHTML=(rows||[]).map(x=>`<tr><td><b>${esc(x.organization_name)}</b></td><td><select class="platform-search platform-mini" data-sub-plan="${x.organization_id}"><option value="free" ${x.plan==='free'?'selected':''}>Gratis</option><option value="pro" ${x.plan==='pro'?'selected':''}>Pro</option><option value="business" ${x.plan==='business'?'selected':''}>Bisnis</option><option value="enterprise" ${x.plan==='enterprise'?'selected':''}>Enterprise</option></select></td><td><select class="platform-search platform-mini" data-sub-status="${x.organization_id}"><option value="active" ${x.status==='active'?'selected':''}>Aktif</option><option value="trial" ${x.status==='trial'?'selected':''}>Masa Coba</option><option value="past_due" ${x.status==='past_due'?'selected':''}>Terlambat</option><option value="cancelled" ${x.status==='cancelled'?'selected':''}>Dibatalkan</option><option value="expired" ${x.status==='expired'?'selected':''}>Berakhir</option></select></td><td>${platformFormat(x.users_count)}</td><td>${platformFormat(x.outlets_count)}</td><td>${esc(platformDate(x.period_end))}</td><td><button class="platform-action" data-sub-save="${x.organization_id}">Simpan</button></td></tr>`).join('')||'<tr><td colspan="7" class="platform-empty">Belum ada data langganan.</td></tr>'}catch(e){$('platformLanggananBody').innerHTML=`<tr><td colspan="7" class="platform-empty">${esc(businessError(e,'Langganan belum dapat dimuat.'))}</td></tr>`}}
+async function loadPlatformPlans(){try{const rows=await PlatformAPI.plans();PlatformState.plans=rows||[];$('platformPlansGrid').innerHTML=PlatformState.plans.map(x=>`<div class="platform-kpi"><div class="k-label">${esc(platformPlanLabel(x.plan))}</div><div class="k-value">${rupiah(x.monthly_price)}</div><div class="k-meta">${rupiah(x.yearly_price)} / tahun</div><div style="margin-top:9px;color:#7b8494;font-size:11px">${platformFormat(x.enabled_features)} / ${platformFormat(x.feature_count)} feature aktif</div><div style="margin-top:10px"><button class="platform-action" data-plan-edit="${esc(x.plan)}">Ubah Paket</button></div></div>`).join('')||'<div class="platform-card platform-empty">Belum ada konfigurasi plan.</div>';await loadPlatformFitur()}catch(e){$('platformPlansGrid').innerHTML=`<div class="platform-card platform-empty">${esc(businessError(e,'Plan belum dapat dimuat.'))}</div>`}}
+async function loadPlatformFitur(){try{const rows=await PlatformAPI.features($('platformFiturPlan').value);$('platformFiturBody').innerHTML=(rows||[]).map(x=>`<tr><td><b>${esc(x.feature_name)}</b><div style="color:#98a2b3;font-size:10px">${esc(x.feature_code)}</div></td><td><input class="platform-feature-toggle" type="checkbox" ${x.enabled?'checked':''} data-feature-enabled="${esc(x.feature_code)}"></td><td><input class="platform-search platform-mini" type="number" min="0" value="${x.limit_value==null?'':x.limit_value}" data-feature-limit="${esc(x.feature_code)}" placeholder="Tanpa batas"></td><td><button class="platform-action" data-feature-save="${esc(x.feature_code)}">Simpan</button></td></tr>`).join('')||'<tr><td colspan="4" class="platform-empty">Belum ada feature.</td></tr>'}catch(e){$('platformFiturBody').innerHTML=`<tr><td colspan="4" class="platform-empty">${esc(businessError(e,'Fitur belum dapat dimuat.'))}</td></tr>`}}
+async function loadPlatformTagihan(){try{const status=$('platformTagihanStatus').value||null;const rows=await PlatformAPI.billing(status,200);$('platformTagihanBody').innerHTML=(rows||[]).map(x=>`<tr><td><b>${esc(x.invoice_number)}</b></td><td>${esc(x.organization_name)}</td><td><span class="platform-status ${x.status==='paid'?'active':''}">${esc(x.status)}</span></td><td>${rupiah(x.amount)}</td><td>${esc(platformDate(x.due_at))}</td><td>${platformFormat(x.payment_count)}${x.last_payment_method?` · ${esc(x.last_payment_method)}`:''}</td><td>${x.status!=='paid'?`<button class="platform-action good" data-pay-invoice="${x.invoice_id}" data-pay-amount="${x.amount}">Catat Pembayaran</button>`:'<span style="color:#027a48;font-size:11px;font-weight:700">Lunas</span>'}</td></tr>`).join('')||'<tr><td colspan="7" class="platform-empty">Belum ada invoice.</td></tr>';const payments=await PlatformAPI.payments(200);$('platformPembayaranBody').innerHTML=(payments||[]).map(x=>`<tr><td>${esc(platformDate(x.created_at))}</td><td>${esc(x.invoice_number)}</td><td>${esc(x.organization_name)}</td><td>${rupiah(x.amount)}</td><td>${esc(x.method)}</td><td>${esc(x.status)}</td><td>${esc(x.reference_no||'—')}</td></tr>`).join('')||'<tr><td colspan="7" class="platform-empty">Belum ada pembayaran.</td></tr>';await loadPlatformTagihanTokos()}catch(e){$('platformTagihanBody').innerHTML=`<tr><td colspan="7" class="platform-empty">${esc(businessError(e,'Tagihan belum dapat dimuat.'))}</td></tr>`}}
+async function loadPlatformTagihanTokos(){const rows=PlatformState.tenants.length?PlatformState.tenants:await PlatformAPI.tenants(null,200);$('platformTagihanToko').innerHTML='<option value="">Pilih toko</option>'+(rows||[]).map(x=>`<option value="${x.organization_id}">${esc(x.organization_name)}</option>`).join('')}
+
 async function loadPlatformAuditFull(){try{const rows=await PlatformAPI.audit(200);$('platformAuditFullBody').innerHTML=rows.map(x=>`<tr><td>${esc(platformDate(x.created_at))}</td><td>${esc(x.action||'—')}</td><td>${esc(x.resource_type||'—')}</td><td>${esc(x.resource_id||'—')}</td><td>${esc(x.description||'—')}</td></tr>`).join('')||'<tr><td colspan="5" class="platform-empty">Belum ada aktivitas.</td></tr>'}catch(e){$('platformAuditFullBody').innerHTML=`<tr><td colspan="5" class="platform-empty">${esc(businessError(e,'Audit log belum dapat dimuat.'))}</td></tr>`}}
 function platformRoute(name='dashboard'){
   if(!PlatformState.isAdmin)return showPlatformDenied();
   const allowed=['dashboard','tenants','subscriptions','plans','billing','audit'];if(!allowed.includes(name))name='dashboard';
-  const map={dashboard:['platformDashboardPage','Dashboard'],tenants:['platformTenantsPage','Tenants'],subscriptions:['platformSubscriptionsPage','Subscriptions'],plans:['platformPlansPage','Plans & Features'],billing:['platformBillingPage','Billing'],audit:['platformAuditPage','Audit Log']};
+  const map={dashboard:['platformRingkasanPage','Ringkasan'],tenants:['platformTokosPage','Tokos'],subscriptions:['platformLanggananPage','Langganan'],plans:['platformPlansPage','Paket & Fitur'],billing:['platformTagihanPage','Tagihan'],audit:['platformAuditPage','Riwayat Aktivitas']};
   document.querySelectorAll('[data-platform-page]').forEach(b=>b.classList.toggle('active',b.dataset.platformPage===name));Object.values(map).forEach(([id])=>$(id).classList.add('hidden'));$(map[name][0]).classList.remove('hidden');$('platformTitle').textContent=map[name][1];$('platformSidebar').classList.remove('open');history.replaceState(null,'','#/super-admin/'+name);
-  if(name==='dashboard')loadPlatformDashboard();if(name==='tenants')loadPlatformTenants();if(name==='plans')loadPlatformPlans();if(name==='billing')loadPlatformBilling();if(name==='audit')loadPlatformAuditFull();
+  if(name==='dashboard')loadPlatformRingkasan();if(name==='tenants')loadPlatformTokos();if(name==='subscriptions')loadPlatformLangganan();if(name==='plans')loadPlatformPlans();if(name==='billing')loadPlatformTagihan();if(name==='audit')loadPlatformAuditFull();
 }
 async function platformLogout(){await supabaseClient.auth.signOut();PlatformState.isAdmin=false;State.session=null;State.user=null;$('platformApp').classList.add('hidden');$('platformDenied').classList.add('hidden');$('auth').classList.remove('hidden');setAuthMode('login')}
 document.querySelectorAll('[data-platform-page]').forEach(b=>b.addEventListener('click',()=>platformRoute(b.dataset.platformPage)));
 document.querySelectorAll('[data-platform-jump]').forEach(b=>b.addEventListener('click',()=>platformRoute(b.dataset.platformJump)));
-$('platformMenu').addEventListener('click',()=>$('platformSidebar').classList.toggle('open'));$('platformLogout').addEventListener('click',platformLogout);$('platformDeniedLogout').addEventListener('click',platformLogout);$('platformTenantRefresh').addEventListener('click',loadPlatformTenants);$('platformTenantSearch').addEventListener('input',()=>loadPlatformTenants());$('platformAuditRefresh').addEventListener('click',loadPlatformDashboard);$('platformSubscriptionRefresh').addEventListener('click',loadPlatformDashboard);$('platformAuditFullRefresh').addEventListener('click',loadPlatformAuditFull);
+$('platformMenu').addEventListener('click',()=>$('platformSidebar').classList.toggle('open'));$('platformLogout').addEventListener('click',platformLogout);$('platformDeniedLogout').addEventListener('click',platformLogout);$('platformTokoPerbarui').addEventListener('click',loadPlatformTokos);$('platformTokoCari').addEventListener('input',()=>loadPlatformTokos());$('platformAuditPerbarui').addEventListener('click',loadPlatformRingkasan);$('platformAuditFullPerbarui').addEventListener('click',loadPlatformAuditFull);
 window.addEventListener('hashchange',()=>{if(location.hash.startsWith('#/super-admin/'))platformRoute(location.hash.replace('#/super-admin/','')||'dashboard')});
 
 
@@ -1361,6 +1381,95 @@ window.addEventListener('hashchange',()=>{if(location.hash.startsWith('#/super-a
     const {data}=await supabaseClient.auth.getSession();
     if(data.session){State.session=data.session;State.user=data.session.user;const isPlatform=await PlatformAPI.isAdmin();if(isPlatform){PlatformState.isAdmin=true;await bootPlatform()}else{await boot()}}
   }catch(e){console.error(e);toast('Tidak dapat memulihkan session.')}
+})();
+</script>
+
+<script id="tokokula-friendly-language">
+(function(){
+  const map = {
+    PERMISSION_DENIED:"Anda tidak memiliki izin untuk melakukan ini.",
+    TENANT_NOT_FOUND:"Toko tidak ditemukan.",
+    INVOICE_NOT_FOUND:"Tagihan tidak ditemukan.",
+    PLAN_NOT_FOUND:"Paket tidak ditemukan.",
+    FEATURE_NOT_FOUND:"Fitur belum tersedia.",
+    INVALID_LIMIT:"Batas penggunaan belum benar.",
+    INVALID_PRICE:"Harga belum benar.",
+    INVALID_AMOUNT:"Nominal belum benar.",
+    USER_LIMIT_REACHED:"Batas pengguna paket Anda sudah tercapai. Silakan naikkan paket jika ingin menambah pengguna.",
+    PRODUCT_LIMIT_REACHED:"Batas produk paket Anda sudah tercapai. Silakan naikkan paket untuk menambah produk.",
+    OUTLET_LIMIT_REACHED:"Batas outlet paket Anda sudah tercapai. Silakan naikkan paket untuk menambah outlet.",
+    WAREHOUSE_LIMIT_REACHED:"Batas gudang paket Anda sudah tercapai. Silakan naikkan paket untuk menambah gudang.",
+    FEATURE_NOT_AVAILABLE:"Fitur ini belum tersedia pada paket Anda.",
+    SUBSCRIPTION_REQUIRED:"Fitur ini memerlukan paket berlangganan.",
+    NETWORK_ERROR:"Koneksi sedang bermasalah. Periksa internet Anda lalu coba lagi.",
+    NOT_FOUND:"Data yang dicari belum ditemukan.",
+    unknown:"Maaf, permintaan belum dapat diproses. Silakan coba lagi."
+  };
+  window.tokokulaFriendlyError=function(err){
+    const raw=String(err?.message||err||"");
+    for(const k in map) if(raw.toUpperCase().includes(k)) return map[k];
+    if(/network|fetch|failed to fetch/i.test(raw)) return map.NETWORK_ERROR;
+    return raw && !/error|exception|rpc|postgres/i.test(raw) ? raw : map.unknown;
+  };
+  window.tokokulaToast=function(message,type="info"){
+    let box=document.getElementById("tk-friendly-toast");
+    if(!box){box=document.createElement("div");box.id="tk-friendly-toast";box.style.cssText="position:fixed;right:18px;bottom:18px;z-index:99999;max-width:420px;padding:15px 18px;border-radius:16px;background:#101827;color:#fff;box-shadow:0 16px 40px rgba(0,0,0,.18);font-weight:650;line-height:1.45";document.body.appendChild(box);}
+    box.textContent=message;box.style.borderLeft=type==="error"?"4px solid #d64b4b":"4px solid #b8924a";
+    clearTimeout(window.__tkToastTimer);window.__tkToastTimer=setTimeout(()=>box.remove(),4500);
+  };
+  window.addEventListener("unhandledrejection",e=>{
+    const msg=window.tokokulaFriendlyError(e.reason);
+    if(msg) window.tokokulaToast(msg,"error");
+  });
+  window.addEventListener("error",e=>{
+    if(e.message) window.tokokulaToast(window.tokokulaFriendlyError(e.error||e.message),"error");
+  });
+})();
+</script>
+
+<script id="tokokula-final-live">
+(function(){
+ const statusMap={active:"Aktif",trial:"Masa Coba",trialing:"Masa Coba",past_due:"Terlambat",cancelled:"Dibatalkan",expired:"Berakhir",pending:"Menunggu Pembayaran",paid:"Lunas",succeeded:"Berhasil",failed:"Gagal",suspended:"Ditangguhkan"};
+ const actionMap={TENANT_SUSPENDED:"Toko ditangguhkan",TENANT_ACTIVATED:"Toko diaktifkan",SUBSCRIPTION_CHANGED:"Langganan diubah",PLAN_UPDATED:"Paket diubah",PLAN_FEATURE_CHANGED:"Fitur paket diubah",INVOICE_CREATED:"Tagihan dibuat",PAYMENT_RECORDED:"Pembayaran dicatat"};
+ window.platformFriendlyStatus=v=>statusMap[String(v||"").toLowerCase()]||v||"—";
+ window.platformFriendlyAction=v=>actionMap[v]||v||"Aktivitas";
+ window.tokokulaFriendlyError=function(e){
+   const r=String(e?.message||e||"");
+   const m={USER_LIMIT_REACHED:"Batas pengguna paket Anda sudah tercapai. Silakan naikkan paket untuk menambah pengguna.",PRODUCT_LIMIT_REACHED:"Batas produk paket Anda sudah tercapai. Silakan naikkan paket untuk menambah produk.",OUTLET_LIMIT_REACHED:"Batas outlet paket Anda sudah tercapai. Silakan naikkan paket untuk menambah outlet.",WAREHOUSE_LIMIT_REACHED:"Batas gudang paket Anda sudah tercapai. Silakan naikkan paket untuk menambah gudang.",FEATURE_NOT_AVAILABLE:"Fitur ini belum tersedia pada paket Anda.",PERMISSION_DENIED:"Anda tidak memiliki izin untuk melakukan ini.",TENANT_NOT_FOUND:"Toko tidak ditemukan.",PLAN_NOT_FOUND:"Paket tidak ditemukan.",INVOICE_NOT_FOUND:"Tagihan tidak ditemukan.",FEATURE_NOT_FOUND:"Fitur belum tersedia.",INVALID_PRICE:"Harga belum benar.",INVALID_AMOUNT:"Nominal belum benar."};
+   for(const k in m)if(r.toUpperCase().includes(k))return m[k];
+   if(/network|fetch|failed to fetch/i.test(r))return "Koneksi sedang bermasalah. Periksa internet lalu coba lagi.";
+   return "Maaf, permintaan belum dapat diproses. Silakan coba lagi.";
+ };
+ window.tokokulaToast=function(msg,type){
+   let x=document.getElementById("tkToast");
+   if(!x){x=document.createElement("div");x.id="tkToast";x.style.cssText="position:fixed;right:16px;bottom:18px;z-index:99999;max-width:390px;padding:15px 18px;border-radius:16px;background:#101827;color:#fff;box-shadow:0 16px 40px rgba(0,0,0,.2);font-weight:650;line-height:1.45";document.body.appendChild(x)}
+   x.textContent=msg;x.style.borderLeft=type==="error"?"4px solid #d64b4b":"4px solid #b8924a";clearTimeout(window.__tkT);window.__tkT=setTimeout(()=>x.remove(),4500);
+ };
+ const side=document.getElementById("platformSidebar");
+ if(side){const o=document.createElement("div");o.id="tkPlatformOverlay";document.body.appendChild(o);o.onclick=()=>side.classList.remove("open")}
+ const bind=(id,ev,fn)=>{const x=document.getElementById(id);if(x&&!x.dataset.tkBound){x.addEventListener(ev,fn);x.dataset.tkBound="1"}};
+ bind("platformTokoRefresh","click",()=>loadPlatformTokos());
+ bind("platformLanggananRefresh","click",()=>loadPlatformLangganan());
+ bind("platformAuditRefresh","click",()=>loadPlatformRingkasan());
+ bind("platformAuditFullRefresh","click",()=>loadPlatformAuditFull());
+ bind("platformTagihanRefresh","click",()=>loadPlatformTagihan());
+ bind("platformTagihanStatus","change",()=>loadPlatformTagihan());
+ bind("platformFiturPlan","change",()=>loadPlatformFitur());
+
+ document.addEventListener("click",async e=>{
+   const t=e.target.closest("[data-tenant-action]");
+   if(t){if(!confirm(t.dataset.tenantStatus==="suspended"?"Tangguhkan toko ini?":"Aktifkan kembali toko ini?"))return;try{await PlatformAPI.setTokoStatus(t.dataset.tenantAction,t.dataset.tenantStatus,"Diubah oleh admin Tokokula");tokokulaToast(t.dataset.tenantStatus==="suspended"?"Toko berhasil ditangguhkan.":"Toko berhasil diaktifkan kembali.");await loadPlatformTokos();await loadPlatformRingkasan()}catch(x){tokokulaToast(tokokulaFriendlyError(x),"error")}return}
+   const sub=e.target.closest("[data-sub-save]");
+   if(sub){const id=sub.dataset.subSave,plan=document.querySelector(`[data-sub-plan="${id}"]`)?.value,st=document.querySelector(`[data-sub-status="${id}"]`)?.value;try{await PlatformAPI.setLangganan(id,plan,st,null);tokokulaToast("Langganan toko berhasil diperbarui.");await loadPlatformLangganan();await loadPlatformRingkasan()}catch(x){tokokulaToast(tokokulaFriendlyError(x),"error")}return}
+   const f=e.target.closest("[data-feature-save]");
+   if(f){const code=f.dataset.featureSave,plan=document.getElementById("platformFiturPlan")?.value,enabled=document.querySelector(`[data-feature-enabled="${CSS.escape(code)}"]`)?.checked,inp=document.querySelector(`[data-feature-limit="${CSS.escape(code)}"]`),lim=inp&&inp.value!==""?Number(inp.value):null;if(lim!==null&&(!Number.isInteger(lim)||lim<0)){tokokulaToast("Batas penggunaan harus berupa angka 0 atau lebih.","error");return}try{await PlatformAPI.setFitur(plan,code,enabled,lim);tokokulaToast("Pengaturan fitur berhasil disimpan.");await loadPlatformFitur()}catch(x){tokokulaToast(tokokulaFriendlyError(x),"error")}return}
+   const p=e.target.closest("[data-pay-invoice]");
+   if(p){const amount=Number(p.dataset.payAmount||0),method=prompt("Cara pembayaran:","Transfer Bank");if(!method)return;const ref=prompt("Nomor referensi pembayaran (opsional):","")||null;try{await PlatformAPI.recordPembayaran(p.dataset.payInvoice,amount,method,ref,"succeeded");tokokulaToast("Pembayaran berhasil dicatat. Tagihan sekarang lunas.");await loadPlatformTagihan();await loadPlatformRingkasan()}catch(x){tokokulaToast(tokokulaFriendlyError(x),"error")}return}
+   const ed=e.target.closest("[data-plan-edit]");
+   if(ed){const row=(PlatformState.plans||[]).find(x=>x.plan===ed.dataset.planEdit);if(!row)return;const name=prompt("Nama paket:",row.name||"");if(name===null)return;const monthly=Number(prompt("Harga per bulan:",row.monthly_price||0)),yearly=Number(prompt("Harga per tahun:",row.yearly_price||0));if(!Number.isFinite(monthly)||!Number.isFinite(yearly)||monthly<0||yearly<0){tokokulaToast("Harga belum benar.","error");return}try{await PlatformAPI.updatePlan(row.plan,name,row.description||"",monthly,yearly,!!row.active);tokokulaToast("Paket berhasil diperbarui.");await loadPlatformPlans()}catch(x){tokokulaToast(tokokulaFriendlyError(x),"error")}}
+ });
+ const ob=new MutationObserver(()=>{document.querySelectorAll(".platform-status").forEach(x=>x.textContent=platformFriendlyStatus(x.textContent.trim()));document.querySelectorAll("#platformAuditBody td:nth-child(2),#platformAuditFullBody td:nth-child(2)").forEach(x=>x.textContent=platformFriendlyAction(x.textContent.trim()))});
+ ob.observe(document.body,{subtree:true,childList:true});
 })();
 </script>
 </body>
