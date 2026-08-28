@@ -99,7 +99,19 @@ h1{margin:0;font-size:28px;letter-spacing:-.8px}.desc{color:var(--muted);font-si
 #app .nav button.active:before{content:"";position:absolute;left:0;width:3px;height:26px;border-radius:3px;background:#b79a68}
 .owner-nav-icon{width:28px;height:28px;display:grid;place-items:center;border-radius:9px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);font-size:13px;flex:0 0 28px}
 #app .nav button.active .owner-nav-icon{background:rgba(183,154,104,.13);color:#e3c994;border-color:rgba(183,154,104,.25)}
-.owner-side-foot{position:absolute;left:28px;right:28px;bottom:22px;border-top:1px solid rgba(255,255,255,.07);padding-top:15px;color:#8c97a9;font-size:10px}.owner-side-foot b{display:block;color:#e0e5ed;margin-bottom:4px}
+#app .nav-group{display:grid;gap:5px;margin-top:2px}
+#app .nav-group-toggle{display:flex;align-items:center;gap:12px;width:100%;min-height:48px;padding:11px 13px;border-radius:14px;color:#9eabbd;font-weight:650;position:relative;border:0;background:transparent;text-align:left}
+#app .nav-group-toggle:hover{background:rgba(255,255,255,.055);color:#fff}
+#app .nav-group-toggle.open{background:rgba(255,255,255,.045);color:#fff}
+#app .nav-chevron{margin-left:auto;font-size:16px;line-height:1;transition:transform .18s ease;color:#78869a}
+#app .nav-group-toggle.open .nav-chevron{transform:rotate(180deg);color:#d7bb87}
+#app .nav-submenu{display:none;padding:2px 0 2px 28px;gap:3px}
+#app .nav-submenu.open{display:grid}
+#app .nav-submenu button{display:flex;align-items:center;gap:10px;width:100%;min-height:40px;padding:9px 12px;border:0;border-radius:11px;background:transparent;color:#8997aa;font-size:12px;font-weight:600;text-align:left}
+#app .nav-submenu button:hover{background:rgba(255,255,255,.045);color:#fff}
+#app .nav-submenu button.active{background:rgba(183,154,104,.10);color:#fff}
+#app .nav-submenu .submenu-dot{width:6px;height:6px;border-radius:50%;background:#526074;flex:0 0 6px}
+#app .nav-submenu button.active .submenu-dot{background:#b79a68;box-shadow:0 0 0 3px rgba(183,154,104,.10)}
 #app .main{margin-left:286px}
 #app .topbar{height:78px;padding:0 34px;background:rgba(255,255,255,.88);backdrop-filter:blur(22px);border-bottom:1px solid #e5e8ed}
 .owner-top-left{display:flex;align-items:center;gap:12px}.owner-context{display:block;color:#8a93a2;font-size:10px;margin-top:2px}
@@ -117,7 +129,7 @@ h1{margin:0;font-size:28px;letter-spacing:-.8px}.desc{color:var(--muted);font-si
 .owner-section-title{font-size:38px;letter-spacing:-1.7px;margin:0}.owner-section-sub{color:#7b8494;font-size:13px;margin-top:7px}.owner-toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:22px 0 14px}.owner-toolbar input,.owner-toolbar select{min-height:44px;border:1px solid #e0e4ea;border-radius:12px;padding:11px 13px;background:#fff}.owner-toolbar input{flex:1;min-width:220px}.owner-refresh{border:1px solid #111827;background:#111827;color:#fff;border-radius:12px;padding:11px 14px;font-weight:700}
 .owner-empty{padding:30px;text-align:center;color:#98a2b3}.owner-error{padding:20px;color:#b42318}
 @media(max-width:1100px){#app .cards{grid-template-columns:repeat(2,minmax(0,1fr))}.owner-grid{grid-template-columns:1fr}}
-@media(max-width:760px){#app .sidebar{width:286px;transform:translateX(-100%);transition:transform .22s ease}#app .sidebar.open{transform:translateX(0)}#app .main{margin-left:0}#app .topbar{height:68px;padding:0 14px}.owner-user-meta{display:none}#app .page{padding:25px 14px 55px}.owner-hero h1,.owner-section-title{font-size:30px}#app .cards{grid-template-columns:1fr 1fr;gap:10px;margin-top:20px}.owner-kpi{min-height:112px;padding:15px;border-radius:17px}.owner-kpi .value{font-size:22px}.owner-side-foot{display:none}}
+@media(max-width:760px){#app .sidebar{width:286px;transform:translateX(-100%);transition:transform .22s ease}#app .sidebar.open{transform:translateX(0)}#app .main{margin-left:0}#app .topbar{height:68px;padding:0 14px}.owner-user-meta{display:none}#app .page{padding:25px 14px 55px}.owner-hero h1,.owner-section-title{font-size:30px}#app .cards{grid-template-columns:1fr 1fr;gap:10px;margin-top:20px}.owner-kpi{min-height:112px;padding:15px;border-radius:17px}.owner-kpi .value{font-size:22px}}
 @media(max-width:390px){#app .cards{gap:8px}.owner-kpi{padding:13px}.owner-kpi .value{font-size:19px}}
 </style>
 </head>
@@ -236,24 +248,30 @@ h1{margin:0;font-size:28px;letter-spacing:-.8px}.desc{color:var(--muted);font-si
 
 <section id="app" class="app hidden">
   <aside id="sidebar" class="sidebar">
-    <div class="side-brand"><b>Tokokula</b><small>Enterprise POS</small><span class="owner-badge">OWNER WORKSPACE</span></div>
+    <div class="side-brand"><b>Tokokula</b><small>Enterprise POS</small></div>
     <nav class="nav">
-      <button class="active" data-page="dashboard" data-permission="dashboard.view"><span class="owner-nav-icon">⌂</span><span>Dashboard</span></button>
-      <button data-page="pos" data-permission="sales.view"><span class="owner-nav-icon">▣</span><span>Penjualan (POS)</span></button>
-      <button data-page="inventory" data-permission="inventory.view"><span class="owner-nav-icon">▤</span><span>Stok Barang</span></button>
-      <button data-page="customers" data-permission="customer.view"><span class="owner-nav-icon">♙</span><span>Pelanggan</span></button>
-      <button data-page="purchases" data-permission="purchase.manage"><span class="owner-nav-icon">↙</span><span>Pembelian</span></button>
+      <button class="active" data-page="dashboard" data-permission="dashboard.view"><span class="owner-nav-icon">⌂</span><span>Beranda</span></button>
+      <button data-page="pos" data-permission="sales.view"><span class="owner-nav-icon">▣</span><span>POS</span></button>
+      <button data-page="inventory" data-permission="inventory.view"><span class="owner-nav-icon">▤</span><span>Stok</span></button>
       <button data-page="finance" data-permission="reports.view"><span class="owner-nav-icon">Rp</span><span>Keuangan</span></button>
       <button data-page="reports" data-permission="reports.view"><span class="owner-nav-icon">≋</span><span>Laporan</span></button>
-      <button data-page="master" data-permission="product.manage"><span class="owner-nav-icon">◇</span><span>Data Toko</span></button>
-      <button data-page="settings" data-permission="settings.view"><span class="owner-nav-icon">⚙</span><span>Tim & Pengaturan</span></button>
-    </nav>
-    <div class="owner-side-foot"><b>Tokokula Owner</b>Business management workspace</div>
-  </aside>
 
+      <div class="nav-group" id="teamSettingsGroup">
+        <button type="button" class="nav-group-toggle" id="teamSettingsToggle" aria-expanded="false">
+          <span class="owner-nav-icon">⚙</span><span>Tim & Pengaturan</span><span class="nav-chevron">⌄</span>
+        </button>
+        <div class="nav-submenu" id="teamSettingsSubmenu">
+          <button type="button" data-page="customers" data-permission="customer.view"><span class="submenu-dot"></span><span>Pelanggan</span></button>
+          <button type="button" data-page="purchases" data-permission="purchase.manage"><span class="submenu-dot"></span><span>Pembelian</span></button>
+          <button type="button" data-page="master" data-permission="product.manage"><span class="submenu-dot"></span><span>Data Toko</span></button>
+          <button type="button" data-page="settings" data-permission="settings.view"><span class="submenu-dot"></span><span>Tim & Pengguna</span></button>
+        </div>
+      </div>
+    </nav>
+  </aside>
   <main class="main">
     <header class="topbar">
-      <div class="top-left owner-top-left"><button id="mobileMenu" class="mobile-menu">☰</button><div><strong id="topTitle">Dashboard</strong><span class="owner-context">Owner Workspace</span></div></div>
+      <div class="top-left owner-top-left"><button id="mobileMenu" class="mobile-menu">☰</button><div><strong id="topTitle">Beranda</strong><span class="owner-context">Owner Workspace</span></div></div>
       <div class="top-right"><span id="plan" class="pill owner-plan">Loading...</span><div class="owner-user-meta"><b id="ownerEmail">Owner</b><span>Pemilik Bisnis</span></div><div id="avatar" class="avatar">U</div><button id="logout" class="logout">Keluar</button></div>
     </header>
 
@@ -870,8 +888,12 @@ async function permissionGuards(){
   }
 }
 function page(name){
-  document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===name));
-  const titles={dashboard:'Dashboard',pos:'Point of Sale',inventory:'Inventory',customers:'Customers',purchases:'Purchase & Supplier',finance:'Finance',reports:'Reports & Analytics',settings:'Team & Settings',master:'Master Data'};
+  const grouped=['customers','purchases','master','settings'];
+  document.querySelectorAll('.nav > button[data-page], .nav-submenu button[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===name));
+  const inGroup=grouped.includes(name);
+  const toggle=$('teamSettingsToggle'),submenu=$('teamSettingsSubmenu');
+  if(toggle&&submenu&&inGroup){submenu.classList.add('open');toggle.classList.add('open');toggle.setAttribute('aria-expanded','true');}
+  const titles={dashboard:'Beranda',pos:'Point of Sale',inventory:'Stok',customers:'Pelanggan',purchases:'Purchase & Supplier',finance:'Keuangan',reports:'Reports & Analytics',settings:'Tim & Pengguna',master:'Data Toko'};
   if(name==='dashboard'){
     $('dashboard').classList.remove('hidden');$('module').classList.add('hidden');
   }else{
@@ -1416,7 +1438,8 @@ $('loginForm').addEventListener('submit',e=>{
 $('registerToggle').addEventListener('click',()=>setAuthMode('register'));
 $('backLogin').addEventListener('click',()=>setAuthMode('login'));
 $('logout').addEventListener('click',logout);
-document.querySelectorAll('.nav button').forEach(b=>b.addEventListener('click',()=>{page(b.dataset.page);$('sidebar').classList.remove('open')}));
+document.querySelectorAll('.nav button[data-page], .nav-submenu button[data-page]').forEach(b=>b.addEventListener('click',()=>{page(b.dataset.page);$('sidebar').classList.remove('open')}));
+$('teamSettingsToggle').addEventListener('click',()=>{const sub=$('teamSettingsSubmenu'),toggle=$('teamSettingsToggle');const open=sub.classList.toggle('open');toggle.classList.toggle('open',open);toggle.setAttribute('aria-expanded',String(open));});
 $('mobileMenu').addEventListener('click',()=>$('sidebar').classList.toggle('open'));$('quickPOSFab').addEventListener('click',()=>{page('pos');$('sidebar').classList.remove('open');window.scrollTo({top:0,behavior:'smooth'});});
 $('productSearch').addEventListener('input',renderProducts);
 $('reloadProducts').addEventListener('click',()=>loadPOS());
