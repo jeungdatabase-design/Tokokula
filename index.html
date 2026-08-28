@@ -150,6 +150,235 @@ h1{margin:0;font-size:28px;letter-spacing:-.8px}.desc{color:var(--muted);font-si
   opacity:.9;
 }
 </style>
+
+<style id="tokokula-global-premium-v6">
+:root{
+  --tk-bg:#f5f7fa;
+  --tk-surface:#ffffff;
+  --tk-ink:#101828;
+  --tk-muted:#667085;
+  --tk-line:#e7eaf0;
+  --tk-brand:#b68b45;
+  --tk-brand-2:#8f6a32;
+  --tk-dark:#0b1422;
+  --tk-radius:20px;
+  --tk-shadow:0 10px 35px rgba(16,24,40,.055);
+  --tk-shadow-hover:0 18px 48px rgba(16,24,40,.085);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--tk-bg);
+  color:var(--tk-ink);
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+.app-main,.main-content,.content,.page-content{
+  max-width:none!important;
+}
+.owner-page,.page,.module-page{
+  width:100%;
+  max-width:1440px;
+  margin:0 auto;
+  padding:28px 30px 90px;
+}
+.page-header,.module-header,.section-header{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:20px;
+  margin-bottom:22px;
+}
+.page-title,.module-title{
+  font-size:clamp(24px,2.2vw,34px)!important;
+  line-height:1.12!important;
+  letter-spacing:-.035em!important;
+  font-weight:800!important;
+}
+.page-subtitle,.module-subtitle{
+  color:var(--tk-muted)!important;
+  margin-top:7px!important;
+  line-height:1.55!important;
+}
+.card,.panel,.surface,.stat-card,.kpi-card,.dashboard-card,.metric-card,.table-card,.form-card,.chart-card{
+  background:var(--tk-surface)!important;
+  border:1px solid var(--tk-line)!important;
+  border-radius:var(--tk-radius)!important;
+  box-shadow:var(--tk-shadow)!important;
+}
+.card,.panel,.surface,.dashboard-card,.table-card,.form-card,.chart-card{
+  padding:22px!important;
+}
+.card:hover,.panel:hover,.dashboard-card:hover,.metric-card:hover,.kpi-card:hover{
+  box-shadow:var(--tk-shadow-hover)!important;
+}
+.kpi-grid,.stats-grid,.metrics-grid,.dashboard-grid{
+  gap:16px!important;
+}
+.kpi-card,.stat-card,.metric-card{
+  min-height:138px;
+  padding:22px!important;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+}
+.kpi-label,.stat-label,.metric-label{
+  color:var(--tk-muted)!important;
+  font-size:12px!important;
+  font-weight:750!important;
+  text-transform:uppercase;
+  letter-spacing:.075em;
+}
+.kpi-value,.stat-value,.metric-value{
+  color:var(--tk-ink)!important;
+  font-size:clamp(25px,2.4vw,34px)!important;
+  font-weight:850!important;
+  letter-spacing:-.035em!important;
+}
+.kpi-meta,.stat-meta,.metric-meta{
+  color:var(--tk-muted)!important;
+  font-size:12px!important;
+}
+button,.btn,input,select,textarea{
+  font:inherit;
+}
+.btn,button{
+  border-radius:13px;
+}
+input,select,textarea{
+  border:1px solid #dfe3ea!important;
+  border-radius:13px!important;
+  min-height:44px;
+  background:#fff!important;
+  color:var(--tk-ink)!important;
+}
+input:focus,select:focus,textarea:focus{
+  outline:none!important;
+  border-color:rgba(182,139,69,.8)!important;
+  box-shadow:0 0 0 4px rgba(182,139,69,.10)!important;
+}
+table{
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0;
+}
+th{
+  color:#667085!important;
+  font-size:11px!important;
+  text-transform:uppercase;
+  letter-spacing:.06em;
+  font-weight:800!important;
+  background:#fafbfc!important;
+}
+td,th{
+  padding:14px 16px!important;
+  border-bottom:1px solid #edf0f4!important;
+}
+tr:last-child td{border-bottom:0!important}
+.badge,.pill,.status{
+  border-radius:999px!important;
+  font-weight:750!important;
+}
+.empty,.owner-empty,.empty-state{
+  min-height:170px;
+  display:grid;
+  place-items:center;
+  text-align:center;
+  color:var(--tk-muted);
+}
+.owner-error,.error-state{
+  border:1px solid #f2d0d0!important;
+  background:#fff8f8!important;
+  border-radius:16px!important;
+  color:#8a3f3f!important;
+  padding:15px 17px!important;
+}
+.loading,.loading-state{
+  color:var(--tk-muted)!important;
+}
+.quick-pos-fab{
+  position:fixed!important;
+  right:18px!important;
+  bottom:22px!important;
+  width:60px!important;
+  height:60px!important;
+  border-radius:19px!important;
+  z-index:95!important;
+  display:grid!important;
+  place-items:center!important;
+  background:linear-gradient(145deg,#172235,#080f1b)!important;
+  color:#fff!important;
+  box-shadow:0 18px 40px rgba(7,14,27,.28)!important;
+}
+@media(max-width:900px){
+  .owner-page,.page,.module-page{
+    padding:22px 18px 84px;
+  }
+  .page-header,.module-header,.section-header{
+    align-items:flex-start;
+    flex-direction:column;
+    gap:12px;
+  }
+}
+@media(max-width:760px){
+  .owner-page,.page,.module-page{
+    padding:18px 14px 92px;
+  }
+  .kpi-grid,.stats-grid,.metrics-grid,.dashboard-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:12px!important;
+  }
+  .kpi-card,.stat-card,.metric-card{
+    min-height:118px;
+    padding:17px!important;
+    border-radius:17px!important;
+  }
+  .kpi-value,.stat-value,.metric-value{
+    font-size:24px!important;
+  }
+  .card,.panel,.surface,.dashboard-card,.table-card,.form-card,.chart-card{
+    padding:17px!important;
+    border-radius:17px!important;
+  }
+  .table-wrap,.table-scroll,.overflow-x{
+    overflow-x:auto!important;
+    -webkit-overflow-scrolling:touch;
+  }
+  .quick-pos-fab{
+    width:58px!important;height:58px!important;
+    right:15px!important;bottom:17px!important;
+    border-radius:18px!important;
+  }
+}
+@media(max-width:430px){
+  .kpi-grid,.stats-grid,.metrics-grid,.dashboard-grid{
+    grid-template-columns:1fr 1fr!important;
+  }
+}
+</style>
+
+<style id="tokokula-sidebar-scroll-v6">
+#platformSidebar,
+#sidebar,
+.app-sidebar,
+.owner-sidebar{
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  scrollbar-width:thin;
+  scrollbar-color:rgba(255,255,255,.20) transparent;
+}
+#platformSidebar::-webkit-scrollbar,
+#sidebar::-webkit-scrollbar,
+.app-sidebar::-webkit-scrollbar,
+.owner-sidebar::-webkit-scrollbar{width:6px}
+#platformSidebar::-webkit-scrollbar-thumb,
+#sidebar::-webkit-scrollbar-thumb,
+.app-sidebar::-webkit-scrollbar-thumb,
+.owner-sidebar::-webkit-scrollbar{
+  background:rgba(255,255,255,.20);
+  border-radius:99px;
+}
+</style>
 </head>
 <body>
 
