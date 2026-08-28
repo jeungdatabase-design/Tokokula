@@ -520,7 +520,7 @@ stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
   </aside>
   <main class="main">
     <header class="topbar">
-      <div class="top-left owner-top-left"><button id="mobileMenu" class="mobile-menu">☰</button><div><strong id="topTitle">Beranda</strong><span class="owner-context">Owner Workspace</span></div></div>
+      <div class="top-left owner-top-left"><button id="mobileMenu" class="mobile-menu">☰</button><div><strong id="topTitle">Beranda</strong></div></div>
       <div class="top-right"><span id="plan" class="pill owner-plan">Loading...</span><div class="owner-user-meta"><b id="ownerEmail">Owner</b><span>Pemilik Bisnis</span></div><div id="avatar" class="avatar">U</div><button id="logout" class="logout">Keluar</button></div>
     </header>
 
@@ -1309,20 +1309,20 @@ function addCategory(){
   showMasterModal('Tambah Kategori',`<div class="master-modal-grid"><div class="field"><label>Nama *</label><input id="mName" required></div><div class="field"><label>Kode</label><input id="mCode"></div><div class="field full"><label>Deskripsi</label><textarea id="mDesc"></textarea></div></div><div class="modal-actions"><button class="btn primary" type="submit">Simpan</button></div>`,()=>API.createCategory($('mName').value,$('mCode').value,$('mDesc').value));
 }
 function addBrand(){
-  showMasterModal('Tambah Brand',`<div class="master-modal-grid"><div class="field"><label>Nama *</label><input id="mName" required></div><div class="field"><label>Kode</label><input id="mCode"></div></div><div class="modal-actions"><button class="btn primary" type="submit">Simpan</button></div>`,()=>API.createBrand($('mName').value,$('mCode').value));
+  showMasterModal('Tambah Brand',`<div class="master-modal-grid"><div class="field"><label>Nama *</label><input id="mName_dup2" required></div><div class="field"><label>Kode</label><input id="mCode_dup2"></div></div><div class="modal-actions"><button class="btn primary" type="submit">Simpan</button></div>`,()=>API.createBrand($('mName').value,$('mCode').value));
 }
 function addUnit(){
-  showMasterModal('Tambah Unit',`<div class="master-modal-grid"><div class="field"><label>Nama *</label><input id="mName" required placeholder="Pieces"></div><div class="field"><label>Simbol *</label><input id="mSymbol" required placeholder="pcs"></div></div><div class="modal-actions"><button class="btn primary" type="submit">Simpan</button></div>`,()=>API.createUnit($('mName').value,$('mSymbol').value));
+  showMasterModal('Tambah Unit',`<div class="master-modal-grid"><div class="field"><label>Nama *</label><input id="mName_dup3" required placeholder="Pieces"></div><div class="field"><label>Simbol *</label><input id="mSymbol" required placeholder="pcs"></div></div><div class="modal-actions"><button class="btn primary" type="submit">Simpan</button></div>`,()=>API.createUnit($('mName').value,$('mSymbol').value));
 }
 function addSupplier(){
-  showMasterModal('Tambah Supplier',`<div class="master-modal-grid"><div class="field"><label>Nama *</label><input id="mName" required></div><div class="field"><label>Kode</label><input id="mCode"></div><div class="field"><label>Telepon</label><input id="mPhone"></div><div class="field"><label>Email</label><input id="mEmail" type="email"></div><div class="field full"><label>Alamat</label><textarea id="mAddress"></textarea></div></div><div class="modal-actions"><button class="btn primary" type="submit">Simpan</button></div>`,()=>API.createSupplier($('mName').value,$('mCode').value,$('mPhone').value,$('mEmail').value,$('mAddress').value));
+  showMasterModal('Tambah Supplier',`<div class="master-modal-grid"><div class="field"><label>Nama *</label><input id="mName_dup4" required></div><div class="field"><label>Kode</label><input id="mCode_dup3"></div><div class="field"><label>Telepon</label><input id="mPhone"></div><div class="field"><label>Email</label><input id="mEmail" type="email"></div><div class="field full"><label>Alamat</label><textarea id="mAddress"></textarea></div></div><div class="modal-actions"><button class="btn primary" type="submit">Simpan</button></div>`,()=>API.createSupplier($('mName').value,$('mCode').value,$('mPhone').value,$('mEmail').value,$('mAddress').value));
 }
 function productForm(p=null){
   const escv=v=>esc(v??'');
   return `<div class="master-modal-grid">
     <div class="field"><label>SKU *</label><input id="mSku" value="${escv(p?.sku)}" required></div>
     <div class="field"><label>Barcode</label><input id="mBarcode" value="${escv(p?.barcode)}"></div>
-    <div class="field full"><label>Nama Produk *</label><input id="mName" value="${escv(p?.name)}" required></div>
+    <div class="field full"><label>Nama Produk *</label><input id="mName_dup5" value="${escv(p?.name)}" required></div>
     <div class="field"><label>Harga Modal</label><input id="mCost" type="number" min="0" value="${Number(p?.cost_price||0)}"></div>
     <div class="field"><label>Harga Jual</label><input id="mSelling" type="number" min="0" value="${Number(p?.selling_price||0)}"></div>
     <div class="field"><label>Kategori</label><select id="mCategory"><option value="">Tanpa kategori</option>${MasterState.categories.map(x=>`<option value="${esc(x.id)}" ${x.id===p?.category_id?'selected':''}>${esc(x.name)}</option>`).join('')}</select></div>
@@ -1331,7 +1331,7 @@ function productForm(p=null){
     <div class="field"><label>Minimum Stok</label><input id="mMin" type="number" min="0" value="${Number(p?.min_stock||0)}"></div>
     <div class="field"><label>Pajak (%)</label><input id="mTax" type="number" min="0" step="0.01" value="${Number(p?.tax_rate||0)}"></div>
     <div class="field"><label>URL Gambar</label><input id="mImage" value="${escv(p?.image_url)}"></div>
-    <div class="field full"><label>Deskripsi</label><textarea id="mDesc">${escv(p?.description)}</textarea></div>
+    <div class="field full"><label>Deskripsi</label><textarea id="mDesc_dup2">${escv(p?.description)}</textarea></div>
   </div><div class="modal-actions"><button class="btn primary" type="submit">${p?'Simpan Perubahan':'Buat Produk'}</button></div>`;
 }
 function collectProduct(){
