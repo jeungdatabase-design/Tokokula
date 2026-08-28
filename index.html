@@ -425,9 +425,15 @@ h1{margin:0;font-size:28px;letter-spacing:-.8px}.desc{color:var(--muted);font-si
   <div class="card owner-table-card"><div style="overflow:auto"><table class="owner-table"><thead><tr><th>Nama</th><th>Telepon</th><th>Poin</th><th>Status</th></tr></thead><tbody id="customerBody"></tbody></table></div></div>
 </div>
 <div id="purchasesModule" class="hidden">
-  <h1 class="owner-section-title">Purchase & Supplier</h1><div class="owner-section-sub">Ringkasan purchase order dan hutang supplier dari data organisasi.</div>
-  <div class="owner-toolbar"><button id="purchaseRefresh" class="owner-refresh">↻ Refresh</button></div>
-  <div class="card owner-table-card"><div style="overflow:auto"><table class="owner-table"><thead><tr><th>Purchase Order</th><th>Supplier</th><th>Status</th><th>Total</th><th>Tanggal</th></tr></thead><tbody id="purchaseBody"></tbody></table></div></div>
+  <h1 class="owner-section-title">Pembelian & Pemasok</h1><div class="owner-section-sub">Kelola pemasok, pesanan pembelian, dan tagihan pemasok dalam satu tempat.</div>
+  <div class="owner-toolbar"><button id="purchaseRefresh" class="owner-refresh">↻ Refresh</button><button id="purchaseAddSupplier" class="owner-refresh">+ Pemasok</button></div>
+  <div class="cards" style="margin-top:18px">
+    <div class="card owner-kpi"><div class="label">Pemasok Aktif</div><div id="supplierActiveCount" class="value">0</div></div>
+    <div class="card owner-kpi"><div class="label">Pesanan Pembelian</div><div id="purchaseOrderCount" class="value">0</div></div>
+    <div class="card owner-kpi"><div class="label">Belum Dibayar</div><div id="supplierPayableTotal" class="value">Rp0</div></div>
+  </div>
+  <div class="card owner-table-card" style="margin-top:18px"><div class="owner-card-head"><div><b>Pemasok</b><span>Data pemasok yang tersimpan di toko</span></div></div><div style="overflow:auto;margin-top:10px"><table class="owner-table"><thead><tr><th>Nama Pemasok</th><th>Kontak</th><th>Pesanan</th><th>Belum Dibayar</th><th>Status</th></tr></thead><tbody id="supplierBody"></tbody></table></div></div>
+  <div class="card owner-table-card" style="margin-top:18px"><div class="owner-card-head"><div><b>Pesanan Pembelian</b><span>Pesanan terbaru dari pemasok</span></div></div><div style="overflow:auto;margin-top:10px"><table class="owner-table"><thead><tr><th>Nomor</th><th>Pemasok</th><th>Status</th><th>Total</th><th>Tanggal</th></tr></thead><tbody id="purchaseBody"></tbody></table></div></div>
 </div>
 <div id="financeModule" class="hidden">
   <h1 class="owner-section-title">Finance</h1><div class="owner-section-sub">Ringkasan arus nilai bisnis berdasarkan financial snapshot.</div>
@@ -1003,7 +1009,7 @@ function switchMasterTab(tab){
 }
 function showMasterModal(title,formHtml,submitFn){
   $('masterModalTitle').textContent=title;$('masterModalError').classList.add('hidden');$('masterForm').innerHTML=formHtml;$('masterModal').classList.remove('hidden');
-  $('masterForm').onsubmit=async e=>{e.preventDefault();try{await submitFn();closeMasterModal();await loadMasterData();toast('Data berhasil disimpan.')}catch(err){console.error(err);$('masterModalError').textContent=err.message||'Gagal menyimpan data.';$('masterModalError').classList.remove('hidden')}};
+  $('masterForm').onsubmit=async e=>{e.preventDefault();try{await submitFn();closeMasterModal();await loadMasterData();toast('Data berhasil disimpan.');if(title==='Tambah Supplier')loadPurchasesModule();}catch(err){console.error(err);$('masterModalError').textContent=err.message||'Gagal menyimpan data.';$('masterModalError').classList.remove('hidden')}};
 }
 function closeMasterModal(){$('masterModal').classList.add('hidden')}
 function addCategory(){
@@ -1129,8 +1135,27 @@ async function loadCustomersModule(){
 }
 function renderCustomersModule(){const q=($('customerSearch').value||'').toLowerCase().trim();const rows=CustomerModuleState.rows.filter(x=>!q||[x.name,x.phone].some(v=>String(v||'').toLowerCase().includes(q)));$('customerBody').innerHTML=rows.map(x=>`<tr><td><b>${esc(x.name||'—')}</b></td><td>${esc(x.phone||'—')}</td><td>${platformFormat(x.points)}</td><td>${x.is_active?'Aktif':'Nonaktif'}</td></tr>`).join('')||'<tr><td colspan="4" class="owner-empty">Belum ada pelanggan.</td></tr>'}
 async function loadPurchasesModule(){
-  try{const {data,error}=await supabaseClient.from('purchase_orders').select('id,order_no,status,total_amount,created_at,supplier_id,suppliers(name)').order('created_at',{ascending:false}).limit(200);if(error)throw error;const rows=data||[];$('purchaseBody').innerHTML=rows.map(x=>`<tr><td><b>${esc(x.order_no||x.id)}</b></td><td>${esc(x.suppliers?.name||'—')}</td><td>${esc(x.status||'—')}</td><td>${rupiah(x.total_amount)}</td><td>${esc(platformDate(x.created_at))}</td></tr>`).join('')||'<tr><td colspan="5" class="owner-empty">Belum ada purchase order.</td></tr>'}
-  catch(e){$('purchaseBody').innerHTML=`<tr><td colspan="5" class="owner-error">${esc(businessError(e,'Purchase belum dapat dimuat.'))}</td></tr>`}
+  try{
+    const [{data:suppliers,error:sErr},{data:orders,error:oErr},{data:payables,error:pErr}]=await Promise.all([
+      supabaseClient.from('suppliers').select('id,name,code,phone,email,is_active').order('name').limit(500),
+      supabaseClient.from('purchase_orders').select('id,po_no,status,total,supplier_id,created_at,ordered_at').order('created_at',{ascending:false}).limit(200),
+      supabaseClient.from('payable_records').select('supplier_id,balance_amount,status').gt('balance_amount',0).limit(500)
+    ]);
+    if(sErr)throw sErr; if(oErr)throw oErr; if(pErr)throw pErr;
+    const slist=suppliers||[], olist=orders||[], plist=payables||[];
+    const bySupplier=new Map(slist.map(x=>[x.id,x]));
+    const poCount=new Map(); olist.forEach(x=>poCount.set(x.supplier_id,(poCount.get(x.supplier_id)||0)+1));
+    const debt=new Map(); plist.forEach(x=>debt.set(x.supplier_id,(debt.get(x.supplier_id)||0)+Number(x.balance_amount||0)));
+    $('supplierActiveCount').textContent=platformFormat(slist.filter(x=>x.is_active).length);
+    $('purchaseOrderCount').textContent=platformFormat(olist.length);
+    $('supplierPayableTotal').textContent=rupiah(plist.reduce((n,x)=>n+Number(x.balance_amount||0),0));
+    $('supplierBody').innerHTML=slist.map(x=>`<tr><td><b>${esc(x.name||'—')}</b><span class="muted">${esc(x.code||'')}</span></td><td>${esc(x.phone||x.email||'—')}</td><td>${platformFormat(poCount.get(x.id)||0)}</td><td>${rupiah(debt.get(x.id)||0)}</td><td><span class="status-pill ${x.is_active?'ok':''}">${x.is_active?'Aktif':'Nonaktif'}</span></td></tr>`).join('')||'<tr><td colspan="5" class="owner-empty">Belum ada pemasok.</td></tr>' ;
+    $('purchaseBody').innerHTML=olist.map(x=>`<tr><td><b>${esc(x.po_no||x.id)}</b></td><td>${esc(bySupplier.get(x.supplier_id)?.name||'Pemasok tidak ditemukan')}</td><td>${esc(String(x.status||'').replaceAll('_',' '))}</td><td>${rupiah(x.total)}</td><td>${esc(platformDate(x.created_at||x.ordered_at))}</td></tr>`).join('')||'<tr><td colspan="5" class="owner-empty">Belum ada pesanan pembelian.</td></tr>';
+  }catch(e){
+    const msg=businessError(e,'Data pemasok dan pembelian belum dapat dimuat.');
+    $('supplierBody').innerHTML=`<tr><td colspan="5" class="owner-error">${esc(msg)}</td></tr>`;
+    $('purchaseBody').innerHTML=`<tr><td colspan="5" class="owner-error">${esc(msg)}</td></tr>`;
+  }
 }
 async function loadFinanceModule(){
   try{const r=monthRange(),f=await API.financialSnapshot(r.from,r.to);$('finRevenue').textContent=rupiah(f?.revenue);$('finExpense').textContent=rupiah(f?.expense);$('finCash').textContent=rupiah(f?.cash);$('finPayable').textContent=rupiah(f?.payable);$('financeDetail').innerHTML=[['Revenue',f?.revenue],['HPP',f?.cogs],['Expense',f?.expense],['Net Profit',f?.net_profit],['Cash',f?.cash],['Bank / E-Wallet',f?.bank_ewallet],['Receivable',f?.receivable],['Payable',f?.payable]].map(x=>`<div class="row"><span>${x[0]}</span><b>${rupiah(x[1])}</b></div>`).join('')}catch(e){$('financeDetail').innerHTML=`<div class="owner-error">${esc(businessError(e,'Finance belum dapat dimuat.'))}</div>`}
@@ -1312,6 +1337,7 @@ document.querySelectorAll('[data-owner-jump]').forEach(b=>b.addEventListener('cl
 $('customerSearch')?.addEventListener('input',renderCustomersModule);
 $('customerRefresh')?.addEventListener('click',loadCustomersModule);
 $('purchaseRefresh')?.addEventListener('click',loadPurchasesModule);
+$('purchaseAddSupplier')?.addEventListener('click',()=>{addSupplier();});
 
 supabaseClient.auth.onAuthStateChange((event,session)=>{
   if(event==='SIGNED_OUT'){
