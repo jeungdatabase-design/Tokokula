@@ -641,6 +641,51 @@ tr:last-child td{border-bottom:0!important}
 }
 </style>
 
+
+<style id="tokokula-fix-dotted-leaders-v1">
+/* Titik pemisah berada di ruang kosong, tidak menimpa huruf. */
+.row span:first-child,
+.total-row span,
+.cart-head b:first-child{
+  position:static!important;
+  overflow:visible!important;
+  min-width:0;
+  display:flex!important;
+  align-items:baseline!important;
+}
+
+.row span:first-child::after,
+.total-row span::after,
+.cart-head b:first-child::after{
+  content:""!important;
+  position:static!important;
+  display:block!important;
+  flex:1 1 auto!important;
+  min-width:12px!important;
+  height:0!important;
+  margin:0 7px 4px!important;
+  border-bottom:2px dotted #ddd4c5!important;
+  letter-spacing:0!important;
+  white-space:normal!important;
+}
+
+.row span:last-child,
+.total-row b,
+.cart-head b:last-child{
+  flex:0 0 auto!important;
+  white-space:nowrap!important;
+}
+
+@media(max-width:520px){
+  .row span:first-child::after,
+  .total-row span::after{
+    min-width:8px!important;
+    margin-left:5px!important;
+    margin-right:5px!important;
+  }
+}
+</style>
+
 </head>
 <body>
 
