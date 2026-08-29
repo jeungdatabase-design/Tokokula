@@ -1451,20 +1451,18 @@ async function loginWithGoogle(){
   btn.disabled=true;
 
   try{
-    if(authMode==='register'){
-      const setupData={
-        organizationName:$('organizationName').value.trim(),
-        outletName:$('outletName').value.trim(),
-        outletCode:$('outletCode').value.trim()||'MAIN',
-        address:$('address').value.trim(),
-        phone:$('phone').value.trim()
-      };
-      if(!setupData.organizationName) throw new Error('Nama toko / organisasi wajib diisi.');
-      localStorage.setItem('tokokula_pending_setup',JSON.stringify(setupData));
-    }
+    // Google = LOGIN/SIGNUP terlebih dahulu.
+    // Jangan meminta nama toko atau data bisnis sebelum autentikasi.
+    // Setup toko dilakukan setelah akun Google berhasil masuk.
+    localStorage.removeItem('tokokula_pending_setup');
+    sessionStorage.removeItem('tokokula_pending_setup');
 
     btn.innerHTML='<span class="google-icon">G</span><span>Menghubungkan ke Google...</span>';
-    const redirectTo=(window.location.protocol==='http:'||window.location.protocol==='https:')?window.location.origin+window.location.pathname:'https://tokokula.vercel.app/';
+
+    // Gunakan root URL produksi agar sama dengan URL yang harus
+    // dimasukkan ke Supabase Auth > URL Configuration > Redirect URLs.
+    const redirectTo=window.location.origin+'/';
+
     const {error}=await supabaseClient.auth.signInWithOAuth({
       provider:'google',
       options:{
@@ -1475,7 +1473,9 @@ async function loginWithGoogle(){
     if(error) throw error;
   }catch(e){
     console.error('Google OAuth:',e);
-    authError(businessError(e,'Login dengan Google belum berhasil. Silakan coba lagi.'));
+    localStorage.removeItem('tokokula_pending_setup');
+    sessionStorage.removeItem('tokokula_pending_setup');
+    authError(businessError(e,'Google belum tersambung. Pastikan Google Provider aktif di Supabase dan Redirect URL Tokokula sudah diizinkan.'));
     btn.disabled=false;
     btn.innerHTML='<span class="google-icon">G</span><span>'+(authMode==='register'?'Daftar dengan Google':'Lanjut dengan Google')+'</span>';
   }
@@ -1507,19 +1507,23 @@ async function setupOrganization(){
     p_phone:$('phone').value.trim()||null
   });
   localStorage.removeItem('tokokula_pending_setup');
+  sessionStorage.removeItem('tokokula_pending_setup');
   return result;
 }
 
 async function completePendingSetup(){
-  const raw=localStorage.getItem('tokokula_pending_setup');
+  const raw=localStorage.getItem('tokokula_pending_setup') || sessionStorage.getItem('tokokula_pending_setup');
   if(!raw || !State.session) return null;
   try{
     const result=await setupOrganizationFromData(JSON.parse(raw));
     localStorage.removeItem('tokokula_pending_setup');
+    sessionStorage.removeItem('tokokula_pending_setup');
     return result;
   }catch(e){
     console.error('Pending setup:',e);
-    toast('Akun sudah aktif, tetapi setup toko belum selesai. Silakan lengkapi setup.');
+    // Jangan menghapus data pending jika setup gagal. Setelah refresh/login
+    // ulang, proses setup dapat dicoba kembali.
+    toast('Akun Google sudah aktif, tetapi pembuatan toko belum selesai. Coba refresh lalu lanjutkan.');
     return null;
   }
 }
@@ -2159,6 +2163,11 @@ async function completeSale(){
     const result=await API.completeSale(requestId,State.outlet.id,State.warehouse.id,$('customerSelect').value||null,items,payments,0,'Tokokula POS Web');
     toast(`Transaksi berhasil • ${result.invoice_no} • ${rupiah(result.total)} • Kembali ${rupiah(result.change)}`);
     State.cart=[];$('paymentRef').value='';renderCart();await loadProducts();
+    // Poin diberikan server-side oleh trigger saat sale menjadi completed.
+    // Refresh daftar pelanggan jika modul sedang terbuka.
+    if(typeof loadCustomersModule==='function' && !$('customersModule')?.classList.contains('hidden')){
+      await loadCustomersModule();
+    }
   }catch(e){console.error(e);toast(businessError(e,'Transaksi gagal.'))}
   finally{$('completeSale').disabled=false;$('completeSale').textContent='Bayar & Selesaikan'}
 }
@@ -2234,8 +2243,31 @@ async function handleAuthenticatedSession(session){
     State.session=session;State.user=session.user;
     $('auth')?.classList.add('hidden');
     const isPlatform=await PlatformAPI.isAdmin();
-    if(isPlatform){PlatformState.isAdmin=true;await bootPlatform();}
-    else{PlatformState.isAdmin=false;await completePendingSetup();await boot();}
+    if(isPlatform){
+      PlatformState.isAdmin=true;
+      await bootPlatform();
+    }else{
+      PlatformState.isAdmin=false;
+      await completePendingSetup();
+
+      // Akun Google baru belum punya organization: login tetap berhasil,
+      // lalu pengguna diarahkan ke tahap setup toko di dalam aplikasi.
+      const {data:profile}=await supabaseClient.from('profiles')
+        .select('organization_id')
+        .eq('id',State.user.id)
+        .maybeSingle();
+
+      if(!profile?.organization_id){
+        setAuthMode('register');
+        $('authDesc').textContent='Akun berhasil masuk. Lengkapi data toko Anda untuk mulai menggunakan Tokokula.';
+        $('authError').textContent='Login Google berhasil. Sekarang lengkapi nama toko dan informasi bisnis Anda.';
+        $('authError').classList.remove('hidden');
+        $('auth')?.classList.remove('hidden');
+        $('app')?.classList.add('hidden');
+      }else{
+        await boot();
+      }
+    }
   }catch(e){
     console.error('Auth session boot:',e);
     if(typeof authError==='function') authError(businessError(e,'Login berhasil, tetapi data Tokokula gagal dimuat. Silakan refresh halaman.'));
