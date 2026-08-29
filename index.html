@@ -480,6 +480,128 @@ tr:last-child td{border-bottom:0!important}
 .tk-report-fastbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 12px;padding:10px 13px;border:1px solid #e7eaf0;background:#fff;border-radius:12px;font-size:10px;color:#667085}.tk-report-fastbar b{color:#182230}.tk-report-loading{opacity:.65}.tk-report-cached{color:#027a48;font-weight:800}@media(max-width:520px){.tk-report-fastbar{font-size:9px}.tk-report-fastbar button{padding:7px 9px!important}}
 </style>
 
+
+<style id="tokokula-setup-v20">
+.tk-setup-modal{position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:10020;display:flex;align-items:center;justify-content:center;padding:14px;overflow:auto}
+.tk-setup-box{width:min(100%,680px);max-height:calc(100dvh - 28px);background:#fff;border-radius:22px;box-shadow:0 30px 90px rgba(0,0,0,.25);display:flex;flex-direction:column;overflow:hidden}
+.tk-setup-head{padding:17px 20px;border-bottom:1px solid #edf0f4;display:flex;justify-content:space-between;align-items:center;gap:12px;flex:0 0 auto}
+.tk-setup-head h3{margin:0;font-size:20px;color:#111827}
+.tk-setup-head p{margin:3px 0 0;font-size:11px;color:#8a94a6}
+.tk-setup-close{border:0;background:#f2f4f7;border-radius:9px;width:34px;height:34px;font-size:19px;cursor:pointer}
+.tk-setup-body{padding:17px 20px;overflow-y:auto;overscroll-behavior:contain;min-height:0}
+.tk-setup-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+.tk-setup-field{min-width:0}.tk-setup-field.full{grid-column:1/-1}
+.tk-setup-field label{display:block;font-size:10px;font-weight:850;color:#475467;margin-bottom:5px}
+.tk-setup-field input,.tk-setup-field textarea,.tk-setup-field select{width:100%;box-sizing:border-box;border:1px solid #dfe4ec;border-radius:10px;background:#fbfcfe;padding:9px 10px;font:inherit;font-size:12px;color:#182230}
+.tk-setup-field input,.tk-setup-field select{height:40px}.tk-setup-field textarea{min-height:72px;resize:vertical}
+.tk-setup-foot{padding:12px 20px;border-top:1px solid #edf0f4;background:#fafbfc;display:flex;justify-content:flex-end;gap:8px;flex:0 0 auto}
+.tk-setup-btn{height:39px;border:0;border-radius:10px;padding:0 14px;font-weight:850;font-size:11px;cursor:pointer}
+.tk-setup-btn.light{background:#f2f4f7;color:#344054}.tk-setup-btn.dark{background:#111827;color:#fff}
+.tk-location-tabs{display:flex;gap:7px;margin-bottom:13px}.tk-location-tab{border:1px solid #dfe4ec;background:#fff;border-radius:9px;padding:8px 12px;font-size:11px;font-weight:800;cursor:pointer}.tk-location-tab.active{background:#111827;color:#fff;border-color:#111827}
+.tk-location-note{font-size:10px;color:#8a94a6;margin:0 0 12px;line-height:1.45}
+.tk-setup-error{font-size:11px;color:#b42318;background:#fef3f2;border:1px solid #fecdca;border-radius:9px;padding:9px 10px;margin-bottom:10px;display:none}
+.tk-setup-success{font-size:11px;color:#027a48;background:#ecfdf3;border:1px solid #abefc6;border-radius:9px;padding:9px 10px;margin-bottom:10px;display:none}
+@media(max-width:560px){.tk-setup-modal{align-items:flex-start;padding:8px}.tk-setup-box{max-height:calc(100dvh - 16px);border-radius:17px}.tk-setup-head,.tk-setup-body,.tk-setup-foot{padding-left:14px;padding-right:14px}.tk-setup-grid{grid-template-columns:1fr}.tk-setup-field.full{grid-column:auto}.tk-setup-foot{position:sticky;bottom:0}.tk-setup-btn{flex:1}}
+/* Existing generic modals: always allow vertical scrolling so Save remains reachable on small screens. */
+.modal-backdrop{overflow-y:auto!important;padding:10px!important;align-items:flex-start!important}
+.modal{max-height:calc(100dvh - 20px)!important;overflow-y:auto!important;margin:auto 0!important}
+.master-modal-grid{max-height:none!important;overflow:visible!important}
+</style>
+
+<script id="tokokula-setup-v20">
+(function(){
+  const q=s=>document.querySelector(s), $=id=>document.getElementById(id);
+  function closeSetup(){const x=$('tkSetupModal');if(x)x.remove()}
+  function showSetup(type){
+    closeSetup();
+    const isStore=type==='store';
+    const root=document.createElement('div'); root.id='tkSetupModal'; root.className='tk-setup-modal';
+    root.innerHTML=isStore ? `
+      <div class="tk-setup-box" role="dialog" aria-modal="true">
+        <div class="tk-setup-head"><div><h3>Data Toko</h3><p>Lengkapi informasi dasar toko Anda.</p></div><button class="tk-setup-close">×</button></div>
+        <form id="tkStoreForm">
+          <div class="tk-setup-body">
+            <div id="tkStoreError" class="tk-setup-error"></div><div id="tkStoreSuccess" class="tk-setup-success"></div>
+            <div class="tk-setup-grid">
+              <div class="tk-setup-field full"><label>Nama Toko *</label><input id="tkStoreName" required maxlength="120" placeholder="Contoh: Toko Maju Jaya"></div>
+              <div class="tk-setup-field"><label>Nomor Telepon</label><input id="tkStorePhone" inputmode="tel" maxlength="30" placeholder="08xxxxxxxxxx"></div>
+              <div class="tk-setup-field"><label>Email</label><input id="tkStoreEmail" type="email" maxlength="160" placeholder="nama@toko.com"></div>
+              <div class="tk-setup-field full"><label>Alamat Toko</label><textarea id="tkStoreAddress" maxlength="500" placeholder="Alamat lengkap toko"></textarea></div>
+            </div>
+          </div>
+          <div class="tk-setup-foot"><button type="button" class="tk-setup-btn light tk-setup-cancel">Batal</button><button type="submit" class="tk-setup-btn dark">Simpan Data Toko</button></div>
+        </form>
+      </div>` : `
+      <div class="tk-setup-box" role="dialog" aria-modal="true">
+        <div class="tk-setup-head"><div><h3>Outlet & Gudang</h3><p>Buat tempat transaksi dan tempat penyimpanan stok.</p></div><button class="tk-setup-close">×</button></div>
+        <div class="tk-setup-body">
+          <div id="tkLocError" class="tk-setup-error"></div><div id="tkLocSuccess" class="tk-setup-success"></div>
+          <div class="tk-location-tabs"><button class="tk-location-tab active" data-loc-tab="outlet">Outlet</button><button class="tk-location-tab" data-loc-tab="warehouse">Gudang</button></div>
+          <p class="tk-location-note" id="tkLocHelp">Outlet adalah tempat kasir melakukan transaksi penjualan.</p>
+          <form id="tkLocationForm">
+            <div class="tk-setup-grid">
+              <div class="tk-setup-field full"><label id="tkLocNameLabel">Nama Outlet *</label><input id="tkLocName" required maxlength="120" placeholder="Contoh: Toko Utama"></div>
+              <div class="tk-setup-field"><label>Telepon</label><input id="tkLocPhone" inputmode="tel" maxlength="30" placeholder="08xxxxxxxxxx"></div>
+              <div class="tk-setup-field"><label>Kode (opsional)</label><input id="tkLocCode" maxlength="30" placeholder="OUT-01"></div>
+              <div class="tk-setup-field full"><label>Alamat</label><textarea id="tkLocAddress" maxlength="500" placeholder="Alamat lokasi"></textarea></div>
+            </div>
+          </form>
+        </div>
+        <div class="tk-setup-foot"><button type="button" class="tk-setup-btn light tk-setup-cancel">Tutup</button><button type="button" id="tkLocSave" class="tk-setup-btn dark">Simpan</button></div>
+      </div>`;
+    document.body.appendChild(root);
+    root.querySelector('.tk-setup-close').onclick=closeSetup;
+    root.querySelector('.tk-setup-cancel').onclick=closeSetup;
+    if(isStore) setupStoreForm();
+    else setupLocationForm();
+  }
+  async function setupStoreForm(){
+    const form=$('tkStoreForm');
+    // Best-effort load of existing master data if the app exposes the same API.
+    try{
+      if(window.API && typeof API.masterList==='function'){
+        const d=await API.masterList('all'); const s=(d&&d.store)||d?.organization||d?.company||{};
+        if(s){$('tkStoreName').value=s.name||s.store_name||'';$('tkStorePhone').value=s.phone||s.phone_number||'';$('tkStoreEmail').value=s.email||'';$('tkStoreAddress').value=s.address||''}
+      }
+    }catch(e){}
+    form.addEventListener('submit',async function(ev){
+      ev.preventDefault(); const err=$('tkStoreError'),ok=$('tkStoreSuccess');err.style.display='none';ok.style.display='none';
+      const name=$('tkStoreName').value.trim();if(!name){err.textContent='Nama toko wajib diisi.';err.style.display='block';return}
+      try{
+        if(window.API && typeof API.updateStore==='function') await API.updateStore({name,phone:$('tkStorePhone').value.trim(),email:$('tkStoreEmail').value.trim(),address:$('tkStoreAddress').value.trim()});
+        else if(window.API && typeof API.updateOrganization==='function') await API.updateOrganization({name,phone:$('tkStorePhone').value.trim(),email:$('tkStoreEmail').value.trim(),address:$('tkStoreAddress').value.trim()});
+        else {err.textContent='Pengaturan Data Toko belum terhubung ke database. Form sudah siap, tetapi endpoint penyimpanan belum tersedia.';err.style.display='block';return}
+        ok.textContent='Data toko berhasil disimpan.';ok.style.display='block';setTimeout(closeSetup,500);
+      }catch(e){err.textContent=(e&&e.message)||'Data toko belum dapat disimpan.';err.style.display='block'}
+    });
+  }
+  function setupLocationForm(){
+    let type='outlet';
+    const tabs=[...document.querySelectorAll('[data-loc-tab]')];
+    function refresh(){
+      const wh=type==='warehouse'; tabs.forEach(x=>x.classList.toggle('active',x.dataset.locTab===type));
+      $('tkLocNameLabel').textContent=wh?'Nama Gudang *':'Nama Outlet *';
+      $('tkLocName').placeholder=wh?'Contoh: Gudang Utama':'Contoh: Toko Utama';
+      $('tkLocCode').placeholder=wh?'WH-01':'OUT-01';
+      $('tkLocHelp').textContent=wh?'Gudang digunakan untuk menyimpan dan mengatur stok barang.':'Outlet adalah tempat kasir melakukan transaksi penjualan.';
+    }
+    tabs.forEach(t=>t.onclick=()=>{type=t.dataset.locTab;refresh()}); refresh();
+    $('tkLocSave').onclick=async function(){
+      const err=$('tkLocError'),ok=$('tkLocSuccess');err.style.display='none';ok.style.display='none';
+      const name=$('tkLocName').value.trim();if(!name){err.textContent='Nama wajib diisi.';err.style.display='block';return}
+      try{
+        if(type==='outlet' && window.API && typeof API.createOutlet==='function') await API.createOutlet({name,phone:$('tkLocPhone').value.trim(),code:$('tkLocCode').value.trim(),address:$('tkLocAddress').value.trim()});
+        else if(type==='warehouse' && window.API && typeof API.createWarehouse==='function') await API.createWarehouse({name,phone:$('tkLocPhone').value.trim(),code:$('tkLocCode').value.trim(),address:$('tkLocAddress').value.trim()});
+        else {err.textContent='Fitur penyimpanan '+(type==='outlet'?'outlet':'gudang')+' belum terhubung ke endpoint database.';err.style.display='block';return}
+        ok.textContent=(type==='outlet'?'Outlet':'Gudang')+' berhasil dibuat.';ok.style.display='block';setTimeout(closeSetup,500);
+      }catch(e){err.textContent=(e&&e.message)||'Data belum dapat disimpan.';err.style.display='block'}
+    };
+  }
+  window.openTokokulaStoreSetup=()=>showSetup('store');
+  window.openTokokulaLocationSetup=()=>showSetup('location');
+})();
+</script>
+
 </head>
 <body>
 
@@ -837,7 +959,7 @@ stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
     </div>
   </div>
 
-  <div class="tk-report-fastbar"><span><b></b> Data utama dimuat dulu, detail menyusul.</span><span id="reportLoadState">Siap</span></div>
+  <div class="tk-report-fastbar"><span><b></b> </span><span id="reportLoadState">Siap</span></div>
   <div class="tk-report-section-title"><div><b>Ringkasan Penjualan</b><span>Gambaran utama bisnis pada periode terpilih</span></div></div>
   <div class="tk-report-kpis" id="reportCards"></div>
 
@@ -2359,25 +2481,58 @@ function openOwnerCheckout(code){const p=OwnerSubscriptionState.plans.find(x=>St
 </script>
 
 
-<style id="tokokula-help-fab-v17">
-.tk-help-fab{position:fixed;right:18px;bottom:18px;z-index:5000;border:1px solid #dfe3ea;background:#fff;color:#111827;border-radius:999px;padding:10px 13px;font-weight:850;font-size:11px;box-shadow:0 10px 30px rgba(15,23,42,.12);cursor:pointer}
-.tk-help-fab:hover{transform:translateY(-1px)}
-@media(max-width:520px){.tk-help-fab{right:13px;bottom:13px}}
-</style>
-<script id="tokokula-help-fab-v17">
+
+
+<script>document.getElementById('reportsRefresh')?.addEventListener('click',()=>{try{for(let i=sessionStorage.length-1;i>=0;i--){const k=sessionStorage.key(i);if(k&&k.startsWith('tk_reports_'))sessionStorage.removeItem(k)}}catch(e){} loadReportsModule();});</script>
+
+<script id="tokokula-wizard-v20-override">
 (function(){
-  function add(){
-    if(document.getElementById('tkSetupHelp'))return;
-    const b=document.createElement('button');
-    b.id='tkSetupHelp'; b.className='tk-help-fab'; b.type='button';
-    b.textContent='? Panduan 1 Menit';
-    b.onclick=()=>window.openTokokulaSetupWizard&&window.openTokokulaSetupWizard();
-    document.body.appendChild(b);
-  }
-  document.addEventListener('DOMContentLoaded',()=>setTimeout(add,1200));
+ const KEY='tokokula_setup_wizard_seen_v20';
+ const oldOpen=window.openTokokulaSetupWizard;
+ function close(){const x=document.getElementById('tkSetupWizard');if(x)x.remove();try{localStorage.setItem(KEY,'1')}catch(e){}}
+ function openPage(name){const b=document.querySelector('[data-page="'+name+'"]');if(b)b.click()}
+ function render(){
+   if(document.getElementById('tkSetupWizard'))return;
+   const root=document.createElement('div');root.id='tkSetupWizard';root.className='tk-wizard-backdrop';
+   root.innerHTML=`<div class="tk-wizard" role="dialog" aria-modal="true">
+    <div class="tk-wizard-top"><div><div class="tk-wizard-kicker">SETUP TOKOKULA • 1 MENIT</div><h2>Siapkan toko Anda</h2></div><button class="tk-wizard-close">×</button></div>
+    <div class="tk-wizard-body">
+      <p class="tk-wizard-intro">Selesaikan langkah berikut untuk mulai berjualan.</p>
+      <div class="tk-wizard-step"><div class="tk-wizard-num">1</div><div class="tk-wizard-copy"><b>Data Toko</b><span>Atur nama, alamat, telepon, dan informasi usaha.</span></div><button class="tk-wizard-action secondary" data-a="store">Atur Data Toko</button></div>
+      <div class="tk-wizard-step"><div class="tk-wizard-num">2</div><div class="tk-wizard-copy"><b>Outlet & Gudang</b><span>Buat tempat kasir dan tempat penyimpanan stok.</span></div><button class="tk-wizard-action secondary" data-a="location">Atur Sekarang</button></div>
+      <div class="tk-wizard-step"><div class="tk-wizard-num">3</div><div class="tk-wizard-copy"><b>Produk</b><span>Tambahkan barang, harga jual, dan stok awal.</span></div><button class="tk-wizard-action secondary" data-a="product">Tambah Produk</button></div>
+      <div class="tk-wizard-step"><div class="tk-wizard-num">4</div><div class="tk-wizard-copy"><b>Kasir</b><span>Setelah semuanya siap, mulai transaksi.</span></div><button class="tk-wizard-action" data-a="pos">Mulai Kasir</button></div>
+    </div>
+    <div class="tk-wizard-foot"><span>Wizard tidak akan muncul lagi setelah Anda klik Mengerti.</span><button class="tk-wizard-start">Mengerti</button></div>
+   </div>`;
+   document.body.appendChild(root);
+   root.querySelector('.tk-wizard-close').onclick=close;root.querySelector('.tk-wizard-start').onclick=close;
+   root.addEventListener('click',e=>{
+     const b=e.target.closest('[data-a]');if(!b)return;
+     if(b.dataset.a==='store'){close();window.openTokokulaStoreSetup&&window.openTokokulaStoreSetup();return}
+     if(b.dataset.a==='location'){close();window.openTokokulaLocationSetup&&window.openTokokulaLocationSetup();return}
+     if(b.dataset.a==='product'){close();openPage('inventory');setTimeout(()=>{const btn=[...document.querySelectorAll('#inventoryModule button')].find(x=>/tambah produk|\+ produk/i.test(x.textContent||''));if(btn)btn.click()},300);return}
+     if(b.dataset.a==='pos'){close();openPage('pos')}
+   });
+ }
+ window.openTokokulaSetupWizard=render;
 })();
 </script>
 
-<script>document.getElementById('reportsRefresh')?.addEventListener('click',()=>{try{for(let i=sessionStorage.length-1;i>=0;i--){const k=sessionStorage.key(i);if(k&&k.startsWith('tk_reports_'))sessionStorage.removeItem(k)}}catch(e){} loadReportsModule();});</script>
 </body>
 </html>
+
+<style id="tokokula-product-modal-v20">
+/* Final safety net for product add/edit forms */
+#productModal .modal,#addProductModal .modal,.product-modal,.inventory-modal{
+  max-height:calc(100dvh - 20px)!important;
+  overflow-y:auto!important;
+  -webkit-overflow-scrolling:touch!important;
+}
+#productModal form,#addProductModal form,.product-modal form,.inventory-modal form{
+  padding-bottom:72px!important;
+}
+#productModal .modal-actions,#addProductModal .modal-actions,.product-modal .modal-actions,.inventory-modal .modal-actions{
+  position:sticky!important;bottom:0!important;background:#fff!important;padding:10px 0!important;z-index:3!important;
+}
+</style>
