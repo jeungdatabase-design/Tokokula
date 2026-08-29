@@ -746,7 +746,16 @@ stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
   <div class="owner-toolbar"><input id="customerSearch" placeholder="Cari nama / telepon..."><div style="display:flex;gap:8px;flex-wrap:wrap"><button id="customerAdd" class="btn dark-btn" type="button" data-permission="customer.manage">+ Pelanggan Baru</button><button id="customerRefresh" class="owner-refresh" type="button">↻ Refresh</button></div></div>
   <div class="card owner-table-card"><div style="overflow:auto"><table class="owner-table"><thead><tr><th>Nama</th><th>Telepon</th><th>Poin</th><th>Status</th></tr></thead><tbody id="customerBody"></tbody></table></div></div>
 </div>
-<div id="subscriptionModule" class="hidden tk-subscription-page"><div class="tk-sub-hero"><div><div class="tk-sub-eyebrow">TOKOKULA SUBSCRIPTION</div><h1 class="owner-section-title">Langganan</h1><div class="owner-section-sub">Kelola paket bisnis Anda. Upgrade aktif otomatis setelah pembayaran berhasil.</div></div><div id="tkSubStatusBadge" class="tk-sub-status">Memuat...</div></div><div class="tk-sub-current"><div><div class="tk-sub-kicker">PAKET SAAT INI</div><div id="tkSubCurrentPlan" class="tk-sub-current-plan">—</div><div id="tkSubCurrentMeta" class="tk-sub-current-meta">Memuat status langganan...</div></div><div class="tk-sub-current-actions"><button id="tkSubRefresh" class="btn light-btn" type="button">↻ Refresh</button><button id="tkSubCancel" class="btn dark-btn hidden" type="button">Batalkan di Akhir Periode</button></div></div><div id="tkSubPending" class="tk-sub-pending hidden"></div><div class="tk-sub-section-head"><div><b>Pilih paket</b><span>Upgrade sesuai skala bisnis — lebih banyak kontrol, kapasitas, dan otomatisasi.</span></div></div><div id="tkSubPlans" class="tk-sub-plans"><div class="tk-sub-loading">Memuat paket...</div></div><div id="tkSubCheckout" class="tk-sub-modal hidden"><div class="tk-sub-modal-backdrop" data-close-sub-checkout></div><div class="tk-sub-modal-card"><div class="tk-sub-modal-head"><div><div class="tk-sub-kicker">KONFIRMASI</div><h3 id="tkSubCheckoutTitle">Upgrade</h3></div><button class="tk-sub-close" type="button" data-close-sub-checkout>×</button></div><div id="tkSubCheckoutBody"></div><div class="tk-sub-modal-actions"><button class="btn light-btn" type="button" data-close-sub-checkout>Batal</button><button id="tkSubPayBtn" class="btn dark-btn" type="button">Lanjut ke Pembayaran</button></div></div></div></div><div id="purchasesModule" class="hidden">
+<div id="subscriptionModule" class="hidden tk-subscription-page"><div class="tk-sub-hero"><div><div class="tk-sub-eyebrow">TOKOKULA SUBSCRIPTION</div><h1 class="owner-section-title">Langganan</h1><div class="owner-section-sub">Kelola paket bisnis Anda. Upgrade aktif otomatis setelah pembayaran berhasil.</div></div><div id="tkSubStatusBadge" class="tk-sub-status">Memuat...</div></div><div class="tk-sub-current"><div><div class="tk-sub-kicker">PAKET SAAT INI</div><div id="tkSubCurrentPlan" class="tk-sub-current-plan">—</div><div id="tkSubCurrentMeta" class="tk-sub-current-meta">Memuat status langganan...</div></div><div class="tk-sub-current-actions"><button id="tkSubRefresh" class="btn light-btn" type="button">↻ Refresh</button><button id="tkSubCancel" class="btn dark-btn hidden" type="button">Batalkan di Akhir Periode</button></div></div><div id="tkSubPending" class="tk-sub-pending hidden"></div><div id="tkOwnerBillingCenter" class="tk-owner-billing">
+  <div class="tk-billing-head"><div><div class="tk-sub-kicker">BILLING CENTER</div><b>Tagihan & Riwayat Pembayaran</b><span>Pantau invoice, status pembayaran, dan periode langganan Anda.</span></div><button id="tkBillingRefresh" class="tk-billing-refresh" type="button">↻ Refresh</button></div>
+  <div class="tk-billing-kpis">
+    <div><small>Invoice Terakhir</small><b id="tkBillingLast">—</b></div>
+    <div><small>Status</small><b id="tkBillingStatus">—</b></div>
+    <div><small>Nilai Tagihan</small><b id="tkBillingAmount">Rp0</b></div>
+    <div><small>Masa Aktif</small><b id="tkBillingPeriod">—</b></div>
+  </div>
+  <div class="tk-billing-table-wrap"><table class="tk-billing-table"><thead><tr><th>Invoice</th><th>Tanggal</th><th>Periode</th><th>Nominal</th><th>Status</th></tr></thead><tbody id="tkBillingBody"><tr><td colspan="5" class="tk-billing-empty">Memuat riwayat...</td></tr></tbody></table></div>
+</div><div class="tk-sub-section-head"><div><b>Pilih paket</b><span>Upgrade sesuai skala bisnis — lebih banyak kontrol, kapasitas, dan otomatisasi.</span></div></div><div id="tkSubPlans" class="tk-sub-plans"><div class="tk-sub-loading">Memuat paket...</div></div><div id="tkSubCheckout" class="tk-sub-modal hidden"><div class="tk-sub-modal-backdrop" data-close-sub-checkout></div><div class="tk-sub-modal-card"><div class="tk-sub-modal-head"><div><div class="tk-sub-kicker">KONFIRMASI</div><h3 id="tkSubCheckoutTitle">Upgrade</h3></div><button class="tk-sub-close" type="button" data-close-sub-checkout>×</button></div><div id="tkSubCheckoutBody"></div><div class="tk-sub-modal-actions"><button class="btn light-btn" type="button" data-close-sub-checkout>Batal</button><button id="tkSubPayBtn" class="btn dark-btn" type="button">Lanjut ke Pembayaran</button></div></div></div></div><div id="purchasesModule" class="hidden">
   <h1 class="owner-section-title">Pembelian & Pemasok</h1><div class="owner-section-sub">Kelola pemasok, pesanan pembelian, dan tagihan pemasok dalam satu tempat.</div>
   <div class="owner-toolbar"><button id="purchaseRefresh" class="owner-refresh">↻ Refresh</button><button id="purchaseAddSupplier" class="owner-refresh">+ Pemasok</button></div>
   <div class="cards" style="margin-top:18px">
@@ -1682,7 +1691,7 @@ async function loadPOS(){
     const {data:warehouses,error:wErr}=await supabaseClient.from('warehouses').select('id,name').eq('is_active',true).order('name');
     if(wErr) throw wErr;
     State.warehouse=warehouses?.[0];
-    if(!State.warehouse) throw new Error('Belum ada warehouse aktif.');
+    if(!State.warehouse) throw new Error('Belum ada gudang yang aktif. Silakan buat atau aktifkan gudang terlebih dahulu.');
 
     $('posContext').textContent=`${outlet.name} • ${State.warehouse.name}`;
 
@@ -2130,5 +2139,180 @@ function renderOwnerSubscriptionPlans(){
 }
 function openOwnerCheckout(code){const p=OwnerSubscriptionState.plans.find(x=>String(x.code).toLowerCase()===String(code).toLowerCase());if(!p)return;OwnerSubscriptionState.checkout=p;$('tkSubCheckoutTitle').textContent='Upgrade ke '+(p.name||ownerPlanLabel(code));$('tkSubCheckoutBody').innerHTML=`<div class="tk-sub-summary"><div class="tk-sub-summary-row"><span>Paket sekarang</span><b>${esc(ownerPlanLabel(ownerSubCode()))}</b></div><div class="tk-sub-summary-row"><span>Paket tujuan</span><b>${esc(p.name||ownerPlanLabel(code))}</b></div><div class="tk-sub-summary-row"><span>Tagihan</span><b>1 bulan</b></div><div class="tk-sub-summary-row total"><span>Total</span><b>${ownerMoney(p.monthly_price)}</b></div></div><p style="color:#667085;font-size:12px;line-height:1.6">Paket belum berubah sampai pembayaran berhasil diverifikasi. Setelah lunas, Tokokula mengaktifkan paket baru otomatis.</p>`;$('tkSubCheckout').classList.remove('hidden')}function closeOwnerCheckout(){$('tkSubCheckout').classList.add('hidden');OwnerSubscriptionState.checkout=null}async function startOwnerCheckout(){const p=OwnerSubscriptionState.checkout;if(!p)return;const b=$('tkSubPayBtn');b.disabled=true;b.textContent='Menyiapkan pembayaran...';try{const {data,error}=await supabaseClient.functions.invoke('subscription-checkout-session',{body:{plan:String(p.code).toLowerCase()}});if(error)throw error;const c=data?.checkout;if(!c)throw new Error(data?.user_message||'Checkout belum dapat dibuat.');closeOwnerCheckout();toast('Checkout berhasil dibuat. Mengarahkan ke pembayaran...');if(c.payment_url)location.assign(c.payment_url);else if(c.redirect_url)location.assign(c.redirect_url);else if(c.snap_token&&window.snap)window.snap.pay(c.snap_token,{onSuccess:()=>loadOwnerSubscription(),onPending:()=>loadOwnerSubscription(),onError:()=>toast('Pembayaran belum berhasil. Silakan coba lagi.')});else throw new Error('PAYMENT_URL_NOT_RETURNED')}catch(e){console.error(e);toast(ownerCheckoutError(e))}finally{b.disabled=false;b.textContent='Lanjut ke Pembayaran'}}document.addEventListener('click',e=>{const u=e.target.closest('[data-owner-upgrade]');if(u&&!u.disabled)openOwnerCheckout(u.dataset.ownerUpgrade);if(e.target.closest('[data-close-sub-checkout]'))closeOwnerCheckout()});$('tkSubPayBtn')?.addEventListener('click',startOwnerCheckout);$('tkSubRefresh')?.addEventListener('click',loadOwnerSubscription);document.addEventListener('click',e=>{const j=e.target.closest('[data-owner-jump]');if(j){e.preventDefault();page(j.dataset.ownerJump)}});</script>
 <script id="tokokula-payment-return-v15">(function(){try{const q=new URLSearchParams(location.search);if(q.get('payment')==='finish'){setTimeout(()=>{try{page('subscription');loadOwnerSubscription();toast('Kami sedang memverifikasi pembayaran Anda...')}catch(e){}},300)}}catch(e){}})();</script>
+
+<style id="tokokula-owner-billing-v16">
+.tk-owner-billing{margin-top:15px;background:#fff;border:1px solid #e4e8ee;border-radius:20px;box-shadow:0 8px 26px rgba(15,23,42,.045);overflow:hidden}
+.tk-billing-head{display:flex;align-items:flex-start;justify-content:space-between;gap:15px;padding:20px 21px;border-bottom:1px solid #edf0f4}
+.tk-billing-head b{display:block;font-size:16px;margin-top:4px}.tk-billing-head span{display:block;color:#8992a1;font-size:11px;margin-top:4px}
+.tk-billing-refresh{border:1px solid #111827;background:#111827;color:#fff;border-radius:11px;padding:10px 13px;font-weight:800;white-space:nowrap}
+.tk-billing-refresh:disabled{opacity:.55;cursor:wait}
+.tk-billing-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:14px 21px}
+.tk-billing-kpis>div{background:#f8fafc;border:1px solid #e8ebf1;border-radius:14px;padding:13px}
+.tk-billing-kpis small{display:block;color:#8a94a6;font-size:9px;text-transform:uppercase;letter-spacing:.08em;font-weight:850}
+.tk-billing-kpis b{display:block;margin-top:7px;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tk-billing-table-wrap{overflow:auto}.tk-billing-table{width:100%;min-width:620px;border-collapse:collapse}
+.tk-billing-table th{background:#fafbfc;color:#7b8494;font-size:9px;text-transform:uppercase;letter-spacing:.08em;text-align:left;padding:11px 18px}
+.tk-billing-table td{padding:13px 18px;border-top:1px solid #f0f2f5;font-size:11px;color:#344054;white-space:nowrap}
+.tk-billing-status{display:inline-flex;padding:5px 8px;border-radius:999px;background:#f2f4f7;color:#667085;font-weight:800;font-size:9px}
+.tk-billing-status.paid{background:#ecfdf3;color:#027a48}.tk-billing-status.pending,.tk-billing-status.open{background:#fff7ed;color:#9a3412}.tk-billing-status.overdue,.tk-billing-status.failed{background:#fef3f2;color:#b42318}
+.tk-billing-empty{text-align:center!important;color:#98a2b3!important;padding:25px!important}
+@media(max-width:760px){.tk-billing-head{flex-direction:column}.tk-billing-refresh{width:100%}.tk-billing-kpis{grid-template-columns:1fr 1fr;padding:12px 14px}.tk-billing-head{padding:17px}.tk-billing-table th,.tk-billing-table td{padding:11px 13px}}
+</style>
+<script id="tokokula-owner-billing-v16">
+(function(){
+  const money=v=>Number(v||0).toLocaleString('id-ID',{style:'currency',currency:'IDR',maximumFractionDigits:0});
+  const statusLabel=s=>({paid:'Lunas',pending:'Menunggu',open:'Belum Lunas',overdue:'Terlambat',payment_failed:'Gagal',failed:'Gagal',refunded:'Dikembalikan',partially_paid:'Sebagian Dibayar'}[String(s||'').toLowerCase()]||s||'—');
+  const statusClass=s=>{s=String(s||'').toLowerCase();return ['paid','pending','open','overdue','failed'].includes(s)?s:''};
+  const fmtDate=v=>v?new Date(v).toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric'}):'—';
+  async function loadOwnerBilling(){
+    const btn=document.getElementById('tkBillingRefresh'),body=document.getElementById('tkBillingBody');
+    if(!body||!window.supabaseClient)return;
+    if(btn){btn.disabled=true;btn.textContent='Memuat...'}
+    try{
+      const uid=State.user?.id;
+      if(!uid)throw new Error('Sesi login belum tersedia.');
+      const {data:profile,error:pe}=await supabaseClient.from('profiles').select('organization_id').eq('id',uid).single();
+      if(pe)throw pe;
+      if(!profile?.organization_id)throw new Error('Organisasi belum tersedia.');
+      const {data:rows,error}=await supabaseClient.from('platform_billing_invoices').select('invoice_number,status,amount,due_at,period_start,period_end,created_at,paid_at').eq('organization_id',profile.organization_id).order('created_at',{ascending:false}).limit(12);
+      if(error)throw error;
+      const list=rows||[];
+      const last=list[0];
+      document.getElementById('tkBillingLast').textContent=last?.invoice_number||'—';
+      document.getElementById('tkBillingStatus').textContent=statusLabel(last?.status);
+      document.getElementById('tkBillingAmount').textContent=money(last?.amount);
+      document.getElementById('tkBillingPeriod').textContent=last?.period_end?fmtDate(last.period_end):'—';
+      body.innerHTML=list.map(x=>`<tr><td><b>${esc(x.invoice_number||'—')}</b></td><td>${fmtDate(x.created_at)}</td><td>${fmtDate(x.period_start)} — ${fmtDate(x.period_end)}</td><td><b>${money(x.amount)}</b></td><td><span class="tk-billing-status ${statusClass(x.status)}">${esc(statusLabel(x.status))}</span></td></tr>`).join('')||'<tr><td colspan="5" class="tk-billing-empty">Belum ada riwayat tagihan.</td></tr>';
+    }catch(e){
+      console.error('Owner billing:',e);
+      body.innerHTML=`<tr><td colspan="5" class="tk-billing-empty">Riwayat billing belum dapat dimuat. ${esc(businessError(e,'Periksa hak akses billing.'))}</td></tr>`;
+    }finally{if(btn){btn.disabled=false;btn.textContent='↻ Refresh'}}
+  }
+  window.loadOwnerBilling=loadOwnerBilling;
+  document.getElementById('tkBillingRefresh')?.addEventListener('click',loadOwnerBilling);
+  const old=window.loadOwnerSubscription;
+  if(typeof old==='function'){
+    window.loadOwnerSubscription=async function(){
+      await old.apply(this,arguments);
+      await loadOwnerBilling();
+    };
+  }
+  document.addEventListener('click',e=>{
+    const u=e.target.closest('[data-owner-upgrade]');
+    if(u) setTimeout(loadOwnerBilling,1200);
+  });
+})();
+</script>
+
+
+<!-- TOKOKULA SETUP WIZARD 1 MENIT -->
+<style id="tokokula-setup-wizard-v17">
+.tk-wizard-backdrop{position:fixed;inset:0;background:rgba(15,23,42,.52);backdrop-filter:blur(5px);z-index:9999;display:grid;place-items:center;padding:16px}
+.tk-wizard{width:min(100%,620px);background:#fff;border-radius:24px;box-shadow:0 30px 90px rgba(0,0,0,.25);overflow:hidden}
+.tk-wizard-top{padding:22px 24px 16px;border-bottom:1px solid #edf0f4;display:flex;justify-content:space-between;gap:16px;align-items:flex-start}
+.tk-wizard-kicker{font-size:10px;font-weight:900;letter-spacing:.14em;color:#806638}
+.tk-wizard h2{margin:6px 0 0;font-size:25px;letter-spacing:-.03em;color:#111827}
+.tk-wizard-close{border:0;background:#f3f4f6;border-radius:10px;width:36px;height:36px;font-size:20px;color:#667085;cursor:pointer}
+.tk-wizard-body{padding:20px 24px}
+.tk-wizard-intro{font-size:13px;color:#667085;line-height:1.6;margin-bottom:16px}
+.tk-wizard-step{display:flex;gap:13px;padding:13px 0;border-bottom:1px solid #f0f2f5;align-items:center}
+.tk-wizard-step:last-child{border-bottom:0}
+.tk-wizard-num{width:31px;height:31px;border-radius:50%;display:grid;place-items:center;background:#111827;color:#fff;font-size:12px;font-weight:900;flex:0 0 31px}
+.tk-wizard-step.done .tk-wizard-num{background:#027a48}
+.tk-wizard-copy{flex:1;min-width:0}
+.tk-wizard-copy b{display:block;font-size:13px;color:#182230}
+.tk-wizard-copy span{display:block;margin-top:3px;font-size:11px;color:#8a94a6;line-height:1.45}
+.tk-wizard-action{border:1px solid #111827;background:#111827;color:#fff;border-radius:10px;padding:8px 11px;font-size:11px;font-weight:850;cursor:pointer;white-space:nowrap}
+.tk-wizard-action.secondary{background:#fff;color:#111827;border-color:#dfe3ea}
+.tk-wizard-foot{padding:15px 24px;background:#fafbfc;border-top:1px solid #edf0f4;display:flex;justify-content:space-between;gap:10px;align-items:center}
+.tk-wizard-foot span{font-size:10px;color:#98a2b3}
+.tk-wizard-start{border:0;background:#111827;color:#fff;border-radius:12px;padding:11px 16px;font-weight:850;cursor:pointer}
+@media(max-width:560px){
+ .tk-wizard{border-radius:19px}.tk-wizard-top,.tk-wizard-body,.tk-wizard-foot{padding-left:18px;padding-right:18px}
+ .tk-wizard-step{align-items:flex-start}.tk-wizard-action{margin-left:auto}
+ .tk-wizard h2{font-size:21px}
+}
+</style>
+<script id="tokokula-setup-wizard-v17">
+(function(){
+  const KEY='tokokula_setup_wizard_seen_v17';
+  function el(id){return document.getElementById(id)}
+  function go(page){
+    try{
+      if(typeof window.page==='function') window.page(page);
+      else if(typeof window.location!=='undefined') {
+        const b=document.querySelector('[data-page="'+page+'"]'); if(b)b.click();
+      }
+      close();
+    }catch(e){console.error(e)}
+  }
+  function close(){
+    const x=el('tkSetupWizard'); if(x)x.remove();
+    try{localStorage.setItem(KEY,'1')}catch(e){}
+  }
+  function render(){
+    if(el('tkSetupWizard'))return;
+    const root=document.createElement('div');
+    root.id='tkSetupWizard';
+    root.className='tk-wizard-backdrop';
+    root.innerHTML=`
+      <div class="tk-wizard" role="dialog" aria-modal="true" aria-label="Panduan mulai Tokokula">
+        <div class="tk-wizard-top">
+          <div><div class="tk-wizard-kicker">MULAI DALAM 1 MENIT</div><h2>Yuk, siapkan toko Anda</h2></div>
+          <button class="tk-wizard-close" type="button" aria-label="Tutup">×</button>
+        </div>
+        <div class="tk-wizard-body">
+          <div class="tk-wizard-intro">Ikuti 4 langkah singkat ini supaya Tokokula siap dipakai untuk jualan. Tidak perlu mengatur semuanya sekaligus.</div>
+          <div class="tk-wizard-step"><div class="tk-wizard-num">1</div><div class="tk-wizard-copy"><b>Isi Data Toko</b><span>Pastikan nama toko dan informasi dasar bisnis sudah benar.</span></div><button class="tk-wizard-action secondary" data-wizard-go="master">Buka</button></div>
+          <div class="tk-wizard-step"><div class="tk-wizard-num">2</div><div class="tk-wizard-copy"><b>Buat Outlet & Gudang</b><span>Outlet untuk tempat jualan. Gudang untuk menyimpan dan mengatur stok.</span></div><button class="tk-wizard-action secondary" data-wizard-go="master">Atur</button></div>
+          <div class="tk-wizard-step"><div class="tk-wizard-num">3</div><div class="tk-wizard-copy"><b>Masukkan Produk</b><span>Tambahkan barang yang akan dijual, termasuk harga dan stok awal.</span></div><button class="tk-wizard-action secondary" data-wizard-go="inventory">Buka</button></div>
+          <div class="tk-wizard-step"><div class="tk-wizard-num">4</div><div class="tk-wizard-copy"><b>Mulai Kasir</b><span>Kalau produk dan stok sudah siap, langsung lakukan transaksi pertama.</span></div><button class="tk-wizard-action" data-wizard-go="pos">Mulai Kasir</button></div>
+        </div>
+        <div class="tk-wizard-foot"><span>Anda bisa membuka panduan ini lagi dari menu bantuan.</span><button class="tk-wizard-start" type="button">Saya Mengerti</button></div>
+      </div>`;
+    document.body.appendChild(root);
+    root.querySelector('.tk-wizard-close').onclick=close;
+    root.querySelector('.tk-wizard-start').onclick=close;
+    root.addEventListener('click',e=>{
+      const b=e.target.closest('[data-wizard-go]');
+      if(b)go(b.dataset.wizardGo);
+      if(e.target===root)close();
+    });
+  }
+  window.openTokokulaSetupWizard=render;
+  function maybe(){
+    try{
+      if(localStorage.getItem(KEY)==='1')return;
+    }catch(e){}
+    // Tampilkan setelah aplikasi utama siap, bukan di halaman login.
+    setTimeout(function(){
+      if(el('app') && !el('app').classList.contains('hidden')) render();
+    },900);
+  }
+  document.addEventListener('DOMContentLoaded',maybe);
+  window.addEventListener('tokokula:ready',maybe);
+})();
+</script>
+
+
+<style id="tokokula-help-fab-v17">
+.tk-help-fab{position:fixed;right:18px;bottom:18px;z-index:5000;border:1px solid #dfe3ea;background:#fff;color:#111827;border-radius:999px;padding:10px 13px;font-weight:850;font-size:11px;box-shadow:0 10px 30px rgba(15,23,42,.12);cursor:pointer}
+.tk-help-fab:hover{transform:translateY(-1px)}
+@media(max-width:520px){.tk-help-fab{right:13px;bottom:13px}}
+</style>
+<script id="tokokula-help-fab-v17">
+(function(){
+  function add(){
+    if(document.getElementById('tkSetupHelp'))return;
+    const b=document.createElement('button');
+    b.id='tkSetupHelp'; b.className='tk-help-fab'; b.type='button';
+    b.textContent='? Panduan 1 Menit';
+    b.onclick=()=>window.openTokokulaSetupWizard&&window.openTokokulaSetupWizard();
+    document.body.appendChild(b);
+  }
+  document.addEventListener('DOMContentLoaded',()=>setTimeout(add,1200));
+})();
+</script>
+
 </body>
 </html>
