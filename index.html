@@ -602,6 +602,46 @@ tr:last-child td{border-bottom:0!important}
 })();
 </script>
 
+
+<style id="tk-billing-center-v25">
+/* Billing Center unified with Langganan: compact, no duplicate renewal panels. */
+#tkOwnerBillingCenter{margin:10px 0!important}
+#tkOwnerBillingCenter .tk-billing-grid{display:block!important}
+#tkOwnerBillingCenter .tk-billing-card{padding:12px!important;border-radius:14px!important}
+#tkOwnerBillingCenter .tk-billing-grid>.tk-billing-card+ .tk-billing-card{margin-top:8px!important}
+#tkOwnerBillingCenter .tk-billing-plan{font-size:21px!important}
+#tkOwnerBillingCenter .tk-billing-kpis{margin-top:8px!important}
+#tkOwnerBillingCenter .tk-billing-table{margin-top:6px!important}
+#tkOwnerBillingCenter .tk-billing-card h3{font-size:13px!important}
+@media(max-width:560px){
+  #tkOwnerBillingCenter .tk-billing-card{padding:10px!important}
+  #tkOwnerBillingCenter .tk-billing-kpis{grid-template-columns:repeat(3,1fr)!important}
+  #tkOwnerBillingCenter .tk-billing-actions button{height:36px!important}
+}
+</style>
+<script id="tk-billing-center-placement-v25">
+(function(){
+  function place(){
+    const center=document.getElementById('tkOwnerBillingCenter');
+    const sub=document.getElementById('subscriptionModule');
+    if(!center||!sub)return;
+    // Ensure the Billing Center exists only inside Langganan.
+    if(!sub.contains(center)){
+      const anchor=sub.querySelector('.tk-sub-header,.subscription-header,.page-header')||sub.firstElementChild;
+      if(anchor&&anchor.parentNode===sub) anchor.insertAdjacentElement('afterend',center);
+      else sub.prepend(center);
+    }
+    // Remove duplicate renewal controls outside subscription module.
+    document.querySelectorAll('button,a').forEach(el=>{
+      if(!/perpanjang langganan|perpanjang/i.test(el.textContent||''))return;
+      if(!sub.contains(el)) el.remove();
+    });
+  }
+  document.addEventListener('DOMContentLoaded',()=>setTimeout(place,300));
+  window.addEventListener('tokokula:ready',place);
+})();
+</script>
+
 </head>
 <body>
 
@@ -1011,19 +1051,30 @@ stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
     $('tkRenewClose').onclick=()=>root.remove();$('tkRenewCancel').onclick=()=>root.remove();
     $('tkRenewPay').onclick=async()=>{
       const m=Number(root.querySelector('.tk-renew-option.active')?.dataset.months||1);
+      const pay=$('tkRenewPay'); pay.disabled=true; pay.textContent='Menyiapkan pembayaran...';
       try{
-        if(window.API?.createCheckout){
-          await API.createCheckout({type:'renewal',months:m});
-          root.remove();
-          if(typeof window.toast==='function')toast('Checkout renewal berhasil dibuat.');
-        }else if(window.API?.createSubscriptionCheckout){
-          await API.createSubscriptionCheckout({renewal:true,months:m});
-          root.remove();
-        }else if(window.page){
-          root.remove();window.page('subscription');
-          if(typeof window.toast==='function')toast('Pilih paket lalu lanjutkan pembayaran.');
-        }else root.remove();
-      }catch(e){if(typeof window.toast==='function')toast(e.message||'Checkout renewal gagal.');}
+        if(!window.supabaseClient?.functions?.invoke) throw new Error('Koneksi pembayaran belum siap. Silakan refresh halaman.');
+        const {data,error}=await supabaseClient.functions.invoke('subscription-checkout-session',{
+          body:{type:'renewal',renewal:true,months:m}
+        });
+        if(error) throw error;
+        const c=data?.checkout;
+        if(!c) throw new Error(data?.user_message||'Checkout perpanjangan belum dapat dibuat.');
+        root.remove();
+        if(typeof window.toast==='function')toast('Checkout perpanjangan berhasil dibuat.');
+        if(c.payment_url) location.assign(c.payment_url);
+        else if(c.redirect_url) location.assign(c.redirect_url);
+        else if(c.snap_token&&window.snap) window.snap.pay(c.snap_token,{
+          onSuccess:()=>{try{page('subscription');loadOwnerSubscription()}catch(e){}},
+          onPending:()=>{try{page('subscription');loadOwnerSubscription()}catch(e){}},
+          onError:()=>{if(typeof window.toast==='function')toast('Pembayaran belum berhasil. Silakan coba lagi.')}
+        });
+        else throw new Error('PAYMENT_URL_NOT_RETURNED');
+      }catch(e){
+        console.error('Renewal checkout',e);
+        if(typeof window.toast==='function')toast(e?.message||'Checkout perpanjangan gagal.');
+        pay.disabled=false; pay.textContent='Lanjut ke Pembayaran';
+      }
     };
   }
   window.openOwnerBillingCenterRenewal=openRenew;
@@ -1035,7 +1086,7 @@ stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
 })();
 </script>
 
-<div id="subscriptionModule" class="hidden tk-subscription-page"><div style="margin-top:10px"><button id="tkSubRenewTop" class="btn dark-btn" type="button">Perpanjang Langganan</button></div><div class="tk-sub-hero"><div><div class="tk-sub-eyebrow">TOKOKULA SUBSCRIPTION</div><h1 class="owner-section-title">Langganan</h1><div class="owner-section-sub">Kelola paket bisnis Anda. Upgrade aktif otomatis setelah pembayaran berhasil.</div></div><div id="tkSubStatusBadge" class="tk-sub-status"></div></div><div class="tk-sub-current"><div><div class="tk-sub-kicker">PAKET SAAT INI</div><div id="tkSubCurrentPlan" class="tk-sub-current-plan">—</div><div id="tkSubCurrentMeta" class="tk-sub-current-meta">Memuat status langganan...</div></div><div class="tk-sub-current-actions"><button id="tkSubRefresh" class="btn light-btn" type="button">↻ Refresh</button><button id="tkSubCancel" class="btn dark-btn hidden" type="button">Batalkan di Akhir Periode</button></div></div><div id="tkSubPending" class="tk-sub-pending hidden"></div><div id="tkOwnerBillingCenter" class="tk-owner-billing">
+<div id="subscriptionModule" class="hidden tk-subscription-page"><div style="margin-top:10px"></div><div class="tk-sub-hero"><div><div class="tk-sub-eyebrow">TOKOKULA SUBSCRIPTION</div><h1 class="owner-section-title">Langganan</h1><div class="owner-section-sub">Kelola paket bisnis Anda. Upgrade aktif otomatis setelah pembayaran berhasil.</div></div><div id="tkSubStatusBadge" class="tk-sub-status"></div></div><div class="tk-sub-current"><div><div class="tk-sub-kicker">PAKET SAAT INI</div><div id="tkSubCurrentPlan" class="tk-sub-current-plan">—</div><div id="tkSubCurrentMeta" class="tk-sub-current-meta">Memuat status langganan...</div></div><div class="tk-sub-current-actions"><button id="tkSubRefresh" class="btn light-btn" type="button">↻ Refresh</button><button id="tkSubCancel" class="btn dark-btn hidden" type="button">Batalkan di Akhir Periode</button></div></div><div id="tkSubPending" class="tk-sub-pending hidden"></div><div id="tkOwnerBillingCenter" class="tk-owner-billing">
   <div class="tk-billing-head"><div><div class="tk-sub-kicker">BILLING CENTER</div><b>Tagihan & Riwayat Pembayaran</b><span>Pantau invoice, status pembayaran, dan periode langganan Anda.</span></div><button id="tkBillingRefresh" class="tk-billing-refresh" type="button">↻ Refresh</button></div>
   <div class="tk-billing-kpis">
     <div><small>Invoice Terakhir</small><b id="tkBillingLast">—</b></div>
