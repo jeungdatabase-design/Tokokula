@@ -630,6 +630,197 @@ tr:last-child td{border-bottom:0!important}
 
 <!-- TOKOKULA 3 PRINCIPLES — V28 -->
 
+
+<!-- TOKOKULA PREMIUM SUBSCRIPTION REDESIGN V30 -->
+<style id="tokokula-premium-subscription-v30">
+/* Premium subscription presentation — compact, clear, high-end */
+#subscriptionModule .premium-shell{margin-top:10px}
+#subscriptionModule .premium-hero{
+  position:relative;overflow:hidden;border-radius:22px;padding:22px 22px 20px;
+  background:linear-gradient(135deg,#111827 0%,#252b38 58%,#6f5a36 140%);
+  color:#fff;box-shadow:0 16px 38px rgba(15,23,42,.16)
+}
+#subscriptionModule .premium-hero:after{
+  content:"";position:absolute;width:220px;height:220px;border-radius:50%;
+  right:-70px;top:-100px;border:1px solid rgba(255,255,255,.14);
+  box-shadow:0 0 0 28px rgba(255,255,255,.025),0 0 0 56px rgba(255,255,255,.02)
+}
+#subscriptionModule .premium-kicker{font-size:9px;letter-spacing:.18em;font-weight:900;opacity:.68}
+#subscriptionModule .premium-title{font-size:27px;line-height:1.05;font-weight:950;letter-spacing:-.045em;margin:7px 0 7px}
+#subscriptionModule .premium-sub{font-size:11px;line-height:1.55;color:rgba(255,255,255,.72);max-width:560px}
+#subscriptionModule .premium-current{
+  position:relative;z-index:2;margin-top:16px;display:flex;justify-content:space-between;align-items:center;gap:14px;
+  padding:12px 14px;border:1px solid rgba(255,255,255,.12);border-radius:14px;background:rgba(255,255,255,.07)
+}
+#subscriptionModule .premium-current small{font-size:9px;color:rgba(255,255,255,.58);display:block}
+#subscriptionModule .premium-current b{font-size:16px;display:block;margin-top:2px}
+#subscriptionModule .premium-status{font-size:9px;font-weight:900;padding:7px 10px;border-radius:999px;background:rgba(255,255,255,.11);white-space:nowrap}
+#subscriptionModule .premium-plans{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px;margin-top:13px}
+#subscriptionModule .premium-plan{
+  position:relative;background:#fff;border:1px solid #e6e9ef;border-radius:17px;padding:15px;
+  box-shadow:0 7px 20px rgba(15,23,42,.045);transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease
+}
+#subscriptionModule .premium-plan:hover{transform:translateY(-2px);box-shadow:0 13px 28px rgba(15,23,42,.09);border-color:#cfd5df}
+#subscriptionModule .premium-plan.featured{border-color:#b7a06f;box-shadow:0 10px 28px rgba(111,90,54,.13)}
+#subscriptionModule .premium-ribbon{
+  position:absolute;right:11px;top:11px;font-size:8px;font-weight:950;letter-spacing:.08em;
+  padding:5px 7px;border-radius:999px;background:#111827;color:#fff
+}
+#subscriptionModule .premium-plan-name{font-size:15px;font-weight:950;color:#182230}
+#subscriptionModule .premium-price{font-size:22px;font-weight:950;letter-spacing:-.03em;margin:11px 0 2px;color:#111827}
+#subscriptionModule .premium-price span{font-size:9px;font-weight:700;color:#98a2b3;letter-spacing:0}
+#subscriptionModule .premium-desc{font-size:10px;color:#667085;line-height:1.45;min-height:29px}
+#subscriptionModule .premium-benefits{list-style:none;padding:0;margin:11px 0 13px;display:grid;gap:6px}
+#subscriptionModule .premium-benefits li{font-size:10px;color:#475467;display:flex;gap:7px;line-height:1.35}
+#subscriptionModule .premium-benefits li:before{content:"✓";font-weight:950;color:#027a48}
+#subscriptionModule .premium-cta{width:100%;height:37px;border:0;border-radius:10px;background:#111827;color:#fff;font-size:10px;font-weight:900;cursor:pointer}
+#subscriptionModule .premium-plan:not(.featured) .premium-cta{background:#f2f4f7;color:#182230}
+#subscriptionModule .premium-bottom{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:13px}
+#subscriptionModule .premium-info{
+  background:#fff;border:1px solid #e7eaf0;border-radius:16px;padding:14px
+}
+#subscriptionModule .premium-info h4{margin:0 0 3px;font-size:12px;color:#182230}
+#subscriptionModule .premium-info p{margin:0;font-size:10px;line-height:1.5;color:#667085}
+#subscriptionModule .premium-checks{display:grid;grid-template-columns:repeat(2,1fr);gap:7px;margin-top:10px}
+#subscriptionModule .premium-check{padding:9px 10px;background:#fafbfc;border:1px solid #eef0f3;border-radius:10px;font-size:9px;color:#475467}
+#subscriptionModule .premium-check b{display:block;font-size:10px;color:#182230;margin-bottom:2px}
+@media(max-width:980px){#subscriptionModule .premium-plans{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){
+  #subscriptionModule .premium-hero{padding:18px 16px;border-radius:18px}
+  #subscriptionModule .premium-title{font-size:23px}
+  #subscriptionModule .premium-current{align-items:flex-start;flex-direction:column}
+  #subscriptionModule .premium-plans{grid-template-columns:1fr;gap:9px}
+  #subscriptionModule .premium-plan{padding:13px}
+  #subscriptionModule .premium-bottom{grid-template-columns:1fr}
+  #subscriptionModule .premium-checks{grid-template-columns:1fr 1fr}
+}
+</style>
+<script id="tokokula-premium-subscription-v30">
+(function(){
+  function redesign(){
+    const mod=document.getElementById('subscriptionModule');
+    if(!mod || mod.dataset.premiumV30==='1')return;
+    mod.dataset.premiumV30='1';
+
+    // Keep existing functional package buttons/forms, but present a premium
+    // visual layer at the top. The original controls remain available below.
+    const shell=document.createElement('div');
+    shell.className='premium-shell';
+    shell.innerHTML=`
+      <section class="premium-hero">
+        <div class="premium-kicker">TOKOKULA • BUSINESS SUBSCRIPTION</div>
+        <div class="premium-title">Pilih paket yang tumbuh bersama bisnis Anda.</div>
+        <div class="premium-sub">Mulai dari kebutuhan dasar hingga operasional multi-outlet. Upgrade saat bisnis berkembang, tanpa mengubah data toko Anda.</div>
+        <div class="premium-current">
+          <div><small>Paket Anda Saat Ini</small><b id="tkPremiumCurrentPlan">Memuat paket</b></div>
+          <div class="premium-status" id="tkPremiumCurrentStatus">Aktif</div>
+        </div>
+      </section>
+
+      <section class="premium-plans">
+        <article class="premium-plan">
+          <div class="premium-plan-name">FREE</div>
+          <div class="premium-price">Rp0 <span>/ selamanya</span></div>
+          <div class="premium-desc">Untuk toko yang baru mulai.</div>
+          <ul class="premium-benefits">
+            <li>Kasir dasar</li><li>Produk & stok</li><li>Laporan dasar</li><li>1 outlet</li>
+          </ul>
+          <button class="premium-cta" data-premium-plan="free">Paket Saat Ini</button>
+        </article>
+
+        <article class="premium-plan featured">
+          <div class="premium-ribbon">PALING POPULER</div>
+          <div class="premium-plan-name">PRO</div>
+          <div class="premium-price">Rp37.000 <span>/ bulan</span></div>
+          <div class="premium-desc">Untuk toko yang mulai serius bertumbuh.</div>
+          <ul class="premium-benefits">
+            <li>Semua fitur Free</li><li>Fitur operasional lebih lengkap</li><li>Laporan lebih mendalam</li><li>Kontrol bisnis lebih baik</li>
+          </ul>
+          <button class="premium-cta" data-premium-plan="pro">Pilih PRO</button>
+        </article>
+
+        <article class="premium-plan">
+          <div class="premium-plan-name">BUSINESS</div>
+          <div class="premium-price">Rp137.000 <span>/ bulan</span></div>
+          <div class="premium-desc">Untuk bisnis dengan operasional lebih besar.</div>
+          <ul class="premium-benefits">
+            <li>Semua fitur Pro</li><li>Multi-outlet</li><li>Kontrol operasional</li><li>Analitik bisnis</li>
+          </ul>
+          <button class="premium-cta" data-premium-plan="business">Pilih BUSINESS</button>
+        </article>
+
+        <article class="premium-plan">
+          <div class="premium-plan-name">ENTERPRISE</div>
+          <div class="premium-price">Rp497.000 <span>/ bulan</span></div>
+          <div class="premium-desc">Untuk operasi skala besar dan kebutuhan khusus.</div>
+          <ul class="premium-benefits">
+            <li>Semua fitur Business</li><li>Skala bisnis lebih besar</li><li>Kontrol & keamanan tingkat lanjut</li><li>Kebutuhan enterprise</li>
+          </ul>
+          <button class="premium-cta" data-premium-plan="enterprise">Pilih ENTERPRISE</button>
+        </article>
+      </section>
+
+      <section class="premium-bottom">
+        <div class="premium-info">
+          <h4>Yang Anda dapatkan</h4>
+          <p>Pilih paket sesuai kebutuhan. Paket yang lebih tinggi membuka kemampuan operasional dan kontrol bisnis yang lebih luas.</p>
+          <div class="premium-checks">
+            <div class="premium-check"><b>Upgrade mudah</b>Data toko tetap tersimpan.</div>
+            <div class="premium-check"><b>Pembayaran aman</b>Transaksi diproses melalui Midtrans.</div>
+            <div class="premium-check"><b>Aktif otomatis</b>Status mengikuti pembayaran yang terverifikasi.</div>
+            <div class="premium-check"><b>Renewal jelas</b>Perpanjangan tersedia dari halaman Langganan.</div>
+          </div>
+        </div>
+        <div class="premium-info">
+          <h4>Butuh perpanjangan?</h4>
+          <p>Billing Center tetap menjadi satu tempat untuk melihat masa aktif, invoice, pembayaran, dan memperpanjang paket.</p>
+          <button class="premium-cta" id="tkPremiumGoBilling" style="margin-top:11px">Lihat Billing Center</button>
+        </div>
+      </section>
+    `;
+    mod.prepend(shell);
+
+    // Wire premium buttons into existing subscription/package controls where possible.
+    shell.querySelectorAll('[data-premium-plan]').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const plan=btn.dataset.premiumPlan;
+        const existing=[...mod.querySelectorAll('button,a')].find(x=>{
+          const t=(x.textContent||'').toLowerCase();
+          return t.includes(plan) && !x.closest('.premium-shell');
+        });
+        if(existing){existing.click();return;}
+        if(plan==='free')return;
+        if(typeof window.page==='function')window.page('subscription');
+      });
+    });
+    const billing=document.getElementById('tkOwnerBillingCenter');
+    const go=document.getElementById('tkPremiumGoBilling');
+    if(go&&billing)go.onclick=()=>billing.scrollIntoView({behavior:'smooth',block:'start'});
+
+    // Read the live subscription without introducing visible loading copy.
+    try{
+      if(window.supabaseClient){
+        supabaseClient.auth.getUser().then(async({data})=>{
+          if(!data?.user)return;
+          const {data:p}=await supabaseClient.from('profiles').select('organization_id').eq('id',data.user.id).maybeSingle();
+          if(!p?.organization_id)return;
+          const {data:s}=await supabaseClient.from('organization_subscriptions').select('plan,status').eq('organization_id',p.organization_id).limit(1).maybeSingle();
+          if(s){
+            const plan=String(s.plan||'free').toUpperCase();
+            const cp=document.getElementById('tkPremiumCurrentPlan');
+            const cs=document.getElementById('tkPremiumCurrentStatus');
+            if(cp)cp.textContent=plan;
+            if(cs)cs.textContent=String(s.status||'active').replaceAll('_',' ');
+          }
+        }).catch(()=>{});
+      }
+    }catch(e){}
+  }
+  function ready(){setTimeout(redesign,250)}
+  document.addEventListener('DOMContentLoaded',ready);
+  window.addEventListener('tokokula:ready',ready);
+})();
+</script>
 </head>
 <body>
 
