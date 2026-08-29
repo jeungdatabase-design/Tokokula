@@ -686,6 +686,42 @@ tr:last-child td{border-bottom:0!important}
 }
 </style>
 
+
+<style id="tokokula-data-toko-v35">
+.store-page-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:18px}
+.store-eyebrow{font-size:10px;font-weight:900;letter-spacing:.16em;color:#826436;margin-bottom:6px}
+.store-summary-grid{display:grid;grid-template-columns:1.7fr 1fr 1fr;gap:12px;margin-bottom:14px}
+.store-summary-card{background:#fff;border:1px solid #e9e6e2;border-radius:18px;padding:18px;box-shadow:0 10px 28px rgba(29,26,21,.045)}
+.store-summary-main{background:linear-gradient(135deg,#201d18,#302a22);color:#fff;border-color:#201d18}
+.store-summary-label{font-size:9px;font-weight:900;letter-spacing:.12em;color:#9d978f}
+.store-summary-main .store-summary-label{color:#cdb487}
+.store-summary-name{font-family:var(--font-display);font-size:25px;font-weight:600;letter-spacing:-.03em;margin-top:8px}
+.store-summary-number{font-size:28px;font-weight:900;margin-top:9px;letter-spacing:-.04em}
+.store-summary-meta{font-size:10px;color:#8e8881;line-height:1.5;margin-top:4px;min-height:15px}
+.store-summary-main .store-summary-meta{color:#c4bdb2}
+.store-summary-btn{margin-top:13px!important;width:auto!important}
+.store-summary-main .store-summary-btn{background:#fff!important;color:#201d18!important}
+.store-location-card{background:#fff;border:1px solid #e9e6e2;border-radius:18px;box-shadow:0 10px 28px rgba(29,26,21,.045);padding:18px;margin-bottom:18px}
+.store-card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding-bottom:13px;border-bottom:1px solid #f1efec}
+.store-card-head b,.store-products-head b{font-size:15px}
+.store-card-head span,.store-products-head span{display:block;font-size:10px;color:#9d978f;margin-top:3px}
+.store-locations-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}
+.store-location{border:1px solid #eeeae5;border-radius:14px;padding:14px;background:#fcfbfa}
+.store-location-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.store-location-name{font-size:13px;font-weight:850;color:#201d18}
+.store-location-type{font-size:8px;font-weight:900;letter-spacing:.08em;padding:5px 7px;border-radius:999px;background:#f5f1ea;color:#826436}
+.store-location-code{font-size:9px;color:#a09990;margin-top:3px}
+.store-location-address{font-size:10px;color:#7e776d;line-height:1.5;margin-top:9px}
+.store-location-empty{padding:18px;text-align:center;color:#a09990;font-size:11px}
+.store-modal-note{font-size:10px;color:#8e8881;line-height:1.5;margin:-3px 0 12px}
+.store-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.store-form-grid .full{grid-column:1/-1}.store-form-grid .field{margin-bottom:0}
+.store-form-grid input,.store-form-grid textarea{width:100%;padding:11px;border:1px solid var(--line);border-radius:11px;outline:0;background:#fff}
+.store-form-grid textarea{min-height:72px;resize:vertical}
+.store-modal-actions{display:flex;gap:8px;margin-top:15px}.store-modal-actions .btn{flex:1}
+@media(max-width:850px){.store-summary-grid{grid-template-columns:1fr 1fr}.store-summary-main{grid-column:1/-1}.store-locations-grid{grid-template-columns:1fr}}
+@media(max-width:560px){.store-page-head{align-items:stretch;flex-direction:column}.store-page-head .btn{width:100%}.store-summary-grid{grid-template-columns:1fr}.store-summary-main{grid-column:auto}.store-location-card,.store-summary-card{border-radius:15px;padding:14px}.store-form-grid{grid-template-columns:1fr}.store-form-grid .full{grid-column:auto}}
+</style>
 </head>
 <body>
 
@@ -951,9 +987,34 @@ stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
         </div>
 
         <div id="masterModule" class="hidden">
-          <h1>Master Data</h1>
-          <div class="subtitle">Kelola produk, kategori, brand, unit, supplier, dan stok awal.</div>
-
+          <div class="store-page-head">
+            <div><div class="store-eyebrow">PENGATURAN BISNIS</div><h1>Data Toko</h1><div class="subtitle">Atur identitas toko, outlet, gudang, dan data operasional dari satu tempat.</div></div>
+            <button id="storeRefresh" class="btn light-btn" type="button">↻ Refresh</button>
+          </div>
+          <div class="store-summary-grid">
+            <div class="store-summary-card store-summary-main">
+              <div class="store-summary-label">IDENTITAS TOKO</div>
+              <div id="storeSummaryName" class="store-summary-name">—</div>
+              <div id="storeSummaryContact" class="store-summary-meta">—</div>
+              <div id="storeSummaryAddress" class="store-summary-meta">—</div>
+              <button id="editStoreDataBtn" class="btn dark-btn store-summary-btn" type="button">Atur Data Toko</button>
+            </div>
+            <div class="store-summary-card">
+              <div class="store-summary-label">OUTLET</div><div id="storeOutletCount" class="store-summary-number">0</div>
+              <div class="store-summary-meta">Lokasi tempat penjualan</div>
+              <button id="addOutletBtn" class="btn light-btn store-summary-btn" type="button">+ Tambah Outlet</button>
+            </div>
+            <div class="store-summary-card">
+              <div class="store-summary-label">GUDANG</div><div id="storeWarehouseCount" class="store-summary-number">0</div>
+              <div class="store-summary-meta">Tempat penyimpanan stok</div>
+              <button id="addWarehouseBtn" class="btn light-btn store-summary-btn" type="button">+ Tambah Gudang</button>
+            </div>
+          </div>
+          <div class="store-location-card">
+            <div class="store-card-head"><div><b>Outlet & Gudang</b><span>Kelola lokasi bisnis dan tempat penyimpanan stok.</span></div><button id="addLocationBtn" class="btn dark-btn" type="button">+ Tambah</button></div>
+            <div id="storeLocationsGrid" class="store-locations-grid"></div>
+          </div>
+          <div class="store-products-head"><div><b>Data Produk</b><span>Produk, kategori, brand, unit, dan supplier.</span></div></div>
           <div class="master-tabs">
             <button class="master-tab active" data-master-tab="products">Produk</button>
             <button class="master-tab" data-master-tab="categories">Kategori</button>
@@ -1290,7 +1351,14 @@ const API={
   inventoryTransferList:()=>API.rpc('inventory_transfer_list'),
   inventoryCreateOpname:(warehouseId,items,note=null)=>API.rpc('inventory_create_opname',{p_warehouse_id:warehouseId,p_items:items,p_note:note}),
   inventoryCompleteOpname:id=>API.rpc('inventory_complete_opname',{p_opname_id:id}),
-  inventoryOpnameList:()=>API.rpc('inventory_opname_list')
+  inventoryOpnameList:()=>API.rpc('inventory_opname_list'),
+  ownerStoreData:()=>API.rpc('owner_store_data'),
+  updateStoreData:(x)=>API.rpc('owner_update_store_data',{
+    p_name:x.name,p_phone:x.phone||null,p_email:x.email||null,p_address:x.address||null,
+    p_city:x.city||null,p_province:x.province||null,p_postal_code:x.postal_code||null,
+    p_business_type:x.business_type||null,p_legal_name:x.legal_name||null,p_tax_id:x.tax_id||null,
+    p_receipt_header:x.receipt_header||null,p_receipt_footer:x.receipt_footer||null
+  })
 };
 
 const State={session:null,user:null,subscription:null,outlet:null,warehouse:null,products:[],customers:[],cart:[]};
@@ -2681,27 +2749,69 @@ document.addEventListener('DOMContentLoaded',async function(){
 })();
 </script>
 <!-- V34 sanity: billing_center=1; scripts=14/14; styles=20/20 -->
+
+<script id="tokokula-data-toko-v35">
+(function(){
+  const S={data:null}, escv=v=>esc(v??'');
+  function close(){document.getElementById('masterModal')?.classList.add('hidden')}
+  function modal(title,body,save){
+    const m=$('masterModal'),f=$('masterForm'),e=$('masterModalError');
+    if(!m||!f)return;
+    $('masterModalTitle').textContent=title;e.classList.add('hidden');e.textContent='';f.innerHTML=body;m.classList.remove('hidden');
+    f.onsubmit=async ev=>{ev.preventDefault();const b=f.querySelector('button[type=submit]');if(b){b.disabled=true;b.textContent='Menyimpan...'}try{await save();m.classList.add('hidden');toast('Data berhasil disimpan.');await loadStoreModule()}catch(x){e.textContent=businessError(x,'Data belum dapat disimpan. Silakan coba lagi.');e.classList.remove('hidden')}finally{if(b){b.disabled=false;b.textContent='Simpan'}}};
+  }
+  async function loadStoreModule(){
+    try{
+      const d=await API.ownerStoreData();S.data=d||{};const o=d?.organization||{},s=d?.settings||{},out=d?.outlets||[],wh=d?.warehouses||[];
+      $('storeSummaryName').textContent=o.name||'Nama toko belum diatur';
+      $('storeSummaryContact').textContent=[s.phone,s.email].filter(Boolean).join(' • ')||'Nomor telepon dan email belum diatur';
+      $('storeSummaryAddress').textContent=[s.address,s.city,s.province,s.postal_code].filter(Boolean).join(', ')||'Alamat toko belum diatur';
+      $('storeOutletCount').textContent=out.filter(x=>x.is_active).length;$('storeWarehouseCount').textContent=wh.filter(x=>x.is_active).length;
+      const cards=[...out.map(x=>({type:'OUTLET',...x})),...wh.map(x=>({type:'GUDANG',...x}))];
+      $('storeLocationsGrid').innerHTML=cards.map(x=>`<div class="store-location"><div class="store-location-top"><div><div class="store-location-name">${escv(x.name)}</div><div class="store-location-code">${escv(x.code||'Tanpa kode')}${x.phone?' • '+escv(x.phone):''}</div></div><span class="store-location-type">${x.type}</span></div><div class="store-location-address">${escv(x.address||'Alamat belum diatur')}</div></div>`).join('')||'<div class="store-location-empty">Belum ada outlet atau gudang.</div>';
+    }catch(e){console.error(e);toast(businessError(e,'Data toko belum dapat dimuat.'))}
+  }
+  function editStore(){
+    const s=S.data?.settings||{},o=S.data?.organization||{};
+    modal('Atur Data Toko',`<div class="store-modal-note">Informasi ini digunakan untuk identitas bisnis dan kebutuhan struk.</div><div class="store-form-grid">
+      <div class="field full"><label>Nama Toko *</label><input id="stName" maxlength="120" required value="${escv(o.name)}" placeholder="Contoh: Toko Maju Jaya"></div>
+      <div class="field"><label>Nomor HP / Telepon</label><input id="stPhone" inputmode="tel" maxlength="40" value="${escv(s.phone)}" placeholder="08xxxxxxxxxx"></div>
+      <div class="field"><label>Email Toko</label><input id="stEmail" type="email" maxlength="160" value="${escv(s.email)}" placeholder="nama@toko.com"></div>
+      <div class="field full"><label>Alamat Toko</label><textarea id="stAddress" maxlength="500" placeholder="Alamat lengkap toko">${escv(s.address)}</textarea></div>
+      <div class="field"><label>Kota</label><input id="stCity" maxlength="80" value="${escv(s.city)}"></div>
+      <div class="field"><label>Provinsi</label><input id="stProvince" maxlength="80" value="${escv(s.province)}"></div>
+      <div class="field"><label>Kode Pos</label><input id="stPostal" maxlength="12" value="${escv(s.postal_code)}"></div>
+      <div class="field"><label>Jenis Usaha</label><input id="stBusiness" maxlength="100" value="${escv(s.business_type)}" placeholder="Retail / Kuliner / Jasa"></div>
+      <div class="field full"><label>Nama Legal (opsional)</label><input id="stLegal" maxlength="160" value="${escv(s.legal_name)}"></div>
+    </div><div class="store-modal-actions"><button class="btn light-btn" type="button" id="stCancel">Batal</button><button class="btn primary" type="submit">Simpan</button></div>`,async()=>{
+      const name=$('stName').value.trim();if(!name)throw new Error('STORE_NAME_REQUIRED');
+      await API.updateStoreData({name,phone:$('stPhone').value.trim(),email:$('stEmail').value.trim(),address:$('stAddress').value.trim(),city:$('stCity').value.trim(),province:$('stProvince').value.trim(),postal_code:$('stPostal').value.trim(),business_type:$('stBusiness').value.trim(),legal_name:$('stLegal').value.trim()});
+    });
+    $('stCancel')?.addEventListener('click',close);
+  }
+  function addLocation(type){
+    const wh=type==='warehouse';
+    modal(wh?'Tambah Gudang':'Tambah Outlet',`<div class="store-modal-note">${wh?'Gudang digunakan untuk menyimpan dan mengatur stok barang.':'Outlet adalah lokasi tempat transaksi penjualan dilakukan.'}</div><div class="store-form-grid">
+      <div class="field full"><label>${wh?'Nama Gudang':'Nama Outlet'} *</label><input id="locName" maxlength="120" required placeholder="${wh?'Contoh: Gudang Utama':'Contoh: Outlet Utama'}"></div>
+      <div class="field"><label>Kode</label><input id="locCode" maxlength="30" placeholder="${wh?'WH-01':'OUT-01'}"></div>
+      ${wh?'':'<div class="field"><label>Telepon</label><input id="locPhone" inputmode="tel" maxlength="40" placeholder="08xxxxxxxxxx"></div>'}
+      <div class="field full"><label>Alamat</label><textarea id="locAddress" maxlength="500" placeholder="Alamat lokasi"></textarea></div>
+    </div><div class="store-modal-actions"><button class="btn light-btn" type="button" id="locCancel">Batal</button><button class="btn primary" type="submit">Simpan</button></div>`,async()=>{
+      const name=$('locName').value.trim();if(!name)throw new Error('Nama wajib diisi.');
+      const code=$('locCode').value.trim()||(wh?'WH-'+Date.now().toString(36).toUpperCase():'OUT-'+Date.now().toString(36).toUpperCase()),address=$('locAddress').value.trim();
+      if(wh)await API.createWarehouse({name,code,address});else await API.createOutlet({name,code,address,phone:$('locPhone')?.value.trim()||''});
+      window.dispatchEvent(new CustomEvent('tokokula:location-changed'));
+    });
+    $('locCancel')?.addEventListener('click',close);
+  }
+  window.loadStoreModule=loadStoreModule;
+  document.addEventListener('DOMContentLoaded',()=>{
+    $('editStoreDataBtn')?.addEventListener('click',editStore);$('addOutletBtn')?.addEventListener('click',()=>addLocation('outlet'));$('addWarehouseBtn')?.addEventListener('click',()=>addLocation('warehouse'));$('addLocationBtn')?.addEventListener('click',()=>addLocation('outlet'));$('storeRefresh')?.addEventListener('click',loadStoreModule);
+    window.addEventListener('tokokula:location-changed',()=>setTimeout(loadStoreModule,200));
+  });
+  const old=window.loadMasterData;
+  if(typeof old==='function')window.loadMasterData=async function(){await old.apply(this,arguments);await loadStoreModule()};
+})();
+</script>
 </body>
 </html>
-
-<style id="tokokula-product-modal-v20">
-/* Final safety net for product add/edit forms */
-#productModal .modal,#addProductModal .modal,.product-modal,.inventory-modal{
-  max-height:calc(100dvh - 20px)!important;
-  overflow-y:auto!important;
-  -webkit-overflow-scrolling:touch!important;
-}
-#productModal form,#addProductModal form,.product-modal form,.inventory-modal form{
-  padding-bottom:72px!important;
-}
-#productModal .modal-actions,#addProductModal .modal-actions,.product-modal .modal-actions,.inventory-modal .modal-actions{
-  position:sticky!important;bottom:0!important;background:#fff!important;padding:10px 0!important;z-index:3!important;
-}
-</style>
-
-<script id="tk-renew-bind-v23">
-document.addEventListener('DOMContentLoaded',function(){
-  const b=document.getElementById('tkSubRenewTop');
-  if(b)b.onclick=()=>window.openOwnerBillingCenterRenewal&&window.openOwnerBillingCenterRenewal();
-});
-</script>
