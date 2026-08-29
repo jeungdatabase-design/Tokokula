@@ -1310,7 +1310,7 @@ const API={
   updateUser:(id,name,phone,status,roleCode,outletId=null)=>API.rpc('user_management_update',{p_user_id:id,p_full_name:name,p_phone:phone,p_status:status,p_role_code:roleCode,p_outlet_id:outletId}),
   revokeUser:id=>API.rpc('user_management_revoke',{p_user_id:id}),
   featureLimit:feature=>API.rpc('feature_limit',{p_feature_code:feature}),
-  checkLimit:(key,current)=>API.rpc('subscription_check_limit',{p_limit_key:key,p_current_value:current}),
+  checkLimit:(key,current)=>API.rpc('subscription_check_limit',{p_limit_key:key,p_current_count:current}),
   financialSnapshot:(from,to)=>API.rpc('reporting_financial_snapshot',{p_from:from,p_to:to}),
   salesSummary:(from,to,outletId=null)=>API.rpc('reporting_sales_summary',{p_from:from,p_to:to,p_outlet_id:outletId}),
   topProducts:(from,to,limit=10,outletId=null)=>API.rpc('reporting_top_products',{p_from:from,p_to:to,p_limit:limit,p_outlet_id:outletId}),
