@@ -2050,39 +2050,97 @@ async function loadReportsModule(){
 async function loadPOS(){
   try{
     const [{data:outlets,error:oErr},{data:customers,error:cErr}]=await Promise.all([
-      supabaseClient.from('outlets').select('id,name').eq('is_active',true).order('name'),
+      supabaseClient.from('outlets').select('id,name,is_active').eq('is_active',true).order('name'),
       supabaseClient.from('customers').select('id,name,phone,points').eq('is_active',true).order('name').limit(100)
     ]);
     if(oErr) throw oErr;
     if(cErr) throw cErr;
 
-    const outlet=outlets?.[0];
-    if(!outlet) throw new Error('Belum ada outlet aktif pada organisasi.');
-    State.outlet=outlet;
+    if(!outlets?.length) throw new Error('Belum ada outlet aktif pada organisasi.');
+
     State.customers=customers||[];
-    $('customerSelect').innerHTML='<option value="">Pelanggan umum</option>'+State.customers.map(c=>`<option value="${esc(c.id)}">${esc(c.name)}${c.phone?' — '+esc(c.phone):''}</option>`).join('');
+    $('customerSelect').innerHTML='<option value="">Pelanggan umum</option>'+
+      State.customers.map(c=>`<option value="${esc(c.id)}">${esc(c.name)}${c.phone?' — '+esc(c.phone):''}</option>`).join('');
+
+    // PENTING: shift aktif adalah sumber kebenaran untuk outlet POS.
+    // Sebelumnya frontend hanya mencari shift pada outlet pertama.
+    // Jika kasir punya shift aktif di outlet lain, frontend mengira tidak ada
+    // shift lalu memunculkan prompt dan API menolak dengan SHIFT_ALREADY_OPEN.
+    const {data:activeShifts,error:shiftErr}=await supabaseClient
+      .from('cashier_shifts')
+      .select('id,status,outlet_id,opening_cash,expected_cash,opened_at')
+      .eq('cashier_id',State.user.id)
+      .eq('status','open')
+      .order('opened_at',{ascending:false})
+      .limit(1);
+    if(shiftErr) throw shiftErr;
+
+    let outlet=null;
+    let activeShift=activeShifts?.[0]||null;
+
+    if(activeShift){
+      outlet=outlets.find(o=>o.id===activeShift.outlet_id);
+      if(!outlet){
+        throw new Error('Shift kasir masih terbuka pada outlet yang sudah tidak aktif. Tutup shift tersebut terlebih dahulu dari menu Shift.');
+      }
+      State.shift=activeShift;
+    }else{
+      outlet=outlets[0];
+      State.shift=null;
+    }
+
+    State.outlet=outlet;
 
     const {data:warehouses,error:wErr}=await supabaseClient.from('warehouses')
       .select('id,name,outlet_id').eq('is_active',true).order('name');
     if(wErr) throw wErr;
-    State.warehouse=warehouses?.find(w=>w.outlet_id===outlet.id)||warehouses?.find(w=>!w.outlet_id)||warehouses?.[0];
-    if(!State.warehouse) throw new Error('Belum ada gudang yang aktif untuk outlet ini. Silakan buat gudang terlebih dahulu.');
+
+    State.warehouse=warehouses?.find(w=>w.outlet_id===outlet.id)||warehouses?.find(w=>!w.outlet_id);
+    if(!State.warehouse) throw new Error('Belum ada gudang aktif untuk outlet ini. Silakan buat gudang terlebih dahulu.');
 
     $('posContext').textContent=`${outlet.name} • ${State.warehouse.name}`;
 
-    const {data:shifts,error:sErr}=await supabaseClient.from('cashier_shifts').select('id,status,opening_cash,expected_cash').eq('outlet_id',outlet.id).eq('cashier_id',State.user.id).eq('status','open').limit(1);
-    if(sErr) throw sErr;
-    if(!shifts?.length){
-      const opening=Number(prompt('Belum ada shift kasir. Masukkan modal awal (Rp):','0')||0);
+    if(!activeShift){
+      const opening=Number(prompt(`Belum ada shift kasir untuk ${outlet.name}. Masukkan modal awal (Rp):`,'0')||0);
       if(!Number.isFinite(opening)||opening<0) throw new Error('Modal awal tidak valid.');
-      await API.openShift(outlet.id,opening,'POS frontend');
+
+      try{
+        const shiftId=await API.openShift(outlet.id,opening,'POS frontend');
+        State.shift={id:shiftId,status:'open',outlet_id:outlet.id,opening_cash:opening,expected_cash:opening};
+      }catch(e){
+        // Race-safe UX: bila kasir membuka POS di dua tab/perangkat,
+        // jangan tampilkan prompt kedua; ambil shift yang sudah terbentuk.
+        const msg=String(e?.message||e||'').toUpperCase();
+        if(msg.includes('SHIFT_ALREADY_OPEN')){
+          const {data:existing,error:existingErr}=await supabaseClient
+            .from('cashier_shifts')
+            .select('id,status,outlet_id,opening_cash,expected_cash,opened_at')
+            .eq('cashier_id',State.user.id)
+            .eq('status','open')
+            .order('opened_at',{ascending:false})
+            .limit(1);
+          if(existingErr||!existing?.[0]) throw e;
+          const s=existing[0];
+          const existingOutlet=outlets.find(o=>o.id===s.outlet_id);
+          if(!existingOutlet) throw new Error('Shift kasir sudah terbuka pada outlet lain yang tidak aktif.');
+          State.shift=s;
+          State.outlet=existingOutlet;
+          const wh=warehouses?.find(w=>w.outlet_id===existingOutlet.id)||warehouses?.find(w=>!w.outlet_id);
+          if(!wh) throw new Error('Shift sudah terbuka, tetapi gudang untuk outlet tersebut tidak tersedia.');
+          State.warehouse=wh;
+          $('posContext').textContent=`${existingOutlet.name} • ${wh.name}`;
+        }else{
+          throw e;
+        }
+      }
     }
 
+    // Jika shift sudah aktif, POS langsung berjalan tanpa meminta modal awal lagi.
     await loadProducts();
     renderCart();
   }catch(e){
     console.error(e);
-    $('productGrid').innerHTML=`<div style="grid-column:1/-1;color:#b42121;padding:15px">${esc(e.message||'POS gagal dimuat.')}</div>`;
+    $('productGrid').innerHTML=`<div style="grid-column:1/-1;color:#b42121;padding:15px">${esc(businessError(e,'POS gagal dimuat.'))}</div>`;
     toast(businessError(e,'POS gagal dimuat.'));
   }
 }
