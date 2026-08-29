@@ -635,8 +635,8 @@ stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
     <div class="card owner-kpi"><div class="label">Piutang</div><div id="receivable" class="value">Rp0</div></div>
   </div>
   <div class="owner-grid">
-    <div class="card owner-card"><div class="owner-card-head"><div><b>Financial Snapshot</b><span>Ringkasan periode berjalan</span></div><span class="owner-chip">REAL-TIME</span></div><div id="financial" style="margin-top:17px" class="rows">Memuat...</div></div>
-    <div class="card owner-card"><div class="owner-card-head"><div><b>Subscription</b><span>Status paket Tokokula</span></div></div><div id="subscription" style="margin-top:17px">Memuat...</div></div>
+    <div class="card owner-card"><div class="owner-card-head"><div><b>Financial Snapshot</b><span>Ringkasan periode berjalan</span></div><span class="owner-chip">REAL-TIME</span></div><div id="financial" style="margin-top:17px" class="rows"></div></div>
+    <div class="card owner-card"><div class="owner-card-head"><div><b>Subscription</b><span>Status paket Tokokula</span></div></div><div id="subscription" style="margin-top:17px"></div></div>
   </div>
   <div class="owner-grid">
     <div class="card owner-card"><div class="owner-card-head"><div><b>Quick Actions</b><span>Akses cepat operasional</span></div></div><div class="owner-actions"><button class="owner-action" data-owner-jump="pos"><span>Buka Point of Sale</span><b>→</b></button><button class="owner-action" data-owner-jump="inventory"><span>Kelola Inventory</span><b>→</b></button><button class="owner-action" data-owner-jump="master"><span>Data Toko</span><b>→</b></button></div></div>
@@ -794,7 +794,7 @@ stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
   <div class="owner-toolbar"><input id="customerSearch" placeholder="Cari nama / telepon..."><div style="display:flex;gap:8px;flex-wrap:wrap"><button id="customerAdd" class="btn dark-btn" type="button" data-permission="customer.manage">+ Pelanggan Baru</button><button id="customerRefresh" class="owner-refresh" type="button">↻ Refresh</button></div></div>
   <div class="card owner-table-card"><div style="overflow:auto"><table class="owner-table"><thead><tr><th>Nama</th><th>Telepon</th><th>Poin</th><th>Status</th></tr></thead><tbody id="customerBody"></tbody></table></div></div>
 </div>
-<div id="subscriptionModule" class="hidden tk-subscription-page"><div class="tk-sub-hero"><div><div class="tk-sub-eyebrow">TOKOKULA SUBSCRIPTION</div><h1 class="owner-section-title">Langganan</h1><div class="owner-section-sub">Kelola paket bisnis Anda. Upgrade aktif otomatis setelah pembayaran berhasil.</div></div><div id="tkSubStatusBadge" class="tk-sub-status">Memuat...</div></div><div class="tk-sub-current"><div><div class="tk-sub-kicker">PAKET SAAT INI</div><div id="tkSubCurrentPlan" class="tk-sub-current-plan">—</div><div id="tkSubCurrentMeta" class="tk-sub-current-meta">Memuat status langganan...</div></div><div class="tk-sub-current-actions"><button id="tkSubRefresh" class="btn light-btn" type="button">↻ Refresh</button><button id="tkSubCancel" class="btn dark-btn hidden" type="button">Batalkan di Akhir Periode</button></div></div><div id="tkSubPending" class="tk-sub-pending hidden"></div><div id="tkOwnerBillingCenter" class="tk-owner-billing">
+<div id="subscriptionModule" class="hidden tk-subscription-page"><div class="tk-sub-hero"><div><div class="tk-sub-eyebrow">TOKOKULA SUBSCRIPTION</div><h1 class="owner-section-title">Langganan</h1><div class="owner-section-sub">Kelola paket bisnis Anda. Upgrade aktif otomatis setelah pembayaran berhasil.</div></div><div id="tkSubStatusBadge" class="tk-sub-status"></div></div><div class="tk-sub-current"><div><div class="tk-sub-kicker">PAKET SAAT INI</div><div id="tkSubCurrentPlan" class="tk-sub-current-plan">—</div><div id="tkSubCurrentMeta" class="tk-sub-current-meta">Memuat status langganan...</div></div><div class="tk-sub-current-actions"><button id="tkSubRefresh" class="btn light-btn" type="button">↻ Refresh</button><button id="tkSubCancel" class="btn dark-btn hidden" type="button">Batalkan di Akhir Periode</button></div></div><div id="tkSubPending" class="tk-sub-pending hidden"></div><div id="tkOwnerBillingCenter" class="tk-owner-billing">
   <div class="tk-billing-head"><div><div class="tk-sub-kicker">BILLING CENTER</div><b>Tagihan & Riwayat Pembayaran</b><span>Pantau invoice, status pembayaran, dan periode langganan Anda.</span></div><button id="tkBillingRefresh" class="tk-billing-refresh" type="button">↻ Refresh</button></div>
   <div class="tk-billing-kpis">
     <div><small>Invoice Terakhir</small><b id="tkBillingLast">—</b></div>
@@ -837,7 +837,7 @@ stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
     </div>
   </div>
 
-  <div class="tk-report-fastbar"><span><b>Laporan siap lebih cepat.</b> Data utama dimuat dulu, detail menyusul.</span><span id="reportLoadState">Siap</span></div>
+  <div class="tk-report-fastbar"><span><b></b> Data utama dimuat dulu, detail menyusul.</span><span id="reportLoadState">Siap</span></div>
   <div class="tk-report-section-title"><div><b>Ringkasan Penjualan</b><span>Gambaran utama bisnis pada periode terpilih</span></div></div>
   <div class="tk-report-kpis" id="reportCards"></div>
 
@@ -1713,7 +1713,7 @@ async function loadReportsModule(){
       supabaseClient.from('sales').select('customer_id,total,completed_at,customers:customer_id(id,name,phone)').eq('status','completed').gte('completed_at',from+'T00:00:00').lt('completed_at',to+'T23:59:59.999').not('customer_id','is',null).limit(2000)
     ]);
     paintDetails(top,cashier,customerRows);
-    if(state){state.textContent='Semua data siap';state.className='tk-report-cached'}
+    if(state){state.textContent='';state.className='tk-report-cached'}
   }catch(e){
     console.error(e);
     const message=businessError(e,'Laporan belum dapat dimuat. Silakan coba lagi.');
@@ -2217,7 +2217,7 @@ function openOwnerCheckout(code){const p=OwnerSubscriptionState.plans.find(x=>St
   async function loadOwnerBilling(){
     const btn=document.getElementById('tkBillingRefresh'),body=document.getElementById('tkBillingBody');
     if(!body||!window.supabaseClient)return;
-    if(btn){btn.disabled=true;btn.textContent='Memuat...'}
+    if(btn){btn.disabled=true;btn.textContent=''}
     try{
       const uid=State.user?.id;
       if(!uid)throw new Error('Sesi login belum tersedia.');
@@ -2256,48 +2256,105 @@ function openOwnerCheckout(code){const p=OwnerSubscriptionState.plans.find(x=>St
 
 
 <!-- TOKOKULA SETUP WIZARD 1 MENIT -->
-<style id="tokokula-setup-wizard-v18">
+<style id="tokokula-setup-wizard-v19">
 .tk-wizard-backdrop{position:fixed;inset:0;background:rgba(15,23,42,.52);backdrop-filter:blur(5px);z-index:9999;display:grid;place-items:center;padding:14px}
 .tk-wizard{width:min(100%,650px);max-height:calc(100vh - 28px);overflow:auto;background:#fff;border-radius:22px;box-shadow:0 30px 90px rgba(0,0,0,.25)}
 .tk-wizard-top{padding:19px 21px 14px;border-bottom:1px solid #edf0f4;display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
-.tk-wizard-kicker{font-size:9px;font-weight:900;letter-spacing:.14em;color:#806638}.tk-wizard h2{margin:5px 0 0;font-size:23px;color:#111827;letter-spacing:-.03em}
+.tk-wizard-kicker{font-size:9px;font-weight:900;letter-spacing:.14em;color:#806638}
+.tk-wizard h2{margin:5px 0 0;font-size:23px;color:#111827;letter-spacing:-.03em}
 .tk-wizard-close{border:0;background:#f3f4f6;border-radius:9px;width:34px;height:34px;font-size:19px;color:#667085;cursor:pointer}
-.tk-wizard-body{padding:15px 21px}.tk-wizard-intro{font-size:12px;color:#667085;line-height:1.5;margin:0 0 10px}
-.tk-wizard-step{display:flex;gap:11px;padding:11px 0;border-bottom:1px solid #f0f2f5;align-items:center}.tk-wizard-step:last-child{border-bottom:0}
+.tk-wizard-body{padding:15px 21px}
+.tk-wizard-intro{font-size:12px;color:#667085;line-height:1.5;margin:0 0 10px}
+.tk-wizard-step{display:flex;gap:11px;padding:11px 0;border-bottom:1px solid #f0f2f5;align-items:center}
+.tk-wizard-step:last-child{border-bottom:0}
 .tk-wizard-num{width:29px;height:29px;border-radius:50%;display:grid;place-items:center;background:#111827;color:#fff;font-size:11px;font-weight:900;flex:0 0 29px}
-.tk-wizard-copy{flex:1;min-width:0}.tk-wizard-copy b{display:block;font-size:12px;color:#182230}.tk-wizard-copy span{display:block;margin-top:2px;font-size:10px;color:#8a94a6;line-height:1.4}
+.tk-wizard-copy{flex:1;min-width:0}
+.tk-wizard-copy b{display:block;font-size:12px;color:#182230}
+.tk-wizard-copy span{display:block;margin-top:2px;font-size:10px;color:#8a94a6;line-height:1.4}
 .tk-wizard-action{border:1px solid #111827;background:#111827;color:#fff;border-radius:9px;padding:8px 10px;font-size:10px;font-weight:850;cursor:pointer;white-space:nowrap}
 .tk-wizard-action.secondary{background:#fff;color:#111827;border-color:#dfe3ea}
-.tk-wizard-foot{padding:12px 21px;background:#fafbfc;border-top:1px solid #edf0f4;display:flex;justify-content:space-between;gap:10px;align-items:center}.tk-wizard-foot span{font-size:9px;color:#98a2b3}
+.tk-wizard-foot{padding:12px 21px;background:#fafbfc;border-top:1px solid #edf0f4;display:flex;justify-content:space-between;gap:10px;align-items:center}
+.tk-wizard-foot span{font-size:9px;color:#98a2b3}
 .tk-wizard-start{border:0;background:#111827;color:#fff;border-radius:10px;padding:9px 14px;font-weight:850;cursor:pointer}
-@media(max-width:520px){.tk-wizard{border-radius:18px}.tk-wizard-top,.tk-wizard-body,.tk-wizard-foot{padding-left:15px;padding-right:15px}.tk-wizard h2{font-size:20px}.tk-wizard-step{align-items:flex-start}.tk-wizard-action{margin-left:auto}}
+@media(max-width:520px){
+ .tk-wizard{border-radius:18px}.tk-wizard-top,.tk-wizard-body,.tk-wizard-foot{padding-left:15px;padding-right:15px}
+ .tk-wizard h2{font-size:20px}.tk-wizard-step{align-items:flex-start}.tk-wizard-action{margin-left:auto}
+}
 </style>
-<script id="tokokula-setup-wizard-v18">
+<script id="tokokula-setup-wizard-v19">
 (function(){
- const KEY='tokokula_setup_wizard_seen_v18';
+ const KEY='tokokula_setup_wizard_seen_v19';
  function el(id){return document.getElementById(id)}
- function close(){const x=el('tkSetupWizard');if(x)x.remove();try{localStorage.setItem(KEY,'1')}catch(e){}}
- function go(page){try{if(typeof window.page==='function')window.page(page);else document.querySelector('[data-page="'+page+'"]')?.click();close()}catch(e){console.error(e)}}
+ function close(){
+   const x=el('tkSetupWizard');if(x)x.remove();
+   try{localStorage.setItem(KEY,'1')}catch(e){}
+ }
+ function clickPage(name){
+   const b=document.querySelector('[data-page="'+name+'"]');
+   if(b){b.click();return true}
+   return false;
+ }
+ function openMaster(){
+   if(!clickPage('master'))return;
+   setTimeout(function(){
+     // Prefer the toko/company panel if the master page exposes one.
+     const candidates=['master-settings','master-company','master-organization','master-profile'];
+     for(const id of candidates){const x=el(id);if(x){x.scrollIntoView({behavior:'smooth',block:'start'});break}}
+   },150);
+ }
+ function openOutletWarehouse(){
+   if(!clickPage('master'))return;
+   setTimeout(function(){
+     const candidates=['master-outlets','master-warehouses','master-outlet','master-warehouse'];
+     for(const id of candidates){const x=el(id);if(x&&!x.classList.contains('hidden')){x.scrollIntoView({behavior:'smooth',block:'start'});return}}
+     // Click tabs/buttons with Indonesian labels if present.
+     const buttons=[...document.querySelectorAll('#masterModule button')];
+     const b=buttons.find(x=>/outlet|gudang/i.test(x.textContent||''));
+     if(b)b.click();
+   },180);
+ }
+ function openProducts(){
+   clickPage('inventory');
+   setTimeout(function(){
+     const candidates=['addProductBtn','addInventoryProduct','addProduct'];
+     for(const id of candidates){const x=el(id);if(x){x.click();return}}
+     const b=[...document.querySelectorAll('#inventoryModule button')].find(x=>/tambah produk|\+ produk/i.test(x.textContent||''));
+     if(b)b.click();
+   },250);
+ }
  function render(){
-  if(el('tkSetupWizard'))return;
-  const root=document.createElement('div');root.id='tkSetupWizard';root.className='tk-wizard-backdrop';
-  root.innerHTML=`<div class="tk-wizard" role="dialog" aria-modal="true">
-   <div class="tk-wizard-top"><div><div class="tk-wizard-kicker">SETUP TOKOKULA • 1 MENIT</div><h2>Siapkan toko Anda</h2></div><button class="tk-wizard-close" type="button">×</button></div>
-   <div class="tk-wizard-body">
-    <p class="tk-wizard-intro">Ikuti urutan ini. Kalau ada yang belum siap, tombol di kanan akan membawa Anda ke tempat pengaturannya.</p>
-    <div class="tk-wizard-step"><div class="tk-wizard-num">1</div><div class="tk-wizard-copy"><b>Data Toko</b><span>Periksa nama toko, alamat, dan nomor telepon.</span></div><button class="tk-wizard-action secondary" data-wizard-go="master">Buka Data Toko</button></div>
-    <div class="tk-wizard-step"><div class="tk-wizard-num">2</div><div class="tk-wizard-copy"><b>Outlet & Gudang</b><span>Siapkan tempat transaksi dan gudang untuk stok.</span></div><button class="tk-wizard-action secondary" data-wizard-go="master">Atur Sekarang</button></div>
-    <div class="tk-wizard-step"><div class="tk-wizard-num">3</div><div class="tk-wizard-copy"><b>Produk</b><span>Tambahkan nama barang, harga jual, dan stok awal.</span></div><button class="tk-wizard-action secondary" data-wizard-go="inventory">Tambah Produk</button></div>
-    <div class="tk-wizard-step"><div class="tk-wizard-num">4</div><div class="tk-wizard-copy"><b>Kasir</b><span>Semua siap? Anda bisa langsung mulai transaksi.</span></div><button class="tk-wizard-action" data-wizard-go="pos">Mulai Kasir</button></div>
-   </div>
-   <div class="tk-wizard-foot"><span>Butuh bantuan? Panduan ini bisa dibuka lagi.</span><button class="tk-wizard-start" type="button">Selesai</button></div>
-  </div>`;
-  document.body.appendChild(root);root.querySelector('.tk-wizard-close').onclick=close;root.querySelector('.tk-wizard-start').onclick=close;
-  root.addEventListener('click',e=>{const b=e.target.closest('[data-wizard-go]');if(b)go(b.dataset.wizardGo);if(e.target===root)close()});
+   if(el('tkSetupWizard'))return;
+   const root=document.createElement('div');root.id='tkSetupWizard';root.className='tk-wizard-backdrop';
+   root.innerHTML=`<div class="tk-wizard" role="dialog" aria-modal="true" aria-label="Panduan mulai Tokokula">
+     <div class="tk-wizard-top"><div><div class="tk-wizard-kicker">SETUP TOKOKULA • 1 MENIT</div><h2>Siapkan toko Anda</h2></div><button class="tk-wizard-close" type="button">×</button></div>
+     <div class="tk-wizard-body">
+       <p class="tk-wizard-intro">Selesaikan langkah berikut untuk mulai berjualan. Tombol di kanan membawa Anda langsung ke pengaturannya.</p>
+       <div class="tk-wizard-step"><div class="tk-wizard-num">1</div><div class="tk-wizard-copy"><b>Data Toko</b><span>Atur nama toko, alamat, telepon, dan informasi usaha.</span></div><button class="tk-wizard-action secondary" data-action="store">Atur Data Toko</button></div>
+       <div class="tk-wizard-step"><div class="tk-wizard-num">2</div><div class="tk-wizard-copy"><b>Outlet & Gudang</b><span>Buat outlet tempat kasir bekerja dan gudang untuk menyimpan stok.</span></div><button class="tk-wizard-action secondary" data-action="location">Atur Sekarang</button></div>
+       <div class="tk-wizard-step"><div class="tk-wizard-num">3</div><div class="tk-wizard-copy"><b>Produk</b><span>Tambahkan nama barang, harga jual, dan stok awal.</span></div><button class="tk-wizard-action secondary" data-action="product">Tambah Produk</button></div>
+       <div class="tk-wizard-step"><div class="tk-wizard-num">4</div><div class="tk-wizard-copy"><b>Kasir</b><span>Setelah produk siap, Anda bisa langsung mulai transaksi.</span></div><button class="tk-wizard-action" data-action="pos">Mulai Kasir</button></div>
+     </div>
+     <div class="tk-wizard-foot"><span>Panduan ini tidak akan muncul lagi setelah Anda selesai.</span><button class="tk-wizard-start" type="button">Mengerti</button></div>
+   </div>`;
+   document.body.appendChild(root);
+   root.querySelector('.tk-wizard-close').onclick=close;
+   root.querySelector('.tk-wizard-start').onclick=close;
+   root.addEventListener('click',function(e){
+     const b=e.target.closest('[data-action]');if(!b)return;
+     if(b.dataset.action==='store')openMaster();
+     if(b.dataset.action==='location')openOutletWarehouse();
+     if(b.dataset.action==='product')openProducts();
+     if(b.dataset.action==='pos')clickPage('pos');
+     close();
+   });
  }
  window.openTokokulaSetupWizard=render;
- function maybe(){try{if(localStorage.getItem(KEY)==='1')return}catch(e){} setTimeout(()=>{if(el('app')&&!el('app').classList.contains('hidden'))render()},800)}
- document.addEventListener('DOMContentLoaded',maybe);window.addEventListener('tokokula:ready',maybe);
+ function maybe(){
+   try{if(localStorage.getItem(KEY)==='1')return}catch(e){}
+   setTimeout(function(){if(el('app')&&!el('app').classList.contains('hidden'))render()},800);
+ }
+ document.addEventListener('DOMContentLoaded',maybe);
+ window.addEventListener('tokokula:ready',maybe);
 })();
 </script>
 
