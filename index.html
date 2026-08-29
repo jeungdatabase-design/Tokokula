@@ -708,11 +708,11 @@ tr:last-child td{border-bottom:0!important}
     shell.className='premium-shell';
     shell.innerHTML=`
       <section class="premium-hero">
-        <div class="premium-kicker">TOKOKULA • BUSINESS SUBSCRIPTION</div>
-        <div class="premium-title">Pilih paket yang tumbuh bersama bisnis Anda.</div>
-        <div class="premium-sub">Mulai dari kebutuhan dasar hingga operasional multi-outlet. Upgrade saat bisnis berkembang, tanpa mengubah data toko Anda.</div>
+        <div class="premium-kicker">TOKOKULA • PREMIUM BUSINESS PLATFORM</div>
+        <div class="premium-title">Bisnis Anda berkembang. Paket Tokokula ikut berkembang.</div>
+        <div class="premium-sub">Satu platform untuk mengelola penjualan, stok, operasional, dan pertumbuhan bisnis—dari toko tunggal hingga multi-outlet.</div>
         <div class="premium-current">
-          <div><small>Paket Anda Saat Ini</small><b id="tkPremiumCurrentPlan">Memuat paket</b></div>
+          <div><small>Paket Anda Saat Ini</small><b id="tkPremiumCurrentPlan">Paket aktif</b></div>
           <div class="premium-status" id="tkPremiumCurrentStatus">Aktif</div>
         </div>
       </section>
@@ -821,6 +821,83 @@ tr:last-child td{border-bottom:0!important}
   window.addEventListener('tokokula:ready',ready);
 })();
 </script>
+
+<style id="tokokula-premium-cleanup-v31">
+/* V31: hide legacy subscription presentation; V30 premium shell is the single visual surface. */
+#subscriptionModule > .sub-header,
+#subscriptionModule > .subscription-header,
+#subscriptionModule > .page-header,
+#subscriptionModule > .section-header,
+#subscriptionModule > .subscription-hero,
+#subscriptionModule > .sub-summary,
+#subscriptionModule > .subscription-summary,
+#subscriptionModule > .billing-center-title{display:none!important}
+
+/* Legacy billing center is retained for its functional IDs/data, but visually merged. */
+#subscriptionModule #tkOwnerBillingCenter{
+  margin:16px 0 0!important;
+  padding:16px!important;
+  border:1px solid #e8e1d2!important;
+  border-radius:18px!important;
+  background:linear-gradient(180deg,#fffdf9,#fff)!important;
+  box-shadow:0 12px 30px rgba(111,90,54,.08)!important;
+}
+#subscriptionModule #tkOwnerBillingCenter .tk-billing-grid{display:grid!important;grid-template-columns:1fr 1.05fr!important;gap:12px!important}
+#subscriptionModule #tkOwnerBillingCenter .tk-billing-card{
+  border:1px solid #eee8dc!important;background:rgba(255,255,255,.9)!important;
+  box-shadow:none!important;
+}
+#subscriptionModule #tkOwnerBillingCenter .tk-billing-card:first-child{
+  background:#111827!important;color:#fff!important;border-color:#111827!important
+}
+#subscriptionModule #tkOwnerBillingCenter .tk-billing-card:first-child h3,
+#subscriptionModule #tkOwnerBillingCenter .tk-billing-card:first-child .tk-billing-muted,
+#subscriptionModule #tkOwnerBillingCenter .tk-billing-card:first-child .tk-billing-kpi,
+#subscriptionModule #tkOwnerBillingCenter .tk-billing-card:first-child .tk-billing-kpi small,
+#subscriptionModule #tkOwnerBillingCenter .tk-billing-card:first-child .tk-billing-kpi b{
+  color:#fff!important
+}
+#subscriptionModule #tkOwnerBillingCenter .tk-billing-card:first-child .tk-billing-kpi{
+  background:rgba(255,255,255,.07)!important;border-color:rgba(255,255,255,.1)!important
+}
+#subscriptionModule #tkOwnerBillingCenter .tk-billing-card:first-child .tk-billing-actions button.tk-billing-light{
+  background:rgba(255,255,255,.1)!important;color:#fff!important;border-color:rgba(255,255,255,.15)!important
+}
+#subscriptionModule #tkOwnerBillingCenter .tk-billing-card:first-child .tk-billing-actions{
+  justify-content:flex-start!important
+}
+#subscriptionModule #tkOwnerBillingCenter .tk-billing-card h3{
+  font-weight:900!important;letter-spacing:-.01em
+}
+@media(max-width:760px){
+ #subscriptionModule #tkOwnerBillingCenter .tk-billing-grid{grid-template-columns:1fr!important}
+}
+</style>
+
+<style id="tokokula-premium-luxury-v31">
+#subscriptionModule .premium-shell{max-width:1180px;margin:0 auto}
+#subscriptionModule .premium-hero{
+  min-height:185px;display:flex;flex-direction:column;justify-content:center;
+  background:radial-gradient(circle at 88% 15%,rgba(188,163,111,.24),transparent 28%),
+             linear-gradient(135deg,#0b0f16 0%,#171d27 58%,#403522 150%)!important;
+}
+#subscriptionModule .premium-title{max-width:760px}
+#subscriptionModule .premium-current{max-width:760px}
+#subscriptionModule .premium-plans{align-items:stretch}
+#subscriptionModule .premium-plan{min-height:315px;display:flex;flex-direction:column}
+#subscriptionModule .premium-benefits{flex:1}
+#subscriptionModule .premium-plan.featured{
+  transform:translateY(-2px);
+  border-color:#b99c62!important;
+  box-shadow:0 18px 38px rgba(111,90,54,.16)!important;
+}
+#subscriptionModule .premium-plan.featured:before{
+  content:"";position:absolute;left:0;right:0;top:0;height:3px;border-radius:17px 17px 0 0;
+  background:linear-gradient(90deg,#8e7445,#d6c08d,#8e7445)
+}
+#subscriptionModule .premium-price{font-variant-numeric:tabular-nums}
+#subscriptionModule .premium-info{box-shadow:0 7px 20px rgba(15,23,42,.035)}
+</style>
 </head>
 <body>
 
