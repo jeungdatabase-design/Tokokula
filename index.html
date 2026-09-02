@@ -842,7 +842,7 @@ tr:last-child td{border-bottom:0!important}
     <nav class="nav">
       <button class="active" data-page="dashboard" data-permission="dashboard.view"><span class="owner-nav-icon">⌂</span><span>Beranda</span></button>
       <button data-page="pos" data-permission="sales.view"><span class="owner-nav-icon">▣</span><span>POS</span></button><button data-page="shift"><span class="owner-nav-icon">◷</span><span>Shift & Kas</span></button>
-      <button data-page="inventory" data-permission="inventory.view"><span class="owner-nav-icon">▤</span><span>Stok</span></button>
+      <button data-page="inventory" data-permission="inventory.view"><span class="owner-nav-icon">▤</span><span>Stok</span></button><button data-page="distributor" data-permission="DISTRIBUTOR.DASHBOARD_VIEW"><span class="owner-nav-icon">◎</span><span>Distributor</span></button>
       <button data-page="finance" data-permission="reports.view"><span class="owner-nav-icon">Rp</span><span>Keuangan</span></button>
       <button data-page="reports" data-permission="reports.view"><span class="owner-nav-icon">≋</span><span>Laporan</span></button><button data-page="subscription" data-permission="reports.view"><span class="owner-nav-icon">◈</span><span>Langganan</span></button>
 
@@ -891,6 +891,21 @@ stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
         <div id="genericModule">
           <h1 id="moduleTitle">Module</h1><div class="subtitle">Modul Tokokula</div>
           <div class="card module-box">Frontend module siap dihubungkan ke engine backend.</div>
+        </div>
+
+        <div id="distributorModule" class="hidden tk-dist-page">
+          <div class="tk-dist-hero"><div><div class="tk-dist-eyebrow">TOKOKULA DISTRIBUTOR</div><h1 class="owner-section-title">Distributor Control Center</h1><div class="owner-section-sub">Order, sales force, delivery, piutang, target, dan intelligence terhubung langsung ke Supabase Production.</div></div><button id="distRefresh" class="owner-refresh">↻ Refresh</button></div>
+          <div class="tk-dist-kpis"><div class="card"><small>Penjualan</small><b id="distRevenue">Rp0</b></div><div class="card"><small>Order</small><b id="distOrders">0</b></div><div class="card"><small>Delivery</small><b id="distDeliveries">0</b></div><div class="card"><small>Piutang</small><b id="distReceivable">Rp0</b></div></div>
+          <div class="tk-dist-grid">
+            <div class="card"><div class="tk-dist-head"><div><b>Buat Sales Order</b><span>Draft → Submit → Approval → Fulfillment</span></div></div>
+              <form id="distOrderForm" class="tk-dist-form"><select id="distCustomer" required><option value="">Pilih pelanggan</option></select><select id="distWarehouse" required><option value="">Pilih gudang</option></select><select id="distOutlet" required><option value="">Pilih outlet</option></select><select id="distPaymentType"><option value="cash">Cash</option><option value="credit">Credit</option><option value="partial">Partial</option></select><input id="distDeliveryDate" type="date"><input id="distOrderNote" placeholder="Catatan order"><div class="tk-dist-items"><select id="distProduct"><option value="">Pilih produk</option></select><input id="distQty" type="number" min="0.01" step="0.01" value="1"><button class="btn light-btn" type="button" id="distAddItem">+ Item</button></div><div id="distCart" class="tk-dist-cart"></div><button class="btn primary" type="submit">Simpan Draft Order</button></form>
+            </div>
+            <div class="card"><div class="tk-dist-head"><div><b>Order Terbaru</b><span>Tenant-isolated dari sales_orders</span></div></div><div class="tk-dist-table-wrap"><table class="tk-dist-table"><thead><tr><th>No</th><th>Pelanggan</th><th>Total</th><th>Status</th><th>Aksi</th></tr></thead><tbody id="distOrderBody"></tbody></table></div></div>
+          </div>
+          <div class="tk-dist-grid">
+            <div class="card"><div class="tk-dist-head"><div><b>Delivery Control</b><span>Picking → Out for Delivery → Arrived → POD → Delivered</span></div></div><div class="tk-dist-table-wrap"><table class="tk-dist-table"><thead><tr><th>No</th><th>Status</th><th>Tanggal</th><th>Aksi</th></tr></thead><tbody id="distDeliveryBody"></tbody></table></div></div>
+            <div class="card"><div class="tk-dist-head"><div><b>Collection & Target</b><span>Piutang aging dan pencapaian target</span></div></div><div id="distAging" class="tk-dist-list"></div><div id="distTarget" class="tk-dist-list"></div></div>
+          </div>
         </div>
 
 
@@ -1401,6 +1416,25 @@ const API={
   inventoryCreateOpname:(warehouseId,items,note=null)=>API.rpc('inventory_create_opname',{p_warehouse_id:warehouseId,p_items:items,p_note:note}),
   inventoryCompleteOpname:id=>API.rpc('inventory_complete_opname',{p_opname_id:id}),
   inventoryOpnameList:()=>API.rpc('inventory_opname_list'),
+  /* ===== DISTRIBUTOR PRODUCTION API ===== */
+  distributorDashboard:(from,to)=>API.rpc('distributor_dashboard_kpi',{p_from:from,p_to:to}),
+  distributorSalesPerformance:(from,to)=>API.rpc('distributor_sales_performance',{p_from:from,p_to:to}),
+  distributorDeliveryPerformance:(from,to)=>API.rpc('distributor_delivery_performance',{p_from:from,p_to:to}),
+  distributorTopCustomers:(from,to,limit=10)=>API.rpc('distributor_top_customers',{p_from:from,p_to:to,p_limit:limit}),
+  distributorTopProducts:(from,to,limit=10)=>API.rpc('distributor_top_products',{p_from:from,p_to:to,p_limit:limit}),
+  distributorReceivableAging:()=>API.rpc('distributor_receivable_aging'),
+  distributorTargetSummary:(from,to)=>API.rpc('distributor_target_summary',{p_from:from,p_to:to}),
+  distributorResolvePrice:(customerId,productId,qty,date)=>API.rpc('distributor_resolve_price',{p_customer_id:customerId,p_product_id:productId,p_quantity:qty,p_date:date}),
+  distributorSubmitOrder:id=>API.rpc('distributor_submit_order',{p_order_id:id}),
+  distributorApproveOrder:(id,approved,reason=null)=>API.rpc('distributor_approve_order',{p_order_id:id,p_approved:approved,p_reason:reason}),
+  distributorCompleteOrder:(id,payments=[])=>API.rpc('distributor_complete_order',{p_order_id:id,p_payments:payments}),
+  distributorProcessOrder:(id,payments=[])=>API.rpc('distributor_process_order',{p_order_id:id,p_payments:payments}),
+  distributorVisitCheckin:(customerId,lat,lon,accuracy=null,photo=null,notes=null)=>API.rpc('distributor_visit_checkin',{p_customer_id:customerId,p_latitude:lat,p_longitude:lon,p_accuracy_meters:accuracy,p_photo_url:photo,p_notes:notes}),
+  distributorVisitCheckout:(visitId,outcome=null,notes=null)=>API.rpc('distributor_visit_checkout',{p_visit_id:visitId,p_outcome:outcome,p_notes:notes}),
+  distributorDeliveryStatus:(id,status,lat=null,lon=null,accuracy=null,note=null)=>API.rpc('distributor_delivery_status',{p_delivery_id:id,p_status:status,p_latitude:lat,p_longitude:lon,p_accuracy_meters:accuracy,p_note:note}),
+  distributorPickDelivery:(id,items=[])=>API.rpc('distributor_pick_delivery',{p_delivery_id:id,p_items:items}),
+  distributorAddProof:(id,photo=null,signature=null,recipient=null,lat=null,lon=null,accuracy=null,note=null)=>API.rpc('distributor_add_delivery_proof',{p_delivery_id:id,p_photo_url:photo,p_signature_url:signature,p_recipient_name:recipient,p_latitude:lat,p_longitude:lon,p_accuracy_meters:accuracy,p_note:note}),
+  distributorConfirmDelivery:(id,recipient=null,photo=null,signature=null,note=null,lat=null,lon=null,accuracy=null)=>API.rpc('distributor_confirm_delivery',{p_delivery_id:id,p_recipient_name:recipient,p_photo_url:photo,p_signature_url:signature,p_note:note,p_latitude:lat,p_longitude:lon,p_accuracy_meters:accuracy}),
   ownerStoreData:()=>API.rpc('owner_store_data'),
   updateStoreData:(x)=>API.rpc('owner_update_store_data',{
     p_name:x.name,p_phone:x.phone||null,p_email:x.email||null,p_address:x.address||null,
@@ -1673,19 +1707,20 @@ function page(name){
   const inGroup=grouped.includes(name);
   const toggle=$('teamSettingsToggle'),submenu=$('teamSettingsSubmenu');
   if(toggle&&submenu&&inGroup){submenu.classList.add('open');toggle.classList.add('open');toggle.setAttribute('aria-expanded','true');}
-  const titles={dashboard:'Beranda',pos:'Point of Sale',inventory:'Stok',customers:'Pelanggan',purchases:'Purchase & Supplier',finance:'Keuangan',reports:'Reports & Analytics',settings:'Tim & Pengguna',shift:'Shift & Kas',master:'Data Toko',subscription:'Langganan',qa:'QA & E2E Test'};
+  const titles={dashboard:'Beranda',pos:'Point of Sale',inventory:'Stok',distributor:'Distributor',customers:'Pelanggan',purchases:'Purchase & Supplier',finance:'Keuangan',reports:'Reports & Analytics',settings:'Tim & Pengguna',shift:'Shift & Kas',master:'Data Toko',subscription:'Langganan',qa:'QA & E2E Test'};
   if(name==='dashboard'){
     $('dashboard').classList.remove('hidden');$('module').classList.add('hidden');
   }else{
     $('dashboard').classList.add('hidden');$('module').classList.remove('hidden');
     $('moduleTitle').textContent=titles[name]||name;
-    const realModules=['pos','shift','settings','master','inventory','customers','purchases','finance','reports','subscription','qa'];
+    const realModules=['pos','shift','settings','master','inventory','distributor','customers','purchases','finance','reports','subscription','qa'];
     $('genericModule').classList.add('hidden');
     $('posModule').classList.toggle('hidden',name!=='pos');
     $('shiftModule').classList.toggle('hidden',name!=='shift');
     $('usersModule').classList.toggle('hidden',name!=='settings');
     $('masterModule').classList.toggle('hidden',name!=='master');
     $('inventoryModule').classList.toggle('hidden',name!=='inventory');
+    $('distributorModule').classList.toggle('hidden',name!=='distributor');
     $('customersModule').classList.toggle('hidden',name!=='customers');
     $('purchasesModule').classList.toggle('hidden',name!=='purchases');
     $('financeModule').classList.toggle('hidden',name!=='finance');
@@ -1697,6 +1732,7 @@ function page(name){
     if(name==='settings') loadUsers();
     if(name==='master') loadMasterData();
     if(name==='inventory') loadInventory();
+    if(name==='distributor') loadDistributor();
     if(name==='customers') loadCustomersModule();
     if(name==='purchases') loadPurchasesModule();
     if(name==='finance') loadFinanceModule();
@@ -3115,5 +3151,27 @@ document.addEventListener('DOMContentLoaded',async function(){
 @media(max-width:800px){.tk-qa-hero{align-items:stretch;flex-direction:column}.tk-qa-grid{grid-template-columns:1fr}.tk-qa-actions .btn{flex:1;min-width:150px}}
 </style>
 
+
+<style id="tokokula-distributor-production-ui">
+.tk-dist-page{max-width:1500px;margin:0 auto}.tk-dist-hero{display:flex;justify-content:space-between;align-items:flex-end;gap:20px}.tk-dist-eyebrow{font-size:10px;font-weight:900;letter-spacing:.16em;color:#826436;margin-bottom:7px}.tk-dist-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:20px 0 14px}.tk-dist-kpis .card{min-height:110px}.tk-dist-kpis small{display:block;color:#9d978f;font-size:10px;font-weight:800;text-transform:uppercase}.tk-dist-kpis b{display:block;font-size:25px;margin-top:10px}.tk-dist-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}.tk-dist-head{display:flex;justify-content:space-between;gap:12px;margin-bottom:15px}.tk-dist-head b{font-size:15px}.tk-dist-head span{display:block;color:#9d978f;font-size:10px;margin-top:4px}.tk-dist-form{display:grid;gap:9px}.tk-dist-form select,.tk-dist-form input{width:100%;padding:11px;border:1px solid #e8e5e1;border-radius:11px;background:#fff}.tk-dist-items{display:grid;grid-template-columns:1fr 110px auto;gap:8px}.tk-dist-cart{display:grid;gap:6px}.tk-dist-cart-row{display:flex;justify-content:space-between;gap:10px;padding:9px 10px;background:#faf9f7;border:1px solid #efedea;border-radius:10px;font-size:11px}.tk-dist-table-wrap{overflow:auto}.tk-dist-table{width:100%;border-collapse:collapse;min-width:520px}.tk-dist-table th,.tk-dist-table td{padding:11px;border-bottom:1px solid #f0eeeb;text-align:left;font-size:11px;white-space:nowrap}.tk-dist-table th{font-size:9px;color:#9c958c;text-transform:uppercase}.tk-dist-list{display:grid;gap:7px}.tk-dist-list>div{display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid #f0eeeb;font-size:11px}.tk-dist-action{border:1px solid #e7e3de;background:#fff;border-radius:8px;padding:6px 8px;font-size:10px;font-weight:800}.tk-dist-action.dark{background:#201d18;color:#fff;border-color:#201d18}@media(max-width:900px){.tk-dist-kpis{grid-template-columns:1fr 1fr}.tk-dist-grid{grid-template-columns:1fr}}@media(max-width:520px){.tk-dist-hero{align-items:stretch;flex-direction:column}.tk-dist-kpis{gap:8px}.tk-dist-kpis .card{padding:14px}.tk-dist-kpis b{font-size:20px}.tk-dist-items{grid-template-columns:1fr 90px}.tk-dist-items button{grid-column:1/-1}}
+</style>
+<script id="tokokula-distributor-production-js">
+(function(){'use strict';
+let DS={customers:[],products:[],warehouses:[],outlets:[],cart:[]};
+const d$=id=>document.getElementById(id);
+const dDate=()=>{const d=new Date();return d.toISOString().slice(0,10)};
+function fill(id,rows,label){const e=d$(id);if(!e)return;e.innerHTML='<option value="">'+label+'</option>'+(rows||[]).map(x=>'<option value="'+esc(x.id)+'">'+esc(x.name||x.code||x.product_name||'—')+'</option>').join('')}
+function distCartRender(){d$('distCart').innerHTML=DS.cart.map((x,i)=>'<div class="tk-dist-cart-row"><span>'+esc(x.name)+' × '+x.quantity+'</span><b>'+rupiah(x.line_total)+'</b><button type="button" class="tk-dist-action" data-rm="'+i+'">×</button></div>').join('')||'<div class="owner-empty" style="min-height:70px">Belum ada item.</div>'}
+async function loadDistributor(){try{const r=monthRange();const [md,kpi,aging,target,orders,deliveries]=await Promise.all([API.masterList('all'),API.distributorDashboard(r.from,r.to),API.distributorReceivableAging(),API.distributorTargetSummary(r.from,r.to),supabaseClient.from('sales_orders').select('id,order_no,customer_id,total,status,payment_type,created_at').order('created_at',{ascending:false}).limit(30),supabaseClient.from('delivery_orders').select('id,delivery_no,status,scheduled_date,customer_id').order('created_at',{ascending:false}).limit(30)]);if(orders.error)throw orders.error;if(deliveries.error)throw deliveries.error;DS.customers=md?.customers||[];DS.products=md?.products||[];DS.warehouses=md?.warehouses||[];DS.outlets=md?.outlets||[];fill('distCustomer',DS.customers,'Pilih pelanggan');fill('distProduct',DS.products,'Pilih produk');fill('distWarehouse',DS.warehouses,'Pilih gudang');fill('distOutlet',DS.outlets,'Pilih outlet');d$('distRevenue').textContent=rupiah(kpi?.sales||kpi?.revenue||kpi?.total_sales);d$('distOrders').textContent=Number(kpi?.orders||kpi?.total_orders||0);d$('distDeliveries').textContent=Number(kpi?.deliveries||kpi?.delivered||0);d$('distReceivable').textContent=rupiah(kpi?.receivable||kpi?.outstanding_receivable);renderDistOrders(orders.data||[]);renderDistDeliveries(deliveries.data||[]);renderAging(aging);renderTarget(target)}catch(e){console.error(e);toast(businessError(e,'Distributor belum dapat dimuat.'))}}
+function renderDistOrders(rows){const names=Object.fromEntries(DS.customers.map(x=>[x.id,x.name]));d$('distOrderBody').innerHTML=rows.map(o=>'<tr><td><b>'+esc(o.order_no)+'</b></td><td>'+esc(names[o.customer_id]||'—')+'</td><td>'+rupiah(o.total)+'</td><td><span class="status-pill">'+esc(o.status)+'</span></td><td>'+distOrderActions(o)+'</td></tr>').join('')||emptyRow(5)}
+function distOrderActions(o){let h='';if(o.status==='draft')h+='<button class="tk-dist-action dark" data-submit="'+o.id+'">Submit</button>';if(o.status==='submitted'||o.status==='pending_approval')h+='<button class="tk-dist-action dark" data-approve="'+o.id+'">Approve</button>';if(['approved','picking','packed','ready_delivery'].includes(o.status))h+='<button class="tk-dist-action dark" data-complete="'+o.id+'">Fulfill</button>';return h||'—'}
+function renderDistDeliveries(rows){d$('distDeliveryBody').innerHTML=rows.map(x=>'<tr><td><b>'+esc(x.delivery_no)+'</b></td><td><span class="status-pill">'+esc(x.status)+'</span></td><td>'+esc(x.scheduled_date||'—')+'</td><td>'+(['assigned','picked','out_for_delivery','arrived'].includes(x.status)?'<button class="tk-dist-action dark" data-delivery="'+x.id+'">Next</button>':'—')+'</td></tr>').join('')||emptyRow(4)}
+function renderAging(x){const rows=Array.isArray(x)?x:(x?.rows||[]);d$('distAging').innerHTML='<div><b>Receivable Aging</b><span>—</span></div>'+rows.slice(0,6).map(r=>'<div><span>'+esc(r.bucket||r.aging_bucket||r.status||'Piutang')+'</span><b>'+rupiah(r.amount||r.balance_amount||r.total)+'</b></div>').join('')}
+function renderTarget(x){const rows=Array.isArray(x)?x:(x?.rows||[]);d$('distTarget').innerHTML='<div><b>Target</b><span>—</span></div>'+rows.slice(0,6).map(r=>'<div><span>'+esc(r.sales_user_name||r.user_name||'Sales')+'</span><b>'+rupiah(r.actual_sales||r.sales_actual||r.actual||0)+' / '+rupiah(r.sales_target||r.target||0)+'</b></div>').join('')}
+async function addDistItem(){const id=d$('distProduct').value,q=Number(d$('distQty').value||0);const p=DS.products.find(x=>x.id===id);if(!p||q<=0)return toast('Pilih produk dan jumlah yang valid.');let price=Number(p.selling_price||0);try{if(d$('distCustomer').value){const pr=await API.distributorResolvePrice(d$('distCustomer').value,id,q,dDate());price=Number(pr?.unit_price||pr?.price||price)}}catch(e){}const old=DS.cart.find(x=>x.product_id===id);if(old){old.quantity+=q;old.line_total=old.quantity*old.unit_price}else DS.cart.push({product_id:id,name:p.name,quantity:q,unit_price:price,line_total:q*price});distCartRender()}
+async function saveDistOrder(e){e.preventDefault();if(!DS.cart.length)return toast('Tambahkan minimal 1 item.');const customer=d$('distCustomer').value,wh=d$('distWarehouse').value,out=d$('distOutlet').value;if(!customer||!wh||!out)return toast('Pelanggan, gudang, dan outlet wajib dipilih.');const subtotal=DS.cart.reduce((a,x)=>a+x.line_total,0);const orderNo='SO-'+Date.now().toString(36).toUpperCase();try{const {data:profile,error:pe}=await supabaseClient.from('profiles').select('organization_id').eq('id',State.user.id).single();if(pe)throw pe;const {data:order,error:oe}=await supabaseClient.from('sales_orders').insert({organization_id:profile.organization_id,order_no:orderNo,customer_id:customer,outlet_id:out,warehouse_id:wh,sales_user_id:State.user.id,status:'draft',payment_type:d$('distPaymentType').value,subtotal,discount:0,tax:0,total:subtotal,requested_delivery_date:d$('distDeliveryDate').value||null,note:d$('distOrderNote').value.trim()||null,created_by:State.user.id}).select('id').single();if(oe)throw oe;const items=DS.cart.map(x=>({organization_id:profile.organization_id,sales_order_id:order.id,product_id:x.product_id,quantity:x.quantity,unit_price:x.unit_price,discount:0,tax:0,line_total:x.line_total}));const {error:ie}=await supabaseClient.from('sales_order_items').insert(items);if(ie)throw ie;toast('Sales Order '+orderNo+' berhasil dibuat.');DS.cart=[];d$('distOrderForm').reset();distCartRender();await loadDistributor()}catch(e){console.error(e);toast(businessError(e,'Sales Order gagal disimpan.'))}}
+async function nextDelivery(id){try{const row=(await supabaseClient.from('delivery_orders').select('status').eq('id',id).single()).data;const map={assigned:'out_for_delivery',out_for_delivery:'arrived',arrived:'delivered'};const next=map[row?.status];if(!next)return;await API.distributorDeliveryStatus(id,next);toast('Status delivery diperbarui.');await loadDistributor()}catch(e){toast(businessError(e,'Status delivery gagal diperbarui.'))}}
+function bind(){d$('distAddItem')?.addEventListener('click',addDistItem);d$('distOrderForm')?.addEventListener('submit',saveDistOrder);d$('distRefresh')?.addEventListener('click',loadDistributor);d$('distCart')?.addEventListener('click',e=>{const i=e.target.closest('[data-rm]')?.dataset.rm;if(i!==undefined){DS.cart.splice(Number(i),1);distCartRender()}});d$('distOrderBody')?.addEventListener('click',async e=>{const b=e.target.closest('button');if(!b)return;try{if(b.dataset.submit){await API.distributorSubmitOrder(b.dataset.submit);toast('Order disubmit.')}else if(b.dataset.approve){await API.distributorApproveOrder(b.dataset.approve,true,null);toast('Order disetujui.')}else if(b.dataset.complete){await API.distributorCompleteOrder(b.dataset.complete,[]);toast('Order diproses ke ready delivery.')}await loadDistributor()}catch(x){toast(businessError(x,'Aksi order gagal.'))}});d$('distDeliveryBody')?.addEventListener('click',e=>{const id=e.target.closest('[data-delivery]')?.dataset.delivery;if(id)nextDelivery(id)})}document.addEventListener('DOMContentLoaded',bind);window.loadDistributor=loadDistributor;})();
+</script>
 </body>
 </html>
