@@ -857,6 +857,7 @@ stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
           <button type="button" data-page="purchases" data-permission="purchase.manage"><span class="submenu-dot"></span><span>Pembelian</span></button>
           <button type="button" data-page="master" data-permission="product.manage"><span class="submenu-dot"></span><span>Data Toko</span></button>
           <button type="button" data-page="settings" data-permission="settings.view"><span class="submenu-dot"></span><span>Tim & Pengguna</span></button>
+          <button type="button" data-page="qa" data-permission="settings.view"><span class="submenu-dot"></span><span>QA & E2E Test</span></button>
         </div>
       </div>
     </nav>
@@ -1089,6 +1090,49 @@ stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
 .tk-renew-foot{padding:12px 19px;border-top:1px solid #f2f1ef;display:flex;justify-content:flex-end;gap:8px}
 @media(max-width:760px){.tk-billing-grid{grid-template-columns:1fr}.tk-billing-current{align-items:flex-start;flex-direction:column}.tk-billing-actions{justify-content:flex-start}.tk-billing-kpis{grid-template-columns:1fr 1fr 1fr}.tk-billing-card{padding:13px}}
 </style>
+
+<div id="qaModule" class="hidden">
+  <div class="tk-qa-page">
+    <div class="tk-qa-hero">
+      <div>
+        <div class="tk-qa-eyebrow">TOKOKULA QUALITY ASSURANCE</div>
+        <h1 class="owner-section-title">QA & E2E Test</h1>
+        <div class="owner-section-sub">Validasi backend Distributor dan integritas aplikasi dari session Owner yang sedang aktif.</div>
+      </div>
+      <span id="tkQaBadge" class="tk-qa-badge idle">READY</span>
+    </div>
+
+    <div class="tk-qa-actions">
+      <button id="tkQaStaticBtn" class="btn dark-btn" type="button">🧪 Jalankan Static QA</button>
+      <button id="tkQaE2eBtn" class="btn light-btn" type="button">▶ Jalankan E2E Validation</button>
+      <button id="tkQaClearBtn" class="btn light-btn" type="button">Bersihkan</button>
+    </div>
+
+    <div class="tk-qa-grid">
+      <div class="card tk-qa-card">
+        <div class="tk-qa-head">
+          <div><b>Static QA</b><span>Cek tabel, fungsi, RLS, permission dan struktur inti Distributor.</span></div>
+          <span id="tkQaStaticStatus" class="tk-qa-status idle">BELUM DIJALANKAN</span>
+        </div>
+        <pre id="tkQaStaticResult" class="tk-qa-result">Belum ada hasil.</pre>
+      </div>
+
+      <div class="card tk-qa-card">
+        <div class="tk-qa-head">
+          <div><b>E2E Validation</b><span>Dijalankan memakai session user yang sedang login.</span></div>
+          <span id="tkQaE2eStatus" class="tk-qa-status idle">BELUM DIJALANKAN</span>
+        </div>
+        <pre id="tkQaE2eResult" class="tk-qa-result">Belum ada hasil.</pre>
+      </div>
+    </div>
+
+    <div class="card tk-qa-card tk-qa-note">
+      <b>Catatan produksi</b>
+      <p>Static QA aman dijalankan kapan saja. E2E Validation dapat membuat/menguji data workflow jika fungsi backend memang dirancang demikian, jadi jalankan dari tenant testing terlebih dahulu sebelum digunakan pada data produksi aktif.</p>
+    </div>
+  </div>
+</div>
+
 <div id="subscriptionModule" class="hidden tk-subscription-page"><div style="margin-top:10px"></div><div class="tk-sub-hero"><div><div class="tk-sub-eyebrow">TOKOKULA SUBSCRIPTION</div><h1 class="owner-section-title">Langganan</h1><div class="owner-section-sub">Kelola paket bisnis Anda. Upgrade aktif otomatis setelah pembayaran berhasil.</div></div><div id="tkSubStatusBadge" class="tk-sub-status"></div></div><div class="tk-sub-current"><div><div class="tk-sub-kicker">PAKET SAAT INI</div><div id="tkSubCurrentPlan" class="tk-sub-current-plan">—</div><div id="tkSubCurrentMeta" class="tk-sub-current-meta">Memuat status langganan...</div></div><div class="tk-sub-current-actions"><button id="tkSubRefresh" class="btn light-btn" type="button">↻ Refresh</button><button id="tkSubCancel" class="btn dark-btn hidden" type="button">Batalkan di Akhir Periode</button></div></div><div id="tkSubPending" class="tk-sub-pending hidden"></div><div id="tkOwnerBillingCenter" class="tk-owner-billing">
   <div class="tk-billing-head"><div><div class="tk-sub-kicker">BILLING CENTER</div><b>Tagihan & Riwayat Pembayaran</b><span>Pantau invoice, status pembayaran, dan periode langganan Anda.</span></div><button id="tkBillingRefresh" class="tk-billing-refresh" type="button">↻ Refresh</button></div>
   <div class="tk-billing-kpis">
@@ -1624,18 +1668,18 @@ async function permissionGuards(){
   }
 }
 function page(name){
-  const grouped=['customers','purchases','master','settings'];
+  const grouped=['customers','purchases','master','settings','qa'];
   document.querySelectorAll('.nav > button[data-page], .nav-submenu button[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===name));
   const inGroup=grouped.includes(name);
   const toggle=$('teamSettingsToggle'),submenu=$('teamSettingsSubmenu');
   if(toggle&&submenu&&inGroup){submenu.classList.add('open');toggle.classList.add('open');toggle.setAttribute('aria-expanded','true');}
-  const titles={dashboard:'Beranda',pos:'Point of Sale',inventory:'Stok',customers:'Pelanggan',purchases:'Purchase & Supplier',finance:'Keuangan',reports:'Reports & Analytics',settings:'Tim & Pengguna',shift:'Shift & Kas',master:'Data Toko',subscription:'Langganan'};
+  const titles={dashboard:'Beranda',pos:'Point of Sale',inventory:'Stok',customers:'Pelanggan',purchases:'Purchase & Supplier',finance:'Keuangan',reports:'Reports & Analytics',settings:'Tim & Pengguna',shift:'Shift & Kas',master:'Data Toko',subscription:'Langganan',qa:'QA & E2E Test'};
   if(name==='dashboard'){
     $('dashboard').classList.remove('hidden');$('module').classList.add('hidden');
   }else{
     $('dashboard').classList.add('hidden');$('module').classList.remove('hidden');
     $('moduleTitle').textContent=titles[name]||name;
-    const realModules=['pos','shift','settings','master','inventory','customers','purchases','finance','reports','subscription'];
+    const realModules=['pos','shift','settings','master','inventory','customers','purchases','finance','reports','subscription','qa'];
     $('genericModule').classList.add('hidden');
     $('posModule').classList.toggle('hidden',name!=='pos');
     $('shiftModule').classList.toggle('hidden',name!=='shift');
@@ -1647,6 +1691,7 @@ function page(name){
     $('financeModule').classList.toggle('hidden',name!=='finance');
     $('reportsModule').classList.toggle('hidden',name!=='reports');
     $('subscriptionModule').classList.toggle('hidden',name!=='subscription');
+    $('qaModule').classList.toggle('hidden',name!=='qa');
     if(name==='pos') loadPOS();
     if(name==='shift') loadShift();
     if(name==='settings') loadUsers();
@@ -1657,6 +1702,7 @@ function page(name){
     if(name==='finance') loadFinanceModule();
     if(name==='reports') loadReportsModule();
     if(name==='subscription') loadOwnerSubscription();
+    if(name==='qa') loadTokokulaQA();
   }
   $('topTitle').textContent=titles[name]||name;
 }
@@ -2445,6 +2491,83 @@ $('platformMenu').addEventListener('click',()=>$('platformSidebar').classList.to
 window.addEventListener('hashchange',()=>{if(location.hash.startsWith('#/super-admin/'))platformRoute(location.hash.replace('#/super-admin/','')||'dashboard')});
 
 
+
+/* ================= TOKOKULA QA & E2E ================= */
+function tkQaSetBadge(id,state,text){
+  const el=$(id); if(!el)return;
+  el.className='tk-qa-badge '+state; el.textContent=text;
+}
+function tkQaSetStatus(id,state,text){
+  const el=$(id); if(!el)return;
+  el.className='tk-qa-status '+state; el.textContent=text;
+}
+function tkQaPrint(id,value){
+  const el=$(id); if(!el)return;
+  el.textContent=typeof value==='string'?value:JSON.stringify(value,null,2);
+}
+function tkQaPrettyError(e){
+  return String(e?.message||e||'QA gagal dijalankan.');
+}
+async function loadTokokulaQA(){
+  tkQaSetBadge('tkQaBadge','idle','READY');
+}
+async function runTokokulaStaticQA(){
+  const b=$('tkQaStaticBtn'); if(!b)return;
+  b.disabled=true; b.textContent='Menjalankan Static QA...';
+  tkQaSetBadge('tkQaBadge','running','RUNNING');
+  tkQaSetStatus('tkQaStaticStatus','running','MENJALANKAN');
+  tkQaPrint('tkQaStaticResult','Memeriksa backend...');
+  try{
+    const result=await API.rpc('distributor_run_static_qa');
+    tkQaPrint('tkQaStaticResult',result);
+    tkQaSetStatus('tkQaStaticStatus','pass','SELESAI');
+    tkQaSetBadge('tkQaBadge','pass','QA SELESAI');
+    toast('Static QA selesai. Lihat hasil di panel QA.');
+  }catch(e){
+    console.error('Static QA:',e);
+    tkQaPrint('tkQaStaticResult',tkQaPrettyError(e));
+    tkQaSetStatus('tkQaStaticStatus','fail','GAGAL');
+    tkQaSetBadge('tkQaBadge','fail','QA GAGAL');
+    toast(businessError(e,'Static QA belum dapat dijalankan.'));
+  }finally{
+    b.disabled=false; b.textContent='🧪 Jalankan Static QA';
+  }
+}
+async function runTokokulaE2E(){
+  const b=$('tkQaE2eBtn'); if(!b)return;
+  b.disabled=true; b.textContent='Menjalankan E2E...';
+  tkQaSetBadge('tkQaBadge','running','RUNNING');
+  tkQaSetStatus('tkQaE2eStatus','running','MENJALANKAN');
+  tkQaPrint('tkQaE2eResult','Menjalankan validasi dengan session user aktif...');
+  try{
+    const result=await API.rpc('distributor_run_e2e_validation');
+    tkQaPrint('tkQaE2eResult',result);
+    const raw=JSON.stringify(result).toLowerCase();
+    const failed=raw.includes('"fail"')||raw.includes('"failed"')||raw.includes('"error"');
+    tkQaSetStatus('tkQaE2eStatus',failed?'fail':'pass',failed?'ADA TEMUAN':'PASS');
+    tkQaSetBadge('tkQaBadge',failed?'fail':'pass',failed?'ADA TEMUAN':'E2E PASS');
+    toast(failed?'E2E selesai tetapi ada temuan.':'E2E Validation PASS.');
+  }catch(e){
+    console.error('E2E QA:',e);
+    tkQaPrint('tkQaE2eResult',tkQaPrettyError(e));
+    tkQaSetStatus('tkQaE2eStatus','fail','GAGAL');
+    tkQaSetBadge('tkQaBadge','fail','E2E GAGAL');
+    toast(businessError(e,'E2E Validation belum dapat dijalankan.'));
+  }finally{
+    b.disabled=false; b.textContent='▶ Jalankan E2E Validation';
+  }
+}
+function clearTokokulaQA(){
+  tkQaSetBadge('tkQaBadge','idle','READY');
+  tkQaSetStatus('tkQaStaticStatus','idle','BELUM DIJALANKAN');
+  tkQaSetStatus('tkQaE2eStatus','idle','BELUM DIJALANKAN');
+  tkQaPrint('tkQaStaticResult','Belum ada hasil.');
+  tkQaPrint('tkQaE2eResult','Belum ada hasil.');
+}
+$('tkQaStaticBtn')?.addEventListener('click',runTokokulaStaticQA);
+$('tkQaE2eBtn')?.addEventListener('click',runTokokulaE2E);
+$('tkQaClearBtn')?.addEventListener('click',clearTokokulaQA);
+
 (async()=>{
   try{
     const {data,error}=await supabaseClient.auth.getSession();
@@ -2970,6 +3093,27 @@ document.addEventListener('DOMContentLoaded',async function(){
   }
 })();
 </script>
+
+
+<style id="tokokula-qa-v1">
+.tk-qa-page{max-width:1500px;margin:0 auto}
+.tk-qa-hero{display:flex;justify-content:space-between;align-items:flex-end;gap:20px}
+.tk-qa-eyebrow{font-size:10px;font-weight:900;letter-spacing:.16em;color:#8e8881;margin-bottom:7px}
+.tk-qa-badge,.tk-qa-status{display:inline-flex;align-items:center;padding:7px 10px;border-radius:999px;font-size:10px;font-weight:900}
+.tk-qa-badge.idle,.tk-qa-status.idle{background:#f5f4f2;color:#756e65}
+.tk-qa-badge.running,.tk-qa-status.running{background:#f6f1ea;color:#86693c}
+.tk-qa-badge.pass,.tk-qa-status.pass{background:#edfcf2;color:#07753c}
+.tk-qa-badge.fail,.tk-qa-status.fail{background:#fef3f2;color:#af281d}
+.tk-qa-actions{display:flex;gap:9px;flex-wrap:wrap;margin:22px 0 14px}
+.tk-qa-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.tk-qa-card{min-width:0}
+.tk-qa-head{display:flex;justify-content:space-between;align-items:flex-start;gap:15px}
+.tk-qa-head b{font-size:16px}.tk-qa-head span{display:block;color:#9d978f;font-size:11px;margin-top:4px}
+.tk-qa-result{margin:16px 0 0;padding:15px;border:1px solid #eeeae5;border-radius:14px;background:#fbfaf9;min-height:210px;max-height:420px;overflow:auto;white-space:pre-wrap;word-break:break-word;font:12px/1.6 ui-monospace,SFMono-Regular,Menlo,monospace;color:#4d453b}
+.tk-qa-note{margin-top:14px}
+.tk-qa-note p{margin:7px 0 0;color:#7e776d;font-size:12px;line-height:1.65}
+@media(max-width:800px){.tk-qa-hero{align-items:stretch;flex-direction:column}.tk-qa-grid{grid-template-columns:1fr}.tk-qa-actions .btn{flex:1;min-width:150px}}
+</style>
 
 </body>
 </html>
